@@ -190,8 +190,8 @@ If your samples are defined by 2 factors, say `Genotype` and `Age` (both present
 
 - `~Genotype + Age + Genotype:Age` - models the differences:
   - Between genotypes at the first `Age` value
-  - The differences between different time points (grouping all genotypes)
-  - Genotype-specific differences across the different levels of `Age`.
+  - Between different time points (grouping all genotypes)
+  - Genotype-specific across the levels of `Age`.
 
 ## DESeq2 - note (4) on designs
 
@@ -222,7 +222,7 @@ name_result = resultsNames(deseq_dataset)
 results_DESeq2 <- 
   lapply(name_result[-1], \(comparison) {
     results(deseq_dataset, 
-            name = name_result[2],
+            name = comparison,
             pAdjustMethod = "BH")@listData %>%
       as_tibble() %>%
       mutate(
@@ -242,7 +242,7 @@ results_DESeq2 <-
 head(results_DESeq2)
 ```
 
-. . .
+# Simple summary
 
 - How many genes are deregulated in each comparison?
 
