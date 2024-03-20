@@ -1,0 +1,179 @@
+{
+  "about.qmd": {
+    "about.html": "3edb0093"
+  },
+  "index.qmd": {
+    "index.html": "e214bffb"
+  },
+  "posts/post-with-code/basics.qmd": {
+    "basics.html": "e75db1c8"
+  },
+  "posts/post-with-code/Before_1stClass.qmd": {
+    "Before_1stClass.html": "675d5c89"
+  },
+  "posts/post-with-code/MSA_phylogenetic_trees.qmd": {
+    "MSA_phylogenetic_trees.html": "a96c643d"
+  },
+  "posts/post-with-code/Packages_Functions.qmd": {
+    "Packages_Functions.html": "cddd390c"
+  },
+  "unix/Class1_BasicCommands.qmd": {
+    "Class1_BasicCommands.html": "ec5e7b69"
+  },
+  "unix/Class2_Connection_FileTransfer.qmd": {
+    "Class2_Connection_FileTransfer.html": "ba22ad73"
+  },
+  "unix/Class3_runningJobs.qmd": {
+    "Class3_runningJobs.html": "330105ae"
+  },
+  "unix/Class4_blast.qmd": {
+    "Class4_blast.html": "b74a986e"
+  },
+  "unix/Class5_AWK.qmd": {
+    "Class5_AWK.html": "230dbcde"
+  },
+  "unix/Class6_SED.qmd": {
+    "Class6_SED.html": "12468863"
+  },
+  "useful_unix.qmd": {
+    "useful_unix.html": "1f0ef312"
+  },
+  "posts/post-with-code/Class1_BasicCommands.qmd": {
+    "Class1_BasicCommands.html": "2d5c44d3"
+  },
+  "posts/post-with-code/Class2_Connection_FileTransfer.qmd": {
+    "Class2_Connection_FileTransfer.html": "af86ae0e"
+  },
+  "posts/post-with-code/Class3_runningJobs.qmd": {
+    "Class3_runningJobs.html": "32481643"
+  },
+  "posts/post-with-code/Class4_blast.qmd": {
+    "Class4_blast.html": "eb93108e"
+  },
+  "posts/post-with-code/Class5_AWK.qmd": {
+    "Class5_AWK.html": "e7bf0ea3"
+  },
+  "posts/post-with-code/Class6_SED.qmd": {
+    "Class6_SED.html": "6c96b1ea"
+  },
+  "Unix_classes.qmd": {
+    "Unix_classes.html": "d4282a38"
+  },
+  "posts/r/basics.qmd": {
+    "basics.html": "5cf66042"
+  },
+  "posts/r/Before_1stClass.qmd": {
+    "Before_1stClass.html": "dd6641a3"
+  },
+  "r/basics.qmd": {
+    "basics.html": "ac5adbce"
+  },
+  "r/Before_1stClass.qmd": {
+    "Before_1stClass.html": "39412740"
+  },
+  "r/MSA_phylogenetic_trees.qmd": {
+    "MSA_phylogenetic_trees.html": "527d1769"
+  },
+  "r/Packages_Functions.qmd": {
+    "Packages_Functions.html": "3fbc8838"
+  },
+  "r_classes.qmd": {
+    "r_classes.html": "0f7b21ce"
+  },
+  "r/basics/index.qmd": {
+    "index.html": "6ea3c2ee"
+  },
+  "r/Before_1stClass/index.qmd": {
+    "index.html": "6bb58bf4"
+  },
+  "r/MSA_phylogenetic_trees/index.qmd": {
+    "index.html": "bcab7750"
+  },
+  "r/Packages_Functions/index.qmd": {
+    "index.html": "1eb79f31"
+  },
+  "unix/Class1_BasicCommands/index.qmd": {
+    "index.html": "937545db"
+  },
+  "unix/Class2_Connection_FileTransfer/index.qmd": {
+    "index.html": "ae33a528"
+  },
+  "unix/Class3_runningJobs/index.qmd": {
+    "index.html": "10016cdc"
+  },
+  "unix/Class4_blast/index.qmd": {
+    "index.html": "b9a45f62"
+  },
+  "unix/Class5_AWK/index.qmd": {
+    "index.html": "86ce1e2a"
+  },
+  "unix/Class6_SED/index.qmd": {
+    "index.html": "4d96935b"
+  },
+  "useful_R_commands/index.qmd": {
+    "index.html": "44521c6b"
+  },
+  "useful_R_commands/posts/environment_packages.qmd": {
+    "environment_packages.html": "5211cea3"
+  },
+  "useful_R_commands/posts/help.qmd": {
+    "help.html": "15b9838d"
+  },
+  "useful_R_commands/posts/numeric_data.qmd": {
+    "numeric_data.html": "945d73f2"
+  },
+  "useful_R_commands/posts/overview_data.qmd": {
+    "overview_data.html": "25f7ba94"
+  },
+  "useful_R_commands/posts/read_files.qmd": {
+    "read_files.html": "13568d75"
+  },
+  "useful_R_commands/posts/resources.qmd": {
+    "resources.html": "d74815ed"
+  },
+  "useful_R_commands/posts/seq_rep.qmd": {
+    "seq_rep.html": "fb677de7"
+  },
+  "useful_R_commands/posts/spreadsheets.qmd": {
+    "spreadsheets.html": "a6f058c8"
+  },
+  "useful_R_commands/posts/working_with_text.qmd": {
+    "working_with_text.html": "1174b6f8"
+  },
+  "unix_useful_commands/posts/grep_sed.qmd": {
+    "grep_sed.html": "59aa8e0f"
+  },
+  "unix_useful_commands/index.qmd": {
+    "index.html": "b4536113"
+  },
+  "unix_useful_commands/posts/basic_concepts.qmd": {
+    "basic_concepts.html": "73414e36"
+  },
+  "unix_useful_commands/posts/ls.qmd": {
+    "ls.html": "db4a8ac2"
+  },
+  "unix_useful_commands/posts/read_write_text.qmd": {
+    "read_write_text.html": "83d36b16"
+  },
+  "unix_useful_commands/posts/where_who.qmd": {
+    "where_who.html": "17355bca"
+  },
+  "unix_useful_commands/posts/files_directories.qmd": {
+    "files_directories.html": "f64be38d"
+  },
+  "unix_useful_commands/posts/file_transfer.qmd": {
+    "file_transfer.html": "606dcc70"
+  },
+  "unix_useful_commands/posts/server.qmd": {
+    "server.html": "c35861dd"
+  },
+  "r/Get_read_counts/index.qmd": {
+    "index.html": "274582f6"
+  },
+  "r/DEA/index.qmd": {
+    "index.html": "afaecfce"
+  },
+  "r/test.qmd": {
+    "test.html": "ac221e4f"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "listingMap": {
+    "index.qmd": [
+      "/r/*/index.qmd",
+      "/unix/*/index.qmd"
+    ],
+    "unix_useful_commands\\index.qmd": [
+      "posts/*.qmd"
+    ],
+    "useful_R_commands\\index.qmd": [
+      "posts/*.qmd"
+    ]
+  }
+}

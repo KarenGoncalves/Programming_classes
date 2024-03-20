@@ -1,0 +1,14 @@
+{
+  "hash": "6b2a88e252484ad6a3ab6d56aed53d8e",
+  "result": {
+    "markdown": "---\ntitle: \"R\"\nlisting: \n  contents: \n    - posts/r/*.qmd\n  sort: \"date asc\"\n  categories: true\n  sort-ui: true\n  filter-ui: true\npage-layout: full\ntitle-block-banner: true\n---\n\n\n# Data for classes\n\n\nScripts\n\n- [class_06102023.R](scripts_for_class/class_06102023.R)\n Scripts\n\n- [class_10102023.R](scripts_for_class/class_10102023.R)\n Scripts\n\n- [class_13102023.R](scripts_for_class/class_13102023.R)\n Scripts\n\n- [class_17102023.R](scripts_for_class/class_17102023.R)\n Scripts\n\n- [class_19092023.R](scripts_for_class/class_19092023.R)\n Scripts\n\n- [class_19102023.R](scripts_for_class/class_19102023.R)\n Scripts\n\n- [class_29092023.R](scripts_for_class/class_29092023.R)\n Scripts\n\n- [script_class1f.R](scripts_for_class/script_class1f.R)\n Scripts\n\n- [script_class1t.R](scripts_for_class/script_class1t.R)\n Scripts\n\n- [script_class2t.R](scripts_for_class/script_class2t.R)\n Scripts\n\n- [script_class2tuesday.R](scripts_for_class/script_class2tuesday.R)\n \n\nDatasets\n\n- [TimeSeries_example.csv](exampleData/TimeSeries_example.csv)\n \n\nDatasets\n\n- [Class1_exampleData.txt](exampleData/Class1_exampleData.txt)\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
