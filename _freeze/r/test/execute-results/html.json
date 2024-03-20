@@ -1,0 +1,18 @@
+{
+  "hash": "6f4d775b9c346bf6cfe0c395ccef0c28",
+  "result": {
+    "markdown": "---\ntitle: \"Untitled\"\nformat: \n  revealjs:\n    fontsize: 2em\n    monofont: .1em\n---\n\n\n## The dataset\n\nThe input file is the table [Arabidopsis_counts.csv](../../exampleData/Arabidopsis_counts.csv). \n\n\n\n::: {.cell}\n\n:::\n\n\n```{.r}\ncounts = read.csv(\"https://karengoncalves.github.io/Programming_classes/exampleData/Arabidopsis_counts.csv\",\n                  header = T, row.names = 1)\n```\n\nThis file has 12 columns (3 samples * 4 replicates) and 32833 rows (one per gene).\n\nSamples are aerial tissue of _Arabidopsis thaliana_ ecotype Col-0, harvested at 14 days post germination, with Basta (glyphosate) resistance gene and:\n\n- Control: GFP under the 35S promoter\n- Mlp37347 and Mlp124499: a candidate effector gene (*Mlp37347* or *Mlp124499* from the fungus *Melampsora larici-populina*) tagged with GFP under the 35S promoter\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-after-body": [
+        "\r\n<script>\r\n  // htmlwidgets need to know to resize themselves when slides are shown/hidden.\r\n  // Fire the \"slideenter\" event (handled by htmlwidgets.js) when the current\r\n  // slide changes (different for each slide format).\r\n  (function () {\r\n    // dispatch for htmlwidgets\r\n    function fireSlideEnter() {\r\n      const event = window.document.createEvent(\"Event\");\r\n      event.initEvent(\"slideenter\", true, true);\r\n      window.document.dispatchEvent(event);\r\n    }\r\n\r\n    function fireSlideChanged(previousSlide, currentSlide) {\r\n      fireSlideEnter();\r\n\r\n      // dispatch for shiny\r\n      if (window.jQuery) {\r\n        if (previousSlide) {\r\n          window.jQuery(previousSlide).trigger(\"hidden\");\r\n        }\r\n        if (currentSlide) {\r\n          window.jQuery(currentSlide).trigger(\"shown\");\r\n        }\r\n      }\r\n    }\r\n\r\n    // hookup for slidy\r\n    if (window.w3c_slidy) {\r\n      window.w3c_slidy.add_observer(function (slide_num) {\r\n        // slide_num starts at position 1\r\n        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);\r\n      });\r\n    }\r\n\r\n  })();\r\n</script>\r\n\r\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
