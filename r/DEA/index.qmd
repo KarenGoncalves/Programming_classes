@@ -24,6 +24,7 @@ editor_options:
   chunk_output_type: console
 ---
 
+## The dataset
 
 ```{r}
 #| echo: false
@@ -38,8 +39,6 @@ install_from_dif_sources(
 	github_packages = "KarenGoncalves/CustomSelection"
 )
 ```
-
-## The dataset
 
 The input file is the table [Arabidopsis_counts.csv](../../exampleData/Arabidopsis_counts.csv). 
 
@@ -139,7 +138,6 @@ counts_filtered = countsData[, expressed_genes]
 
 :::
 
-
 ## DESeq2 - main analysis
 
 Now that you have the filtered counts matrix and the design table, you can run DESeq2 by first creating the dataset object then running the function DESeq.
@@ -162,6 +160,8 @@ It takes the first level of the factor `Genotype` as the control.
 
 Because of this, the comparisons we are able to make are only `Genotype_x` vs `Genotype_Control`, we cannot compare `Genotype_x` against `Genotype_y`
 
+Use `resultsNames` to see what comparisons are available
+
 ```{r}
 resultsNames(deseq_dataset)
 ```
@@ -180,12 +180,18 @@ deseq_dataset2 = DESeqDataSetFromMatrix(
 resultsNames(deseq_dataset2) 
 ```
 
-## DESeq2 - note (3) on designs
+## DESeq2 - note (3) on designs 
 
 If your samples are defined by 2 factors, say `Genotype` and `Age` (both present int the `design_matrix` data.frame), you can set the design to either:
 
 - `~Genotype + Age` - you will be able to compare `genotype1` against `genotype2`, and `age1` against `age2`, but not `genotype1_age1` against `genotype1_age2`
-- `~Genotype + Age + Genotype:Age` - models the differences between genotypes at the first `Age` value, the differences at different time points (grouping all genotypes), and genotype-specific differences across the different levels of `Age`.
+
+. . .
+
+- `~Genotype + Age + Genotype:Age` - models the differences:
+  - Between genotypes at the first `Age` value
+  - The differences between different time points (grouping all genotypes)
+  - Genotype-specific differences across the different levels of `Age`.
 
 ## DESeq2 - note (4) on designs
 
@@ -203,40 +209,47 @@ deseq_dataset = DESeqDataSetFromMatrix(
 
 ## DESeq2 results
 
-Now the main part of the analysis is done, to access the results and inform the type of stats you want performed, you use the function `results`. 
-
-However, you need to inform `R` which comparison you want to evaluate each time. To see the options, you can run `resultsNames()`
+Now the main part of the analysis is done, we use the function `results` to access the results and inform the type of stats you want performed. 
 
 ```{r}
 resultsNames(deseq_dataset)
 name_result = resultsNames(deseq_dataset)
 ```
 
-
 ```{r}
-results_DESeq2 = list()
-results_DESeq2[[ name_result[2] ]] = 
-  results(deseq_dataset, 
-          name = name_result[2],
-          pAdjustMethod = "BH")@listData %>%
-  as_tibble() %>%
-  mutate(Gene_name = rownames(counts_filtered),
-         State = case_when(
-           log2FoldChange < 2 ~ "Down-regulated",
-           log2FoldChange > 2 ~ "Up-regulated",
-           .default = "equal"
-         ))
+# Remove the first element of name_result, since it is just the intercept
 
-head(results_DESeq2[[ name_result[2] ]])
+results_DESeq2 <- 
+  lapply(name_result[-1], \(comparison) {
+    results(deseq_dataset, 
+            name = name_result[2],
+            pAdjustMethod = "BH")@listData %>%
+      as_tibble() %>%
+      mutate(
+        # We need to add the gene names
+        Gene_name = rownames(counts_filtered),
+        # We classify the genes by deregulation
+        State = case_when(
+          log2FoldChange < 2 ~ "Down-regulated",
+          log2FoldChange > 2 ~ "Up-regulated",
+          .default = "equal"),
+        # Indicate from which comparison the data comes from
+        Contrast = comparison
+      )
+  }) %>%
+  list_rbind() 
+  
+head(results_DESeq2)
 ```
 
 . . .
 
-- How many genes are deregulated in this comparison?
+- How many genes are deregulated in each comparison?
 
 ```{r}
-results_DESeq2[[ name_result[2] ]]  %>%
+results_DESeq2  %>%
   filter(padj < 0.01) %>%
+  group_by(Contrast) %>%
   dplyr::count()
 ```
 
@@ -245,9 +258,9 @@ results_DESeq2[[ name_result[2] ]]  %>%
 - How many genes are up and how many down-regulated?
 
 ```{r}
-results_DESeq2[[ name_result[2] ]] %>%
+results_DESeq2 %>%
   filter(padj < 0.01) %>%
-  group_by(State) %>%
+  group_by(Contrast, State) %>%
   dplyr::count()
 ```
 
