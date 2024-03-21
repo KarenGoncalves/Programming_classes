@@ -9,7 +9,7 @@
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.551">
+  <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Karen Cristine Goncalves, Ph.D.">
   <meta name="dcterms.date" content="2024-03-21">
@@ -33,7 +33,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -223,8 +223,7 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    padding-bottom: 0.5rem;
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -409,8 +408,8 @@ Karen Cristine Goncalves, Ph.D.
 <section id="the-dataset" class="slide level2">
 <h2>The dataset</h2>
 <p>The input file is the table <a href="../../exampleData/Arabidopsis_counts.csv">Arabidopsis_counts.csv</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>counts <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"https://karengoncalves.github.io/Programming_classes/exampleData/Arabidopsis_counts.csv"</span>,</span>
-<span id="cb1-2"><a></a>                  <span class="at">header =</span> T, <span class="at">row.names =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>counts <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"https://karengoncalves.github.io/Programming_classes/exampleData/Arabidopsis_counts.csv"</span>,</span>
+<span id="cb1-2"><a href="#cb1-2"></a>                  <span class="at">header =</span> T, <span class="at">row.names =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This file has 12 columns (3 samples * 4 replicates) and 32833 rows (one per gene).</p>
 <p>Samples are aerial tissue of <em>Arabidopsis thaliana</em> ecotype Col-0, harvested at 14 days post germination, with Basta (glyphosate) resistance gene and:</p>
 <ul>
@@ -429,7 +428,7 @@ Karen Cristine Goncalves, Ph.D.
 </ul>
 <p>Basically, you need first one column with the rows containing the same values as the column names of the count matrix.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>design_matrix <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">Replicates =</span> <span class="fu">names</span>(counts))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>design_matrix <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">Replicates =</span> <span class="fu">names</span>(counts))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then, you need one (or more) columns that indicate the sample that replicate comes from.</p>
 </section>
@@ -438,13 +437,13 @@ Karen Cristine Goncalves, Ph.D.
 <p>Note that you separate things in the columns, eg. you harvested different tissues at different time points, you would need a design table with three columns: <code>Replicates</code>, <code>tissue_type</code> and <code>Time_point</code>.</p>
 <p>In this case, the genotypes of the plants is part of their name (just remove the <code>_#</code> to get it):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>design_matrix <span class="ot">=</span> design_matrix <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a></a>  <span class="fu">mutate</span>(<span class="at">Genotype =</span> <span class="fu">gsub</span>(<span class="st">"_</span><span class="sc">\\</span><span class="st">d+$"</span>, <span class="st">""</span>, </span>
-<span id="cb3-3"><a></a>                         <span class="co"># replace the underscore and digits at the end of the text </span></span>
-<span id="cb3-4"><a></a>                         <span class="co"># with nothing</span></span>
-<span id="cb3-5"><a></a>                         Replicates))</span>
-<span id="cb3-6"><a></a></span>
-<span id="cb3-7"><a></a><span class="fu">head</span>(design_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>design_matrix <span class="ot">=</span> design_matrix <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">mutate</span>(<span class="at">Genotype =</span> <span class="fu">gsub</span>(<span class="st">"_</span><span class="sc">\\</span><span class="st">d+$"</span>, <span class="st">""</span>, </span>
+<span id="cb3-3"><a href="#cb3-3"></a>                         <span class="co"># replace the underscore and digits at the end of the text </span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>                         <span class="co"># with nothing</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>                         Replicates))</span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="fu">head</span>(design_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Replicates Genotype
 1  Control_1  Control
@@ -460,7 +459,7 @@ Karen Cristine Goncalves, Ph.D.
 <h2>Filtering read counts</h2>
 <p>Not all genes in a genome will be expressed in a study (even one with many conditions and developmental stages), since some need very specific conditions to be expressed. Check for example the gene AT1G01046 (row 5)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>counts[<span class="dv">5</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>counts[<span class="dv">5</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          Control_1 Control_2 Control_3 Control_4 Mlp37347_1 Mlp37347_2
 AT1G01046         0         0         0         0          0          0
@@ -474,31 +473,31 @@ AT1G01046          0          0           0           0           0           0<
 <div id="tabset-1-1">
 <p>We can clean up the data, removing genes that are not expressed ever in our experiment. In theory, genes not expressed will have read <code>count == 0</code> in all samples.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>genes_not_expressed <span class="ot">=</span> <span class="fu">rowSums</span>(counts) <span class="sc">==</span> <span class="dv">0</span></span>
-<span id="cb7-2"><a></a>genes_not_expressed <span class="sc">%&gt;%</span> <span class="fu">which</span>() <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>genes_not_expressed <span class="ot">=</span> <span class="fu">rowSums</span>(counts) <span class="sc">==</span> <span class="dv">0</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>genes_not_expressed <span class="sc">%&gt;%</span> <span class="fu">which</span>() <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5632</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="co"># We keep only rows that are FALSE in the variable genes_not_expressed</span></span>
-<span id="cb9-2"><a></a>counts_filtered <span class="ot">=</span> counts[ <span class="sc">!</span>genes_not_expressed, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># We keep only rows that are FALSE in the variable genes_not_expressed</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>counts_filtered <span class="ot">=</span> counts[ <span class="sc">!</span>genes_not_expressed, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-1-2">
 <p>Another way of filtering weakly expressed genes would be with the functions DAFS from the <a href="https://github.com/KarenGoncalves/CustomSelection">“KarenGoncalves/CustomSelection”</a> package.</p>
 <p>The function gives you the minimum expression level accepted per replicate (based on the sequencing depth), from there you can filter out the genes that are expressed at a level lower than that threshold.</p>
 <p>You will need the count matrix and a named vector with the length of each gene.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="co"># The first thing you do convert the read counts to TPM (transcripts per million):</span></span>
-<span id="cb10-2"><a></a>tpm <span class="ot">=</span> <span class="fu">Counts_to_tpm</span>(<span class="at">counts=</span>counts, <span class="at">featureLength=</span>length)[[<span class="dv">1</span>]]</span>
-<span id="cb10-3"><a></a></span>
-<span id="cb10-4"><a></a><span class="co"># Then you calculate the minimum expression level</span></span>
-<span id="cb10-5"><a></a>cutv <span class="ot">=</span> <span class="fu">DAFS</span>(<span class="at">tpm=</span>tpm) <span class="co"># value given as log2 TPM</span></span>
-<span id="cb10-6"><a></a><span class="co"># Calculate the mean minimum expression level and convert it to TPM</span></span>
-<span id="cb10-7"><a></a>min_expr_level <span class="ot">=</span> <span class="fu">mean</span>(cutv) <span class="sc">^</span> <span class="dv">2</span> </span>
-<span id="cb10-8"><a></a></span>
-<span id="cb10-9"><a></a><span class="co"># Now to filter the weakly expressed genes,</span></span>
-<span id="cb10-10"><a></a><span class="co"># Remove the ones that are expressed below the min_expr_level</span></span>
-<span id="cb10-11"><a></a>expressed_genes <span class="ot">=</span> <span class="fu">apply</span>(tpm, <span class="dv">1</span>, mean) <span class="sc">&gt;</span> min_expr_level</span>
-<span id="cb10-12"><a></a>counts_filtered <span class="ot">=</span> countsData[, expressed_genes]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># The first thing you do convert the read counts to TPM (transcripts per million):</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>tpm <span class="ot">=</span> <span class="fu">Counts_to_tpm</span>(<span class="at">counts=</span>counts, <span class="at">featureLength=</span>length)[[<span class="dv">1</span>]]</span>
+<span id="cb10-3"><a href="#cb10-3"></a></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co"># Then you calculate the minimum expression level</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>cutv <span class="ot">=</span> <span class="fu">DAFS</span>(<span class="at">tpm=</span>tpm) <span class="co"># value given as log2 TPM</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co"># Calculate the mean minimum expression level and convert it to TPM</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>min_expr_level <span class="ot">=</span> <span class="fu">mean</span>(cutv) <span class="sc">^</span> <span class="dv">2</span> </span>
+<span id="cb10-8"><a href="#cb10-8"></a></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="co"># Now to filter the weakly expressed genes,</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="co"># Remove the ones that are expressed below the min_expr_level</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>expressed_genes <span class="ot">=</span> <span class="fu">apply</span>(tpm, <span class="dv">1</span>, mean) <span class="sc">&gt;</span> min_expr_level</span>
+<span id="cb10-12"><a href="#cb10-12"></a>counts_filtered <span class="ot">=</span> countsData[, expressed_genes]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -508,11 +507,11 @@ AT1G01046          0          0           0           0           0           0<
 <p>Now that you have the filtered counts matrix and the design table, you can run DESeq2 by first creating the dataset object then running the function DESeq.</p>
 <p>Pay attention to always put your control samples at the beginning of the count matrix and the design table, as the first sample is taken as the control.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>deseq_dataset <span class="ot">=</span> <span class="fu">DESeqDataSetFromMatrix</span>(</span>
-<span id="cb11-2"><a></a>  <span class="at">countData =</span> counts_filtered,</span>
-<span id="cb11-3"><a></a>  <span class="at">colData =</span> design_matrix, <span class="co"># colData means data about the columns of the count matrix</span></span>
-<span id="cb11-4"><a></a>  <span class="at">design =</span> <span class="sc">~</span>Genotype <span class="co"># basically: expression in function of the genotype</span></span>
-<span id="cb11-5"><a></a>) <span class="sc">%&gt;%</span> <span class="fu">DESeq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>deseq_dataset <span class="ot">=</span> <span class="fu">DESeqDataSetFromMatrix</span>(</span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="at">countData =</span> counts_filtered,</span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="at">colData =</span> design_matrix, <span class="co"># colData means data about the columns of the count matrix</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>  <span class="at">design =</span> <span class="sc">~</span>Genotype <span class="co"># basically: expression in function of the genotype</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a>) <span class="sc">%&gt;%</span> <span class="fu">DESeq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="deseq2---note-on-designs" class="slide level2">
@@ -522,7 +521,7 @@ AT1G01046          0          0           0           0           0           0<
 <p>Because of this, the comparisons we are able to make are only <code>Genotype_x</code> vs <code>Genotype_Control</code>, we cannot compare <code>Genotype_x</code> against <code>Genotype_y</code></p>
 <p>Use <code>resultsNames</code> to see what comparisons are available</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">resultsNames</span>(deseq_dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">resultsNames</span>(deseq_dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Intercept"                     "Genotype_Mlp124499_vs_Control"
 [3] "Genotype_Mlp37347_vs_Control" </code></pre>
@@ -533,13 +532,13 @@ AT1G01046          0          0           0           0           0           0<
 <h2>DESeq2 - note (2) on designs</h2>
 <p>If we want to make all possible pairwise comparisons, we need to add a <code>0</code> to the design function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>deseq_dataset2 <span class="ot">=</span> <span class="fu">DESeqDataSetFromMatrix</span>(</span>
-<span id="cb14-2"><a></a>  <span class="at">countData =</span> counts_filtered,</span>
-<span id="cb14-3"><a></a>  <span class="at">colData =</span> design_matrix, </span>
-<span id="cb14-4"><a></a>  <span class="at">design =</span> <span class="sc">~</span><span class="dv">0</span> <span class="sc">+</span> Genotype <span class="co"># basically: expression in function of the genotype</span></span>
-<span id="cb14-5"><a></a>) <span class="sc">%&gt;%</span> <span class="fu">DESeq</span>()</span>
-<span id="cb14-6"><a></a></span>
-<span id="cb14-7"><a></a><span class="fu">resultsNames</span>(deseq_dataset2) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>deseq_dataset2 <span class="ot">=</span> <span class="fu">DESeqDataSetFromMatrix</span>(</span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="at">countData =</span> counts_filtered,</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="at">colData =</span> design_matrix, </span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="at">design =</span> <span class="sc">~</span><span class="dv">0</span> <span class="sc">+</span> Genotype <span class="co"># basically: expression in function of the genotype</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>) <span class="sc">%&gt;%</span> <span class="fu">DESeq</span>()</span>
+<span id="cb14-6"><a href="#cb14-6"></a></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="fu">resultsNames</span>(deseq_dataset2) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "GenotypeControl"   "GenotypeMlp124499" "GenotypeMlp37347" </code></pre>
 </div>
@@ -565,51 +564,49 @@ AT1G01046          0          0           0           0           0           0<
 <section id="deseq2---note-4-on-designs" class="slide level2">
 <h2>DESeq2 - note (4) on designs</h2>
 <p>If you have a time series experiment, then you need to add a “reduced” design in the <code>DESeq</code> function:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>deseq_dataset <span class="ot">=</span> <span class="fu">DESeqDataSetFromMatrix</span>(</span>
-<span id="cb16-2"><a></a>  <span class="at">countData =</span> counts_filtered,</span>
-<span id="cb16-3"><a></a>  <span class="at">colData =</span> design_matrix, </span>
-<span id="cb16-4"><a></a>  <span class="at">design =</span> <span class="sc">~</span>Genotype <span class="sc">+</span> Age <span class="sc">+</span> Genotype<span class="sc">:</span>Age</span>
-<span id="cb16-5"><a></a>) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-6"><a></a>  <span class="fu">DESeq</span>(<span class="at">test=</span><span class="st">"LRT"</span>, <span class="co"># likelyhood ratio test</span></span>
-<span id="cb16-7"><a></a>        <span class="at">reduced =</span> <span class="sc">~</span> Genotype <span class="sc">+</span> Age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>deseq_dataset <span class="ot">=</span> <span class="fu">DESeqDataSetFromMatrix</span>(</span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="at">countData =</span> counts_filtered,</span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="at">colData =</span> design_matrix, </span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="at">design =</span> <span class="sc">~</span>Genotype <span class="sc">+</span> Age <span class="sc">+</span> Genotype<span class="sc">:</span>Age</span>
+<span id="cb16-5"><a href="#cb16-5"></a>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-6"><a href="#cb16-6"></a>  <span class="fu">DESeq</span>(<span class="at">test=</span><span class="st">"LRT"</span>, <span class="co"># likelyhood ratio test</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>        <span class="at">reduced =</span> <span class="sc">~</span> Genotype <span class="sc">+</span> Age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="deseq2-results" class="slide level2">
 <h2>DESeq2 results</h2>
 <p>Now the main part of the analysis is done, we use the function <code>results</code> to access the results and inform the type of stats you want performed.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">resultsNames</span>(deseq_dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">resultsNames</span>(deseq_dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Intercept"                     "Genotype_Mlp124499_vs_Control"
 [3] "Genotype_Mlp37347_vs_Control" </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>name_result <span class="ot">=</span> <span class="fu">resultsNames</span>(deseq_dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>name_result <span class="ot">=</span> <span class="fu">resultsNames</span>(deseq_dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>By setting <code>name</code> below, we indicate which comparison we wish to analyse, the the <code>pAdjustMethod</code> is the way we wish to correct the multiple tests DESeq will do (one per gene).</p>
-<p>The result table is saved in a list, so we need to transform it to table (or tibble from tidyverse).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="co"># Remove the first element of name_result, since it is just the intercept</span></span>
-<span id="cb20-2"><a></a></span>
-<span id="cb20-3"><a></a>results_DESeq2 <span class="ot">&lt;-</span> </span>
-<span id="cb20-4"><a></a>  <span class="fu">lapply</span>(name_result[<span class="sc">-</span><span class="dv">1</span>], \(comparison) {</span>
-<span id="cb20-5"><a></a>    <span class="fu">results</span>(deseq_dataset, </span>
-<span id="cb20-6"><a></a>            <span class="at">name =</span> comparison,</span>
-<span id="cb20-7"><a></a>            <span class="at">pAdjustMethod =</span> <span class="st">"BH"</span>)<span class="sc">@</span>listData <span class="sc">%&gt;%</span></span>
-<span id="cb20-8"><a></a>      <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb20-9"><a></a>      <span class="fu">mutate</span>(</span>
-<span id="cb20-10"><a></a>        <span class="co"># We need to add the gene names</span></span>
-<span id="cb20-11"><a></a>        <span class="at">Gene_name =</span> <span class="fu">rownames</span>(counts_filtered),</span>
-<span id="cb20-12"><a></a>        <span class="co"># We classify the genes by deregulation</span></span>
-<span id="cb20-13"><a></a>        <span class="at">State =</span> <span class="fu">case_when</span>(</span>
-<span id="cb20-14"><a></a>          log2FoldChange <span class="sc">&lt;</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Down-regulated"</span>,</span>
-<span id="cb20-15"><a></a>          log2FoldChange <span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Up-regulated"</span>,</span>
-<span id="cb20-16"><a></a>          <span class="at">.default =</span> <span class="st">"equal"</span>),</span>
-<span id="cb20-17"><a></a>        <span class="co"># Indicate from which comparison the data comes from</span></span>
-<span id="cb20-18"><a></a>        <span class="at">Contrast =</span> comparison</span>
-<span id="cb20-19"><a></a>      )</span>
-<span id="cb20-20"><a></a>  }) <span class="sc">%&gt;%</span></span>
-<span id="cb20-21"><a></a>  <span class="fu">list_rbind</span>() </span>
-<span id="cb20-22"><a></a>  </span>
-<span id="cb20-23"><a></a><span class="fu">head</span>(results_DESeq2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># Remove the first element of name_result, since it is just the intercept</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a>results_DESeq2 <span class="ot">&lt;-</span> </span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">lapply</span>(name_result[<span class="sc">-</span><span class="dv">1</span>], \(comparison) {</span>
+<span id="cb20-5"><a href="#cb20-5"></a>    <span class="fu">results</span>(deseq_dataset, </span>
+<span id="cb20-6"><a href="#cb20-6"></a>            <span class="at">name =</span> comparison,</span>
+<span id="cb20-7"><a href="#cb20-7"></a>            <span class="at">pAdjustMethod =</span> <span class="st">"BH"</span>)<span class="sc">@</span>listData <span class="sc">%&gt;%</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a>      <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb20-9"><a href="#cb20-9"></a>      <span class="fu">mutate</span>(</span>
+<span id="cb20-10"><a href="#cb20-10"></a>        <span class="co"># We need to add the gene names</span></span>
+<span id="cb20-11"><a href="#cb20-11"></a>        <span class="at">Gene_name =</span> <span class="fu">rownames</span>(counts_filtered),</span>
+<span id="cb20-12"><a href="#cb20-12"></a>        <span class="co"># We classify the genes by deregulation</span></span>
+<span id="cb20-13"><a href="#cb20-13"></a>        <span class="at">State =</span> <span class="fu">case_when</span>(</span>
+<span id="cb20-14"><a href="#cb20-14"></a>          log2FoldChange <span class="sc">&lt;</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Down-regulated"</span>,</span>
+<span id="cb20-15"><a href="#cb20-15"></a>          log2FoldChange <span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Up-regulated"</span>,</span>
+<span id="cb20-16"><a href="#cb20-16"></a>          <span class="at">.default =</span> <span class="st">"equal"</span>),</span>
+<span id="cb20-17"><a href="#cb20-17"></a>        <span class="co"># Indicate from which comparison the data comes from</span></span>
+<span id="cb20-18"><a href="#cb20-18"></a>        <span class="at">Contrast =</span> comparison</span>
+<span id="cb20-19"><a href="#cb20-19"></a>      )</span>
+<span id="cb20-20"><a href="#cb20-20"></a>  }) <span class="sc">%&gt;%</span></span>
+<span id="cb20-21"><a href="#cb20-21"></a>  <span class="fu">list_rbind</span>() </span>
+<span id="cb20-22"><a href="#cb20-22"></a>  </span>
+<span id="cb20-23"><a href="#cb20-23"></a><span class="fu">head</span>(results_DESeq2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 9
   baseMean log2FoldChange lfcSE   stat     pvalue     padj Gene_name State      
@@ -624,16 +621,17 @@ AT1G01046          0          0           0           0           0           0<
 </div>
 </div>
 </section>
-<section id="simple-summary" class="slide level2">
-<h2>Simple summary</h2>
+<section>
+<section id="simple-summary" class="title-slide slide level1 center">
+<h1>Simple summary</h1>
 <ul>
 <li>How many genes are deregulated in each comparison?</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>results_DESeq2  <span class="sc">%&gt;%</span></span>
-<span id="cb22-2"><a></a>  <span class="fu">filter</span>(padj <span class="sc">&lt;</span> <span class="fl">0.01</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb22-3"><a></a>  <span class="fu">group_by</span>(Contrast) <span class="sc">%&gt;%</span></span>
-<span id="cb22-4"><a></a>  dplyr<span class="sc">::</span><span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>results_DESeq2  <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">filter</span>(padj <span class="sc">&lt;</span> <span class="fl">0.01</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">group_by</span>(Contrast) <span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
 # Groups:   Contrast [2]
@@ -648,10 +646,10 @@ AT1G01046          0          0           0           0           0           0<
 <li>How many genes are up and how many down-regulated?</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>results_DESeq2 <span class="sc">%&gt;%</span></span>
-<span id="cb24-2"><a></a>  <span class="fu">filter</span>(padj <span class="sc">&lt;</span> <span class="fl">0.01</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb24-3"><a></a>  <span class="fu">group_by</span>(Contrast, State) <span class="sc">%&gt;%</span></span>
-<span id="cb24-4"><a></a>  dplyr<span class="sc">::</span><span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>results_DESeq2 <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">filter</span>(padj <span class="sc">&lt;</span> <span class="fl">0.01</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">group_by</span>(Contrast, State) <span class="sc">%&gt;%</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
 # Groups:   Contrast, State [4]
@@ -681,12 +679,10 @@ AT1G01046          0          0           0           0           0           0<
 </ul></li>
 </ul>
 
-<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
 </div>
-</div>
-</section>
+</section></section>
     </div>
   </div>
 
@@ -713,6 +709,7 @@ AT1G01046          0          0           0           0           0           0<
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
+'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -898,80 +895,42 @@ AT1G01046          0          0           0           0           0           0<
       });
     </script>
     
-
     <script>
-
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
       // slide changes (different for each slide format).
-
       (function () {
-
         // dispatch for htmlwidgets
-
         function fireSlideEnter() {
-
           const event = window.document.createEvent("Event");
-
           event.initEvent("slideenter", true, true);
-
           window.document.dispatchEvent(event);
-
         }
-
-    
 
         function fireSlideChanged(previousSlide, currentSlide) {
-
           fireSlideEnter();
 
-    
-
           // dispatch for shiny
-
           if (window.jQuery) {
-
             if (previousSlide) {
-
               window.jQuery(previousSlide).trigger("hidden");
-
             }
-
             if (currentSlide) {
-
               window.jQuery(currentSlide).trigger("shown");
-
             }
-
           }
-
         }
-
-    
 
         // hookup for slidy
-
         if (window.w3c_slidy) {
-
           window.w3c_slidy.add_observer(function (slide_num) {
-
             // slide_num starts at position 1
-
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
           });
-
         }
 
-    
-
       })();
-
     </script>
-
-    
 
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -1049,27 +1008,10 @@ AT1G01046          0          0           0           0           0           0<
         // clear code selection
         e.clearSelection();
       });
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp("https:\/\/KarenGoncalves\.github\.io\/Programming_classes\/");
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-        }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
-            }
-          }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      function tippyHover(el, contentFn) {
         const config = {
           allowHTML: true,
+          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1079,17 +1021,8 @@ AT1G01046          0          0           0           0           0           0<
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start',
+          placement: 'bottom-start'
         };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
@@ -1103,11 +1036,7 @@ AT1G01046          0          0           0           0           0           0<
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
-          }
+          return note.innerHTML;
         });
       }
       const findCites = (el) => {
