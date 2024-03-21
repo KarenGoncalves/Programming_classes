@@ -1,6 +1,7 @@
 {
-  "hash": "9c2f485a6224b9f357ebbd212ca2fd9a",
+  "hash": "ed6d5fe368d5075bc25153d71949dcbb",
   "result": {
+    "engine": "knitr",
     "markdown": "---\ntitle: \"Getting help\"\nauthor: \"Karen C. Goncalves dos Santos\"\ncallout-appearance: simple\ndate: \"1 October 2023\"\nformat: html\ncategories:\n  - \"R basics\"\n  - Help\n---\n\n<style>\ncode{\n\tfont-size:1.1em;\n\tcolor:yellow;\n\tbackground-color:#2b2b2b;\n\tborder-radius:.25rem;\n\tpadding:.125rem .25rem;\n\tword-wrap:break-word\n}\n\ncode span {font-size: 1.1em}\ncode span.fu {color: yellow}\n\n</style>\n\n\n## Using `help` and `?function_name` \n\n\nYou can get help about a package or function with the function `help()`. Just put the quoted name of the package/function inside the parenthesis.\n\nYou can also just use a question mark in front of the package/function name (no quote needed in this case)\n\n``` {.r}\nhelp(\"grep\")\n?grepl\n\nhelp(\"stats\")\n?base\n```\n",
     "supporting": [],
     "filters": [
