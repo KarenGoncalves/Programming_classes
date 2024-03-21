@@ -216,6 +216,10 @@ resultsNames(deseq_dataset)
 name_result = resultsNames(deseq_dataset)
 ```
 
+By setting `name` below, we indicate which comparison we wish to analyse, the the `pAdjustMethod` is the way we wish to correct the multiple tests DESeq will do (one per gene). 
+
+The result table is saved in a list, so we need to transform it to table (or tibble from tidyverse).
+
 ```{r}
 # Remove the first element of name_result, since it is just the intercept
 
@@ -242,7 +246,7 @@ results_DESeq2 <-
 head(results_DESeq2)
 ```
 
-# Simple summary
+## Simple summary
 
 - How many genes are deregulated in each comparison?
 
