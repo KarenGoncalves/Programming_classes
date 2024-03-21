@@ -584,6 +584,8 @@ AT1G01046          0          0           0           0           0           0<
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>name_result <span class="ot">=</span> <span class="fu">resultsNames</span>(deseq_dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>By setting <code>name</code> below, we indicate which comparison we wish to analyse, the the <code>pAdjustMethod</code> is the way we wish to correct the multiple tests DESeq will do (one per gene).</p>
+<p>The result table is saved in a list, so we need to transform it to table (or tibble from tidyverse).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="co"># Remove the first element of name_result, since it is just the intercept</span></span>
 <span id="cb20-2"><a></a></span>
@@ -622,9 +624,8 @@ AT1G01046          0          0           0           0           0           0<
 </div>
 </div>
 </section>
-<section>
-<section id="simple-summary" class="title-slide slide level1 center">
-<h1>Simple summary</h1>
+<section id="simple-summary" class="slide level2">
+<h2>Simple summary</h2>
 <ul>
 <li>How many genes are deregulated in each comparison?</li>
 </ul>
@@ -685,7 +686,7 @@ AT1G01046          0          0           0           0           0           0<
 
 </div>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 
