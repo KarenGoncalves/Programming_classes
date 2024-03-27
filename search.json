@@ -553,207 +553,249 @@
     "text": "The dataset\nThe input file is the table Arabidopsis_counts.csv.\ncounts = read.csv(\"https://karengoncalves.github.io/Programming_classes/exampleData/Arabidopsis_counts.csv\",\n                  header = T, row.names = 1)\nThis file has 12 columns (3 samples * 4 replicates) and 32833 rows (one per gene).\nSamples are aerial tissue of Arabidopsis thaliana ecotype Col-0, harvested at 14 days post germination, with Basta (glyphosate) resistance gene and:\n\nControl: GFP under the 35S promoter\nMlp37347 and Mlp124499: a candidate effector gene (Mlp37347 or Mlp124499 from the fungus Melampsora larici-populina) tagged with GFP under the 35S promoter"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#packages",
-    "href": "r/MSA_phylogenetic_trees/index.html#packages",
-    "title": "Multiple sequence alignment and phylogenetic trees",
+    "objectID": "r/Packages_Functions/index.html#be-lazy",
+    "href": "r/Packages_Functions/index.html#be-lazy",
+    "title": "R class - packages and functions",
+    "section": "Be lazy!",
+    "text": "Be lazy!\nThe most certain way to make mistakes when programming is typing everything.\nThink of when you are writing a text, how many typos do you make? This will happen when you are coding!\nRealizing there are typos or bigger mistakes in your code is more difficult than in a text to a friend.\nSo, be lazy and copy/paste codes when possible.\n\nAlso, don’t try to re-invent the wheel. Check on stack-overflow, bioconductor or github to see if other people already tried what you are doing and the solutions they came up with. You can always edit their code!"
+  },
+  {
+    "objectID": "r/Packages_Functions/index.html#packages",
+    "href": "r/Packages_Functions/index.html#packages",
+    "title": "R class - packages and functions",
     "section": "Packages",
-    "text": "Packages\nBefore, we installed packages with the code below\npkgs = c(\"rmarkdown\", \"tidyverse\", \"venn\")\npkgs.To.Install = which(! pkgs %in% installed.packages())\nif (length(pkgs.To.Install) != 0) install.packages(pkgs[pkgs.To.Install])\nfor (curPkg in pkgs) library(curPkg, character.only = T) \nHowever, most packages for bioinformatics are not downloadable with a simple install.packages, as they are not stored in CRAN, the basic website for R packages.\nInstead, they are in Bioconductor, and some are in specific github repositories (think about the R_class_examples)."
+    "text": "Packages\nThese are simply folders containing files with many functions.\nThey may contain data so you can test the functions.\nHow to use packages\n\nInstallLoadAdvanced install and load\n\n\nIf you never used the package, it probably is not installed in your computer, so you need to use the function “install.packages”\ninstall.packages(\"vegan\") # a package with functions for multivariate stats functions\n\n# You can install many packages at once\ninstall.packages(c(\"venn\", \"tidyverse\"))\n\n\ninstall.packages just installs the package, but it does not load it (open in R). To load, use the function library\nlibrary(cluster)\nlibrary(\"tidyverse\") # you do not need the quotes with the function library\n\n\n\n\n\n\nYou cannot put multiple package names in the library function You need to load them one by one\n\n\n\n\n\nCome back to this part once you are more comfortable with programming.\nYou cannot put a vector (ie. c(\"a\", \"b\", \"c\")) inside library(), but you can write a code that loads the packages one by one without you writing that manually.\n# start by creating a vector with all the packages you need\npkgs = c(\"rmarkdown\", \"tidyverse\", \"venn\")\n\n# We check which packages are NOT (!) installed\npkgs.To.Install = ! pkgs %in% installed.packages()\n\n# any() checks if there is at least one TRUE in the vector\nif (any(pkgs.To.Install)) install.packages(pkgs[pkgs.To.Install])\n\nfor (curPkg in pkgs) library(curPkg, character.only = T) \n# curPkg is a variable that takes the value of each element in pkgs\n# Every time the function library() is run, curPkg changes value"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#installing-packages-from-other-sources",
-    "href": "r/MSA_phylogenetic_trees/index.html#installing-packages-from-other-sources",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "Installing packages from other sources",
-    "text": "Installing packages from other sources\n\nBioconductor packagesGithub packagesSimplified install\n\n\nFor these, we use the package BiocManager.\nif (!require(\"BiocManager\", quietly = TRUE))\n    install.packages(\"BiocManager\")\npkgs.bioconductor = c(\"msa\", \"Biostrings\")\npkgs.To.Install = which(! pkgs.bioconductor %in% installed.packages())\nif (length(pkgs.To.Install) != 0) {\n    BiocManager::install(pkgs.bioconductor[pkgs.To.Install])    \n}\n\n\n\n\n\n\nIn BiocManager::install, the :: indicates that the function install comes from the package BiocManager.\nSo even if there is another package with the same function, R will know which one to use.\n\n\n\n\n\n\n\n\n\n\n\nGithub is a website that has folders for each user, and each user may have multiple folders: one for each project. Example, in:\n\nhttps://github.com/KarenGoncalves/R_class_examples\n\nKarenGoncalves/ is my folder in the website, in there I have over 20 folders, one for each project.\nR_class_examples is one of them.\n\n\n\n\n\nif (! \"devtools\" %in% installed.packages()) {\n    install.packages(\"devtools\")\n}\n\nrepos.github = c(\"YuLab-SMU/ggmsa\")\npkgs.github = gsub(\".+/\", \"\", repos.github) # remove the folder name\npkgs.To.Install = which(! pkgs.github %in% installed.packages())\n\nif (length(pkgs.To.Install) != 0) {\n    # To install the package, we need the folder + package name\n    devtools::install_github(repos.github[pkgs.To.Install]) \n}\n\n\nCopy the code below to load all the necessary packages.\nIn future, just come back here, copy the code below and change the list of packages.\n\ndevtools::source_gist(\"https://gist.github.com/KarenGoncalves/0db105bceff4ff69547ee25460dda978\")\n\ninstall_from_dif_sources(\n    cran_packages = c(\"tidyverse\", \"tinytex\", \"patchwork\"),\n    bioconductor_packages = c(\"Biostrings\", \"msa\", \"treeio\", \"ggtree\", \"ape\", \"seqinr\", \"phangorn\"),\n    github_packages = \"YuLab-SMU/ggmsa\"\n)\n\n\n\n\n\n\n\nThe link https://gist.github.com/KarenGoncalves/0db105bceff4ff69547ee25460dda978 contains the R script that creates functions to load the packages from different sources: CRAN (the typical source), Bioconductor and github.\nSo you just need to give the link to the function devtools::source_gist() and then you can use the function install_from_dif_sources"
+    "objectID": "r/Packages_Functions/index.html#loops",
+    "href": "r/Packages_Functions/index.html#loops",
+    "title": "R class - packages and functions",
+    "section": "loops",
+    "text": "loops\nLet’s create a function and a vector of elements that we will use in the function\n\nthesisDefense = function(x) {return(paste(\"Ph.D.\", x))}\ncandidates = c(\"Serge\", \"Fadoua\", \"Arghavan\", \n           \"Snehi\", \"Basanta\", \"Sajjad\", \n           \"Mahsa\", \"Archana\")\n\n\n\nfor\n\nFunction that will repeat what you ask for everything in the group you give it. Eg: every PhD candidate has to defend their theses: - Useful when you do not want to save the results or when you need to save separated objects for each elements in the loop (each candidate below)\n\n\n\nfor (phd in candidates) { thesisDefense(phd) }\n\n\n\n\n# To see an output, we would have to either print it or create an object to save it\ndefenseResults = c()\nfor (phd in candidates) { defenseResults[phd] = thesisDefense(phd) }\ndefenseResults\n\n           Serge           Fadoua         Arghavan            Snehi \n   \"Ph.D. Serge\"   \"Ph.D. Fadoua\" \"Ph.D. Arghavan\"    \"Ph.D. Snehi\" \n         Basanta           Sajjad            Mahsa          Archana \n \"Ph.D. Basanta\"   \"Ph.D. Sajjad\"    \"Ph.D. Mahsa\"  \"Ph.D. Archana\" \n\n\n\n\n\napply functions\n\nSimilar to for, but generates an output\nUseful when you want a single output for each element of the loop\nSeveral options: apply, sapply, lapply, mapply, vapply\n\n\n\ndefenseResults = sapply(candidates, \\(phd) thesisDefense(phd) )\n\ndefenseResults\n\n\n\n           Serge           Fadoua         Arghavan            Snehi \n   \"Ph.D. Serge\"   \"Ph.D. Fadoua\" \"Ph.D. Arghavan\"    \"Ph.D. Snehi\" \n         Basanta           Sajjad            Mahsa          Archana \n \"Ph.D. Basanta\"   \"Ph.D. Sajjad\"    \"Ph.D. Mahsa\"  \"Ph.D. Archana\""
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#a-note-about-classes",
-    "href": "r/MSA_phylogenetic_trees/index.html#a-note-about-classes",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "A note about classes",
-    "text": "A note about classes\nR objects (the things in the environment tab) belong to different classes. The basic ones you already know:\n\nvectors have one dimension and data inside has to be all the same type: character vector; numeric vector; factor vector\nmatrices: vectors, but with columns and rows\ndata.frames: table made of vectors (columns) of the same size\nlists: anything goes! If the objects stored in it have names, you can access them like list$object_name, as if the object inside was a column of a table\n\n\nTo check the class of an object you can use:\nclass(object)\n\n\nA package may create it’s own object class. Sometimes you need to convert an object from one class to another, like:\n\n(numeric_vector &lt;- 1:10)\n\n [1]  1  2  3  4  5  6  7  8  9 10\n\nclass(numeric_vector)\n\n[1] \"integer\"\n\n(character_vector &lt;- as.character(numeric_vector)) # change class\n\n [1] \"1\"  \"2\"  \"3\"  \"4\"  \"5\"  \"6\"  \"7\"  \"8\"  \"9\"  \"10\"\n\nclass(character_vector)\n\n[1] \"character\"\n\n\n\n\nSo, just remember that, if a function starts with as., it is changing the class of the object."
+    "objectID": "r/Packages_Functions/index.html#tidyverse---many-packages-that-make-your-life-easier",
+    "href": "r/Packages_Functions/index.html#tidyverse---many-packages-that-make-your-life-easier",
+    "title": "R class - packages and functions",
+    "section": "Tidyverse - many packages that make your life easier",
+    "text": "Tidyverse - many packages that make your life easier\nWhen you load the package “tidyverse”, it tells you that it loaded many others (packages from the universe tidy)\n\nTables and data.frames\n\ndplyr: many functions to work with tables\ntibble: construct data frames (tables)\ntidyr: tools to better organize data (make it tidyier)\nreadr: fast and friendly functions to read table data\n\nText-like data\n\nforcats: (anagram of factors) tools to work with factors (tutorial)\nstringr: work with text (character variables)\nlubridate: work with dates\n\nPlots\n\nggplot2: create better plots\n\nProgramming\n\npurrr: functional programming in R (cheatsheet)"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#reading-and-writing-fasta-files",
-    "href": "r/MSA_phylogenetic_trees/index.html#reading-and-writing-fasta-files",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "Reading and writing fasta files",
-    "text": "Reading and writing fasta files\nIf you have protein sequences in a fasta file, copy it to your inputs folder, else use the following: Reductases.fasta\n\n# To open a fasta file with multiple sequences, use the function readDNAStringSet() or readAAStringSet()\nfasta_input = \"https://karengoncalves.github.io/Programming_classes/exampleData/Reductases.fasta\" %&gt;%\n    readAAStringSet(format = \"fasta\")\nhead(fasta_input)\n\nAAStringSet object of length 6:\n    width seq                                               names               \n[1]   318 MATENKILILGPTGAIGRHIVWA...IEASEAYPDVTYTTADEYLNQFV IFR Medicago sativa\n[2]   330 MAAGFLFHMGSLPAIATVGHKSK...GEATKLYPEVGYTTVVEYMKRYV PILR2 Linum usita...\n[3]   598 MVGSIVGSNMAATDARFLSSNFG...VAHLPDKANNYLTPALSVLEKNT HC173 Arabidopsis...\n[4]   323 MTTGKGKILILGATGYLGKYMVK...EYLKICLVNPPKPKLATYAQPST IGS1 Petunia hybrida\n[5]   314 MEENGMKSKILIFGGTGYIGNHM...FTTIDELLDIFVHDPPPPASAAF EGS1 Ocimum basil...\n[6]   310 MVASEKSKILIIGGTGYIGKYLV...VEATELYPKVKYTTVDEFYNKFV IFRH Nicotiana gl...\n\n# If you want to select just one or two sequences and export it, you can do:\nwriteXStringSet(fasta_input[1:3], \n        filepath = \"input_subset.fasta\", \n        format = \"fasta\")"
+    "objectID": "r/Packages_Functions/index.html#pipe-or",
+    "href": "r/Packages_Functions/index.html#pipe-or",
+    "title": "R class - packages and functions",
+    "section": "Pipe (|> or %>%)",
+    "text": "Pipe (|&gt; or %&gt;%)\nThink of the pipe as a tube connecting two functions. When the first function is done, instead of presenting its output, you use it to start a new function.\n\nEg. To start a postdoc, I had to finish my Ph.D: phd(\"Karen\") %&gt;% postdoc\n\n\n\n\n\n\n\nIf you use |&gt;, you need to put the parenthesis in the function in front of it. Meaning:\n\nphd(\"Karen\") %&gt;% postdoc works same as phd(\"Karen\") %&gt;% postdoc() and phd(\"Karen\") |&gt; postdoc()\nphd(\"Karen\") |&gt; postdoc does not work\n\n\n\n\nLet’s say you just want to check if R will read your file right or if you need to add more things to it before really working on the file.\n\nExerciseSolution 1Solution 2\n\n\nRun the function str on your input file or on the example from Class 0\n\n\n\n\n\n\nYou can load files from the internet without needing to download them to your computer!\n\n\n\n\n\n\n# You could first put the path to the file in a variable, it would make things easier\nmyFile = \"https://karengoncalves.github.io/Programming_classes/exampleData/Class1_exampleData.txt\"\n\nstr(read.delim(myFile))\n\n'data.frame':   8 obs. of  7 variables:\n $ X        : chr  \"A\" \"B\" \"C\" \"D\" ...\n $ Control_1: num  0.1229 0.0907 0.1068 0.0161 0.1533 ...\n $ Control_2: num  0.827 0.11 0.469 0.359 0.462 ...\n $ Control_3: num  0.1486 0.3352 0.2419 0.0933 0.9419 ...\n $ Treated_1: num  0.086 0.1403 0.1132 0.0271 0.3284 ...\n $ Treated_2: num  0.3145 0.2441 0.2793 0.0352 0.0909 ...\n $ Treated_3: num  0.22 0.433 0.326 0.107 0.316 ...\n\n\n\n\nUsing pipe, you can see the progression of the pipeline, eg.: bachelor(\"Karen\") %&gt;% phd() %&gt;% postdoc instead of postdoc(phd(bachelor(\"Karen\")))\nBasically, the first function written is the first one used, not the last.\n# You can also use a pipe ( %&gt;% )\nmyFile = \"https://karengoncalves.github.io/Programming_classes/exampleData/Class1_exampleData.txt\"\n\nread.delim(myFile) %&gt;% str"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#multiple-sequence-alignment-msa",
-    "href": "r/MSA_phylogenetic_trees/index.html#multiple-sequence-alignment-msa",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "Multiple Sequence Alignment (MSA)",
-    "text": "Multiple Sequence Alignment (MSA)\nMake things easy for yourself later, add the names of the parameters of each function so you know what you need to put next time.\n\nThere are 4 functions for MSA:\n\nmsaClustalW - ClustalW is a general purpose multiple alignment program for DNA or proteins. 1\n\ncluster parameter can be either Neighbor Joining (\"nj\") or Unweighted Pair Group Method with Arithmetic mean (\"upgma\")\n\nDo not use \"upgma\" if you are on windows and your R version is 4.x (x being any number) - R crashes\n\n\nmsaClustalOmega - New MSA tool that uses seeded guide trees and HMM profile-profile techniques to generate alignments. Suitable for medium-large alignments.2\n\ndefault substitutionMatrix: \"Gonnet\"; other options: \"BLOSUM30\", \"BLOSUM40, \"BLOSUM50\", \"BLOSUM65\" and \"BLOSUM80\".\n\nmsaMuscle - Accurate MSA tool, especially good with proteins. Suitable for medium alignments.2\n\ncluster parameter can be either NJ (\"neighborjoining\") or UPGMA (\"upgma\") - UPGMA gives better results 3\n\nmsa - you can set the method with the argument method or just put the sequences and use the default (\"Clustalw\") (other options: \"ClustalOmega\", \"Muscle\")\n\nAdd verbose = T so that the parameters used are printed to the screen and you can take note for your publications."
+    "objectID": "r/Packages_Functions/index.html#readxl-package---open-excel-files",
+    "href": "r/Packages_Functions/index.html#readxl-package---open-excel-files",
+    "title": "R class - packages and functions",
+    "section": "readxl package - open excel files",
+    "text": "readxl package - open excel files\nPart of the tidyverse package\nAllows you to:\n\nCheck the names of the sheets of an excel file: excel_sheets(MY_EXCEL_FILE)\nRead sheets of an excel file as tibbles (a type of data.frame):\n\nread_excel(file = MY_EXCEL_FILE, sheet = MY_SHEET)\nYou can specify what defines NA: read_excel(file = MY_EXCEL_FILE, sheet = MY_SHEET, na = \".\")\nInstead of header = T, you use col_names = T\nYou can specify the number of rows to skip in the beginning with skip = N\nYou can specify the number of rows to read with n_max = N\nYou can specify which cols and rows to read with range = \"H40:T80\"\n\nIf range is specified, skip and n_max are ignored\nYou can include the name of the sheet: range = \"MY_SHEET!H40:T80\"\n\nSHEET EXCLAMATION_POINT CELL_RANGE"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#running-msa",
-    "href": "r/MSA_phylogenetic_trees/index.html#running-msa",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "Running MSA",
-    "text": "Running MSA\n\n# The dataset used as example has 48 sequences, we will subset it for the alignment, selecting only 10\nfasta_for_alignment &lt;- fasta_input[1:10]\n# use ?msa to know what you need to put in the function and what the default values are\nmyFirstAlignment &lt;- msa(fasta_for_alignment, \n            method = \"ClustalOmega\",\n            verbose = T\n)\n\nparams: clustalo --R -o tempClustalOmega.aln --outfmt=clustal --seqtype=protein --force --gapopen=6.000000 --gapext=1.000000 --cluster-size=100 --iter=0 --output-order=tree-order\nusing Gonnet\n\nmyFirstAlignment\n\nClustalOmega 1.2.0 \n\nCall:\n   msa(fasta_for_alignment, method = \"ClustalOmega\", verbose = T)\n\nMsaAAMultipleAlignment with 10 rows and 780 columns\n     aln                                                   names\n [1] -------------------------...------------------------- 5BPOR Digitalis l...\n [2] -------------------------...----------ATYAQPST------- IGS1 Petunia hybrida\n [3] -------------------------...----------AAF------------ EGS1 Ocimum basil...\n [4] -------------------------...------------------------- PILR2 Linum usita...\n [5] -------------------------...------------------------- IFR Medicago sativa\n [6] -------------------------...------------------------- IFRH Nicotiana gl...\n [7] MVGSIVGSNMAATDARFLSSNFGNS...ELVAHLPDKANNYLTPALSVLEKNT HC173 Arabidopsis...\n [8] -------------------------...------------------------- ADH1 Catharanthus...\n [9] -------------------------...------------------------- ADH1 Euphorbia la...\n[10] -------------------------...------------------------- ADRC1 Arabidopsis...\n Con -------------------------...------------------------- Consensus \n\n\n\n\n\n\n\n\nVisualizing the result\n\n\nJust calling the MSA result will not show the whole alignment. For that you can use print()\nprint(myFirstAlignment, show = \"complete\", showConsensus = T)"
+    "objectID": "r/Packages_Functions/index.html#ggplot2",
+    "href": "r/Packages_Functions/index.html#ggplot2",
+    "title": "R class - packages and functions",
+    "section": "ggplot2",
+    "text": "ggplot2\n\nExerciseSolution 1Solution 2Solution 3\n\n\nCreate a colored boxplot with the dataset iris, with nice axes titles\n\n\nCode from the previous class\n\ncolors = c(\"red\", \"green\", \"blue\")\nboxplot(Sepal.Length ~ Species, \n    data = iris, col = colors, \n    ylab = \"Sepal length (mm)\", xlab = \"Species epithet\")\n\n\n\n\n\n\nUse ggplot. The syntax may take a while to get used to, but it is easier to read.\n\n# aes is short for aesthetics, basically what columns hold the values you want to plot\n# fill is the color that will be inside the box, color is just for the border\nggplot(data = iris,\n       aes(x = Species,\n           y = Sepal.Length,\n           fill = Species)) +\n    geom_boxplot() + # the type of plot you want\n    ylab(\"Sepal length (mm)\") +\n    xlab(\"Species epithet\")\n\n\n\n\n\n\nImprove ggplot by setting a better theme (check here see the options)\n\n# Set a theme for all future plots in this session\ntheme_set(theme_bw()) \n\n# Use different colors to fill and remove the legend\ncolors = c(\"red\", \"green\", \"blue\")\n\nggplot(data = iris,\n       aes(x = Species,\n           y = Sepal.Length,\n           fill = Species)) +\n    geom_boxplot(show.legend = F) + # the type of plot you want\n    ylab(\"Sepal length (mm)\") +\n    xlab(\"Species epithet\") +\n    scale_fill_manual(values = colors)"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#use-ggmsa-for-visualization",
-    "href": "r/MSA_phylogenetic_trees/index.html#use-ggmsa-for-visualization",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "Use ggmsa for visualization",
-    "text": "Use ggmsa for visualization\nTo see the alignment as a plot, we can use ggmsa.\n\n\n\n\n\n\nWe need to change the type of object of the alignment result, as ggmsa only accepts \"AAMultipleAlignment\" objects\n\n\n\n\n# The original result is of class MsaAAMultipleAlignment\nmyFirstAlignment2 &lt;- myFirstAlignment # keep the original, make a copy to modify it\nclass(myFirstAlignment2) &lt;-  \"AAMultipleAlignment\"\n\n# We will plot only a part of the alignment - from the AA 220 to the AA 250 - so it is visible \nggmsa(myFirstAlignment2, \n      start = 220, end = 250, \n      seq_name = T)\n\n\n\n# We can see also the consensus highlighted\nggmsa(myFirstAlignment2, \n      start = 220, end = 250, \n      seq_name = T, consensus_views = T)\n\n\n\n# Remove the # below if you want to save the figure\n#ggsave(\"First_alignment_consensus_220_250.tiff\")"
+    "objectID": "r/Packages_Functions/index.html#ggplot---part-2",
+    "href": "r/Packages_Functions/index.html#ggplot---part-2",
+    "title": "R class - packages and functions",
+    "section": "ggplot - part 2",
+    "text": "ggplot - part 2\nGraphics are layers of data and images put on top of each other. That is why the pieces of the ggplot function are connected by a +.\nThe codes below construct the plot from the previous slide piece by piece.\n\nBasic plotDecorations\n\n\n\n# Set a theme for all future plots in this session\ntheme_set(theme_bw()) \n\n# Use different colors to fill and remove the legend\n(plot1 = ggplot(data = iris,\n       aes(x = Species,\n           y = Sepal.Length,\n           fill = Species)))\n\n\n\n\n\n(plot2 = plot1 +\n    geom_boxplot(show.legend = F)) # the type of plot you want\n\n\n\n\n\n\nlabs adds labels:\n\nx and y - will add the labels to the axes (you can use the functions xlab or ylab instead)\ntitle - Normally at the top of the figure (you can use the function ggtitle instead)\nsubtitle - Goes under the title and is a bit smaller\ncaption - Normally goes at the bottom of the figure and is a small text\ntag - the letter that goes at the top-left corner of a plot that is one part of several in a figure\n\n\n(plot3 = plot2 +\n    labs(y = \"Sepal length (mm)\", x = \"Species epithet\"))\n\n\n\nplot3\n\n\n\n\n\ncolors = c(\"red\", \"green\", \"blue\")\n\nplot3 + scale_fill_manual(values = colors)"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#more-ggmsa-options",
-    "href": "r/MSA_phylogenetic_trees/index.html#more-ggmsa-options",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "More ggmsa options",
-    "text": "More ggmsa options\n\nResidue sizeSeqLogoConsensus as bar graph\n\n\nWe can set the width of the characters (use char_width = #), so the residues are not so big\n\nggmsa(myFirstAlignment2, \n      start = 220, end = 250, \n      seq_name = T, char_width = 0.5)\n\n\n\n\n\n\nA seqlogo is a plot with letters on top of each other representing their frequency at each position in the alignment. The bigger a letter, the more frequent it is at a given position.\n\nWe can add this plot with + geom_seqlogo()\n\nyou can use different color schemes with geom_seqlogo(color = #)1\nyou can set your color scheme with geom_seqlogo(custom_color = data.frame)1\n\n\n\nggmsa(myFirstAlignment2, \n      start = 220, end = 250, \n      seq_name = T, char_width = 0.5) + \n    geom_seqlogo() \n\n\n\n# Note that the gaps are also represented in the seqlogo!\n\n\n\n\n\n\n\n1 Check the options with ?geom_seqlogo\n\n\n\n\n\n\nggmsa(myFirstAlignment2, \n      start = 220, end = 250, \n      seq_name = T, char_width = 0.5) + \n    geom_seqlogo() +\n    geom_msaBar()"
+    "objectID": "r/Packages_Functions/index.html#dplyr-prepare-your-data-for-ggplot",
+    "href": "r/Packages_Functions/index.html#dplyr-prepare-your-data-for-ggplot",
+    "title": "R class - packages and functions",
+    "section": "dplyr: prepare your data for ggplot",
+    "text": "dplyr: prepare your data for ggplot\nIn the example dataset, the names of the groups are in the middle not specified, they are inside the replicate name. We need one column with the values and one with the names of the treatments.\n\nInput dataPivot-longerNew columnPlot\n\n\n\nmyFile = \"https://karengoncalves.github.io/Programming_classes/exampleData/Class1_exampleData.txt\"\n\n\nrawData = read.delim(myFile)\nnames(rawData)\n\n[1] \"X\"         \"Control_1\" \"Control_2\" \"Control_3\" \"Treated_1\" \"Treated_2\"\n[7] \"Treated_3\"\n\n# Let's change x to \"Measured\"\nnames(rawData)[1] = \"Measured\"\n\n\n\nThe table now is in the format “wide”, the one we want is called “long”\n\nlongData = pivot_longer(\n    data = rawData,\n    cols = !Measured, # gets all the columns of the table, except for the one in front of !\n    names_to = \"Replicates\", # name of the column that will contain column names from rawData\n    values_to = \"Measurements\"\n    )\n\nstr(longData)\n\ntibble [48 × 3] (S3: tbl_df/tbl/data.frame)\n $ Measured    : chr [1:48] \"A\" \"A\" \"A\" \"A\" ...\n $ Replicates  : chr [1:48] \"Control_1\" \"Control_2\" \"Control_3\" \"Treated_1\" ...\n $ Measurements: num [1:48] 0.123 0.827 0.149 0.086 0.314 ...\n\n\n\n\nLet’s split the values from “Replicates” using str_split from stringr\nmutate will return the input table with the new column we create\n\n# pattern is what separates (_)\n# i is the part that we want to see: Control_1 has 2 pieces, i=1 returns \"Control\"\n\nlongDataTreatments = longData %&gt;%\n    mutate(Treatment = str_split_i(Replicates, pattern = \"_\", i = 1))\n\nstr(longDataTreatments)\n\ntibble [48 × 4] (S3: tbl_df/tbl/data.frame)\n $ Measured    : chr [1:48] \"A\" \"A\" \"A\" \"A\" ...\n $ Replicates  : chr [1:48] \"Control_1\" \"Control_2\" \"Control_3\" \"Treated_1\" ...\n $ Measurements: num [1:48] 0.123 0.827 0.149 0.086 0.314 ...\n $ Treatment   : chr [1:48] \"Control\" \"Control\" \"Control\" \"Treated\" ...\n\n\n\n\n\nlongDataTreatments %&gt;%\n    ggplot(aes(x = Treatment, y = Measurements, fill = Measured)) +\n    geom_boxplot()\n\n\n\nlongDataTreatments %&gt;%\n    ggplot(aes(x = Measured, y = Measurements, fill = Treatment)) +\n    geom_boxplot()"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#make-a-phylogenetic-tree",
-    "href": "r/MSA_phylogenetic_trees/index.html#make-a-phylogenetic-tree",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "Make a phylogenetic tree",
-    "text": "Make a phylogenetic tree\nLearn what is necessary to make a tree, how to read it and what conclusions you can and cannot draw from them.\n\nSequences used for the tree are the leaves/tips.\nThe point where the tree starts (the center if it is circular, or the first tip to separate from the rest of the tree) is the root\nThe lines drawing the tree are the branches/edges.\nGoing from the leaves to the root, the point where two branches connect is called a node"
+    "objectID": "r/Packages_Functions/index.html#types-of-plots---sample-distribution",
+    "href": "r/Packages_Functions/index.html#types-of-plots---sample-distribution",
+    "title": "R class - packages and functions",
+    "section": "Types of plots - sample distribution",
+    "text": "Types of plots - sample distribution\n\nBoxplot - check this slide\n\ngeom_boxplot\nAllows the visual comparison of groups, like a bar chart, as well as the distribution of the replicates\n\nYou can see the minimum, maximum and the median of the sample, as well as the outliers\n\n\nViolin plot\n\ngeom_violin\nSame as boxplot, but without the quantiles drawn\n\n\n\n\n\n\n\n\nYou can put different types of plot and multiple data in the same graphic.\nOver the violin or boxplot layer, you can add the points representing the value measured for each replicate, the mean, etc.\n\n\n\n\n\n\n\n\n\nIf you have few replicates (&lt; 5), use a barplot with the standard deviation (make sure the color of the bar allows the visualization of the error bar)\nIf many replicates per group, use a boxplot or violin plot."
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#compute-the-distance-matrix",
-    "href": "r/MSA_phylogenetic_trees/index.html#compute-the-distance-matrix",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "Compute the distance matrix",
-    "text": "Compute the distance matrix\nWe will use ape and seqinr to create a tree from the alignment. But we need to, again, transform the type of object we got from the msa.\nThen we calculate a distance matrix.\n\n\n\n\n\n\nA distance matrix shows how different each sequence is from the others. It has as many rows as columns, since every sequence is compared to the others.\n\nIts diagonal is all 0s, since the difference between a sequence and itself is 0.\nThe other rows and columns are values that indicate the amount of mismatches between two sequences. The greater the number, the less similar the two sequences are.\n\n\n\n\n\n# We need to first export the alignment and import it again to transform it \nmyFirstAlignment3 &lt;- \n    myFirstAlignment %&gt;% as.phyDat()\n\n# Then, we create a distance matrix\ndistance_alignment &lt;- \n    dist.ml(x = myFirstAlignment3, \n        model = \"Blosum62\")"
+    "objectID": "r/Packages_Functions/index.html#example-violin-plot",
+    "href": "r/Packages_Functions/index.html#example-violin-plot",
+    "title": "R class - packages and functions",
+    "section": "Example violin plot",
+    "text": "Example violin plot\nThe code to get a violin plot is the same as the one for a boxplot, the only difference is the geom_violin.\n\n# Set a theme for all future plots in this session\ntheme_set(theme_bw()) \n\n# Use different colors to fill and remove the legend\ncolors = c(\"red\", \"green\", \"blue\")\n\nggplot(data = iris,\n       aes(x = Species,\n           y = Sepal.Length,\n           fill = Species)) +\n    geom_violin(show.legend = F) + # violin instead of boxplot\n    ylab(\"Sepal length (mm)\") +\n    xlab(\"Species epithet\") +\n    scale_fill_manual(values = colors)"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#tree-computation",
-    "href": "r/MSA_phylogenetic_trees/index.html#tree-computation",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "Tree computation",
-    "text": "Tree computation\nThen, we use the distance matrix to compute the tree, joining sequences most similar, then joining groups of sequences. Each method of computing will do this joining differently.\n\nnjbionjfastmeUPGMA/WPGMA\n\n\nThis function performs the neighbor-joining tree estimation of Saitou and Nei (1987).\n\nnj(X = distance_alignment) %&gt;% plot(main = \"ape::nj()\")\n\n\n\nnj(X = distance_alignment) %&gt;% \n    plot(main = \"phangorn::NJ()\")\n\n\n\n\n\n\nThis function performs the BIONJ algorithm of Gascuel (1997).\n\nbionj(X = distance_alignment) %&gt;% plot(main = \"ape::bionj\")\n\n\n\nUNJ(distance_alignment) %&gt;% plot(main = \"phangorn::UNJ\")\n\n\n\n\n\n\nThe two FastME (fast minimum evolution) functions (balanced - bal - and ordinary least-squares - ols) perform the minimum evolution algorithm of Desper and Gascuel (2002).\n\nfastme.bal(distance_alignment) %&gt;% plot(main = \"FastME BAL\")\n\n\n\nfastme.ols(distance_alignment) %&gt;% plot(main = \"FastME OLS\")\n\n\n\n\n\n\n\nUPGMA: uses the function hclust (hierarchical clustering) with method = \"average\", then transforms the dendrogram into the class phylo.\nWPGMA: uses the function hclust with method = \"mcquitty\", then transforms the dendrogram into the class phylo.\n\nRun ?hclust then look the section “Details”: the methods are explained with more details with references.\n\nupgma(distance_alignment) %&gt;% plot(main = \"UPGMA\")\n\n\n\nwpgma(distance_alignment) %&gt;% plot(main = \"WPGMA\")"
+    "objectID": "r/Packages_Functions/index.html#types-of-plots---bar-chart",
+    "href": "r/Packages_Functions/index.html#types-of-plots---bar-chart",
+    "title": "R class - packages and functions",
+    "section": "Types of plots - Bar chart",
+    "text": "Types of plots - Bar chart\n\nWhat and howgeom_colgeom_bar(stat = \"identity\")Pie chart\n\n\n\nUses\n\nVisually compare means when the number of replicates is low\nVisually compare counts (number of occurences) - number of students per lab\n\nHow\n\nUse either geom_col or geom_bar(stat = \"identity\")\nAdd standard deviation bar with geom_errorbar\n\ngeom_errorbar(aes(ymin=Mean-sd, ymax=Mean+sd), width=.2)\n\n\n\n\n\n\ndf &lt;- data.frame(\n  group = c(\"Male\", \"Female\", \"Child\"),\n  value = c(25, 25, 50)\n  )\n\n# Barplot like geom_col\nggplot(df, aes(x = group, y = value, fill = group)) +\n    geom_col(width = 1)\n\n\n\n\n\n\n\nidentity means that the size of the bar will be the value you put instead of calculating something\n\n\ndf &lt;- data.frame(\n  group = c(\"Male\", \"Female\", \"Child\"),\n  value = c(25, 25, 50)\n  )\n\n# Barplot like geom_col\nggplot(df, aes(x = group, y = value, fill = group)) +\n    geom_bar(width = 1,  stat = \"identity\")\n\n\n\n\n\n\n\nUsing either geom_bar or geom_col, you can make a pie chart with + coord_polar(\"y\")\n\n\ndf &lt;- data.frame(\n  group = c(\"Male\", \"Female\", \"Child\"),\n  value = c(25, 25, 50)\n  )\n\n# Barplot like geom_col\nggplot(df, aes(x = \"\", y = value, fill = group)) +\n    # x has to be \"\" - check how it looks if you put x = group\n    geom_bar(width = 1,  stat = \"identity\") +\n    coord_polar(\"y\", start = 1) +\n    theme_void() # clean up grids, borders, and labels"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#customizing-the-plot",
-    "href": "r/MSA_phylogenetic_trees/index.html#customizing-the-plot",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "Customizing the plot",
-    "text": "Customizing the plot\nWe can use dplyr to separate protein and species names.\n\nGet the treePrepare the labelsPlot the labels\n\n\n\nupgma_tree &lt;- upgma(distance_alignment)\n# We save the tree in a object so we can access the leaf labes with $tip.label\n\n\n\nWe will use a function called parse to italicize only the species name. It evaluates the text and executes functions inside it! Example, in:\n\"'TYDC '~italic('Narcissus pseudonarcissus')\"\nThe texts 'TYDC ' and 'Narcissus pseudonarcissus' (in italic) are joined by the symbol ~.\nIn this case, the protein name has just letters and numbers and is at the start of the sequence name, followed by the species name. So we can use gsub to create the label we want.\n\nSeqnames_tree &lt;- \n    gsub(\"(\\\\w+) (.+)\", \n         \"'\\\\1 '~italic('\\\\2')\",\n         upgma_tree$tip.label)\nupgma_tree$tip.label &lt;- Seqnames_tree\n\n\n\n\n\n\n\nCheck the result before plotting. See that your result looks like the example with TYDC above, as you need to use both double and single quotes.\n\n\n\n\n\n\nggtree(upgma_tree) +\n    # use geom_tiplab to plot the seqnames\n    # add parse = T so R executes the function inside the text\n    geom_tiplab(parse = T) +\n    xlim(c(0, 2)) \n\n\n\n    # the upper x limit may change depending on the length of your labels, play around until you get the whole label but little empty space"
+    "objectID": "r/Packages_Functions/index.html#types-of-plot---proportions",
+    "href": "r/Packages_Functions/index.html#types-of-plot---proportions",
+    "title": "R class - packages and functions",
+    "section": "Types of plot - proportions",
+    "text": "Types of plot - proportions\nYou can use geom_bar(stat = \"count\") if you do not have the number of occurrences of each category computed. This way, ggplot counts it and plots. - Eg. A table with metabolites detected separated by category: how many metabolites of each category were detected?\nIf you want proportions in %, use stat = \"density\" instead of stat = \"count\"\n\ngeom_bar - count\n\n\n\nWith geom_bar, you can have the same plot as with geom_col if you use stat = \"identity\"\nidentity means that the size of the bar will be the value you put instead of calculating something\n\n\n# Datasets about US states\nUS_statesInfo = data.frame(Name = state.name,\n               Region = state.region,\n               Division = state.division)\nx = \"Number of states\"\n# Plot the number of states in each division\nggplot(US_statesInfo, aes(y = Division)) +\n    geom_bar(stat = \"count\") +\n    xlab(x)\n\n\n\n# Plot the number of states in each region\nggplot(US_statesInfo, aes(y = Region)) +\n    geom_bar() +\n    xlab(x)\n\n\n\n# Plot the number of states in each division, and color by the region\nggplot(US_statesInfo, aes(y = Division, fill = Region)) +\n    geom_bar(stat = \"count\") +\n    xlab(x)"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#more-customization",
-    "href": "r/MSA_phylogenetic_trees/index.html#more-customization",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "More customization",
-    "text": "More customization\nLet’s say you want to add bars marking different groups in a tree, like the vertical bars marking the clades in the figure below (Figure 3 in Hori et al. 2006):"
+    "objectID": "r/Packages_Functions/index.html#types-of-plots---part-3",
+    "href": "r/Packages_Functions/index.html#types-of-plots---part-3",
+    "title": "R class - packages and functions",
+    "section": "Types of plots - part 3",
+    "text": "Types of plots - part 3\nLine graph - geom_line\n\nVisualize data across time - points are connected because they are the same sample at different times.\n\nLet’s say we want to see how the labs of 2 PIs have grown across the years and compare the two.\n\n# Let's create a time series to plot\n\nLabSize = data.frame(Isabel = c(0, 3, 5, 10, 30),\n             Hugo = c(2, 2, 6, 9, 9),\n             Year = seq(2014, 2022, 2))\nLabSize.Long = pivot_longer(LabSize,\n                cols = !Year, # all columns from LabSize, except \"Year\"\n                names_to = \"PI\", \n                values_to = \"LabMembers\")\n\nggplot(LabSize.Long, \n       aes(x = Year, y = LabMembers, color = PI)) +\n    geom_line()"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#highlight-important-nodes",
-    "href": "r/MSA_phylogenetic_trees/index.html#highlight-important-nodes",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "Highlight important nodes",
-    "text": "Highlight important nodes\n\nIdentify the nodesMark groupsHighlight groups\n\n\nJust as we added the names of the leaves, we can add the names of the nodes with geom_text(aes(label=node))\nWe may need to play around with the hjust, which goes after aes(), inside geom_text()\n\nggtree(upgma_tree) +\n    geom_text(aes(label = node), hjust = -.2) +\n    geom_tiplab(parse = T, hjust = -.15) +\n    xlim(c(0, 2))\n\n\n\n\n\n\nIn our example tree, there are 2 main groups: nodes 12 and 13. We can use the functiongeom_cladelabel to mark each one\n\n\n\n\n\n\nThere is also geom_cladelab, but you cannot change the color of the text with it\n\n\n\n\nggtree(upgma_tree) +\n    # we do not need the line below anymore\n    #geom_text(aes(label = node), hjust = -.2) +\n    geom_tiplab(parse = T) +\n    geom_cladelabel(node = 12, label = \"Node 12\",\n            color = \"red\", offset = 1) +\n    geom_cladelabel(node = 13, label = \"Node 13\",\n            color = \"green4\", offset = 1,\n            barsize = 2) +\n    xlim(c(0, 2.5))\n\n\n\n\n\n\nYou can draw a rectangle around the node and its branches using geom_highlight\n\nggtree(upgma_tree) +\n    # we do not need the line below anymore\n    #geom_text(aes(label = node), hjust = -.2) +\n    geom_tiplab(parse = T) +\n    geom_highlight(node = 12,\n               fill = \"red\") +\n    # change the transparency of the rectangle with alpha\n    geom_cladelabel(node = 13, label = \"Node 13\",\n            color = \"green4\", offset = 1,\n            barsize = 2) +\n    xlim(c(0, 2.5))"
+    "objectID": "r/Packages_Functions/index.html#advanced-line-graph",
+    "href": "r/Packages_Functions/index.html#advanced-line-graph",
+    "title": "R class - packages and functions",
+    "section": "Advanced line graph",
+    "text": "Advanced line graph\n\nInputPrepare the dataLine chartCalculate statsLine chart with error bars\n\n\nWe will use the time series data\n\n# Load the data\ntimeSeries.File = \"https://karengoncalves.github.io/Programming_classes/exampleData/TimeSeries_example.csv\"\ntimeSeries = read.csv(timeSeries.File)\n\n\nstr(timeSeries)\n\n'data.frame':   12 obs. of  10 variables:\n $ X           : chr  \"Day_1\" \"Day_2\" \"Day_3\" \"Day_4\" ...\n $ Control_3   : num  0 1.96 3.98 6.18 7.52 ...\n $ Control_2   : num  0 2.04 4.02 6 8 ...\n $ Control_1   : num  0 2 4 5.82 8.48 ...\n $ TreatmentA_1: num  0 2.94 6.03 8.73 12 ...\n $ TreatmentA_2: num  0 3 6 9.27 11.28 ...\n $ TreatmentA_3: num  0 3.06 5.97 9 12.72 ...\n $ TreatmentB_3: num  0 1.53 3 4.5 6.36 ...\n $ TreatmentB_2: num  0 1.47 2.98 4.37 5.64 ...\n $ TreatmentB_1: num  0 1.5 3.02 4.63 6 ...\n\n# Let's rename the first column that indicate the time points\nnames(timeSeries)[1] = \"TimePoint\" \ntimeSeries$TimePoint = \n    gsub(\"Day_\", \"\", timeSeries$TimePoint) |&gt;\n    as.numeric()\n\n\n\nLet’s transform the data to format long and add a column with the name of the treatment group\n\nlibrary(tidyverse)\n\ntimeSeriesLong = pivot_longer(\n    timeSeries,\n    cols = !TimePoint, \n    names_to = c(\"Treatment\", \"Replicates\"),\n    names_sep = \"_\",\n    values_to = \"Growth_measure\"\n)\n\nhead(timeSeriesLong)    \n\n# A tibble: 6 × 4\n  TimePoint Treatment  Replicates Growth_measure\n      &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;\n1         1 Control    3                       0\n2         1 Control    2                       0\n3         1 Control    1                       0\n4         1 TreatmentA 1                       0\n5         1 TreatmentA 2                       0\n6         1 TreatmentA 3                       0\n\n\n\n\n\nggplot(timeSeriesLong) +\n    geom_line(aes(x = TimePoint, y = Growth_measure, \n              group = Treatment, \n              color = Treatment)) +\n    scale_x_continuous(breaks = 1:12)\n\n\n\n\n\n\nNow let’s create another table with the mean, standard deviation and coefficient of variation of each treatment per time point\n\nGrowthMeasureStats = timeSeriesLong %&gt;%\n    group_by(Treatment, TimePoint) %&gt;%\n    summarise(\n        Mean = mean(Growth_measure),\n        StdEnv = sd(Growth_measure)\n    )\n\n\n\nFor the error bars, we cannot simply say “here, this is the standard deviation”.\nWe need to tell it “use this value as maximum and this as minimum”\nSee that we set “ymin” and “ymax”. If you have standard deviation for the x-axis, you can add it with “xmin” and “xmax”.\n\n# We put inside ggplot() what is common to all layers\np1 = ggplot(GrowthMeasureStats, \n       aes(x = TimePoint, \n           color = Treatment)) +\n    geom_line(aes(y = Mean)) \np1 \n\n\n\np1 + geom_errorbar(aes(ymin = Mean - StdEnv,\n               ymax = Mean + StdEnv),\n           width = 0.2) +\n    scale_x_continuous(breaks = 1:12)"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#statistical-support",
-    "href": "r/MSA_phylogenetic_trees/index.html#statistical-support",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "Statistical support",
-    "text": "Statistical support\nThe statistical support on phylogenetic trees is calculated with bootstrap. In simple terms, bootstrap is repetition. In more complicated terms, the tree computation (including the calculation of the distance matrix) is repeated n times1, and the result shows the proportion of times the node appeared.\nIf out of 1000 times, a given group appears 100 times, its support is 10%.\n1 n is determined by the number of sequences you are working with.\n\nn is the number of times the calculation was repeated, so it includes the first time. That is why you may see it reported as ‘bootstrap was performed with 999 replicates’ (plus the original tree calculation, you get 1 000 replicates)\nAlthough more is better, using n=10 000 for a tree of 10 sequences is overkill and may take too much time to calculate.\nThe most typical n used (for &lt; 50 sequences in a tree) is 999"
+    "objectID": "r/Packages_Functions/index.html#test-if-the-curves-are-different",
+    "href": "r/Packages_Functions/index.html#test-if-the-curves-are-different",
+    "title": "R class - packages and functions",
+    "section": "Test if the curves are different",
+    "text": "Test if the curves are different\n\nLinear model (regression)Check which curves are different\n\n\n\n# Create the linear model of Growth_measure ~ TimePoint, adding the Treatment interaction\nlinear.model = lm(Growth_measure ~ TimePoint*Treatment, data = timeSeriesLong)\nsummary(linear.model)\n\n\nCall:\nlm(formula = Growth_measure ~ TimePoint * Treatment, data = timeSeriesLong)\n\nResiduals:\n   Min     1Q Median     3Q    Max \n -1.80  -0.06   0.00   0.06   1.80 \n\nCoefficients:\n                              Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)                   -2.00000    0.14189 -14.095  &lt; 2e-16 ***\nTimePoint                      2.00000    0.01928 103.740  &lt; 2e-16 ***\nTreatmentTreatmentA           -1.00000    0.20066  -4.984 2.56e-06 ***\nTreatmentTreatmentB            0.50000    0.20066   2.492   0.0143 *  \nTimePoint:TreatmentTreatmentA  1.00000    0.02726  36.678  &lt; 2e-16 ***\nTimePoint:TreatmentTreatmentB -0.50000    0.02726 -18.339  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.3993 on 102 degrees of freedom\nMultiple R-squared:  0.9979,    Adjusted R-squared:  0.9978 \nF-statistic:  9800 on 5 and 102 DF,  p-value: &lt; 2.2e-16\n\n\n\n\n\ninstall.packages(\"lsmeans\"); library(\"lsmeans\")\n\npackage 'lsmeans' successfully unpacked and MD5 sums checked\n\nThe downloaded binary packages are in\n    C:\\Users\\Karen\\AppData\\Local\\Temp\\RtmpEjEd3Q\\downloaded_packages\n\n\n\nlinear.model.trends &lt;- lstrends(linear.model, \"Treatment\", var=\"TimePoint\")\nsummary(linear.model.trends)\n\n Treatment  TimePoint.trend     SE  df lower.CL upper.CL\n Control                2.0 0.0193 102     1.96     2.04\n TreatmentA             3.0 0.0193 102     2.96     3.04\n TreatmentB             1.5 0.0193 102     1.46     1.54\n\nConfidence level used: 0.95 \n\npairs(linear.model.trends)\n\n contrast                estimate     SE  df t.ratio p.value\n Control - TreatmentA        -1.0 0.0273 102 -36.678  &lt;.0001\n Control - TreatmentB         0.5 0.0273 102  18.339  &lt;.0001\n TreatmentA - TreatmentB      1.5 0.0273 102  55.016  &lt;.0001\n\nP value adjustment: tukey method for comparing a family of 3 estimates"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#bootstrap-support",
-    "href": "r/MSA_phylogenetic_trees/index.html#bootstrap-support",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "Bootstrap support",
-    "text": "Bootstrap support\nLet’s consider that we want to use upgma to calculate our tree and we want to calculate the support of the branches.\n\nComputationTree preparationPlotExport\n\n\nWe use the function bootstrap.phyDat the same way we use sapply: using this dataset, perform this set of functions.\n\nupgma_tree &lt;- myFirstAlignment3 |&gt;\n    dist.ml() |&gt; upgma()\nbs_upgma &lt;- bootstrap.phyDat(\n    myFirstAlignment3, \n    bs = 100, \\(x){\n        dist.ml (x) |&gt; upgma()\n    })\n\nbs_plot &lt;- plotBS(upgma_tree, bs_upgma)\n\n\n\n# The data stored in bs_plot is exactly what we need for ggtree\n\n\n\nSince this is a new file, we need to correct the sequence names again.\nWe also set a threshold for bootstrap. Only values passing the threshold are shown.\n\nbs_plot2 &lt;- bs_plot\n\n# We correct the sequence names\nSeqnames_tree &lt;- \n    gsub(\"(\\\\w+) (.+)\", \n         \"'\\\\1 '~italic('\\\\2')\",\n         bs_plot$tip.label)\nbs_plot2$tip.label &lt;- Seqnames_tree\n\n# Bootstrap threshold\nbs_threshold &lt;- 50\nbs_plot2$node.label &lt;- \n    ifelse(bs_plot$node.label &lt; bs_threshold,\n           \"\", bs_plot$node.label)\n\n\n\n\nggtree(bs_plot2) +\n    geom_tiplab(parse = T) +\n    geom_highlight(node = 12,\n               fill = \"red\") +\n    geom_nodelab(nudge_x = 0.03) +\n    # we use nudge_x to move the label away from the branches\n    xlim(c(0, 1.5))\n\n\n\n\n\n\nWe export the trees to a newick (.nwk) file\nThis format is readable by any program working with trees.\n\nwrite.tree(bs_upgma, file = \"bootstrap_upgma_trees.nwk\")"
+    "objectID": "r/Packages_Functions/index.html#references",
+    "href": "r/Packages_Functions/index.html#references",
+    "title": "R class - packages and functions",
+    "section": "References",
+    "text": "References\n\nAll tidyverse packages\nTutorials on all types of plots with ggplot2\n\nr-statistics\nCedric Scherer - advanced\n\nTutorials on data manipulation with dplyr\n\nTidyverse\nR official\nGenomics class"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#resources",
-    "href": "r/MSA_phylogenetic_trees/index.html#resources",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "Resources",
-    "text": "Resources\n\nMultiple sequence alignment in R - msa\nape: phylogenetic trees\nggmsa\nggtree\nphangorn"
+    "objectID": "r/Packages_Functions/index.html#code-from-class",
+    "href": "r/Packages_Functions/index.html#code-from-class",
+    "title": "R class - packages and functions",
+    "section": "Code from class",
+    "text": "Code from class\nTuesdays group\n\nSeptember 19th\nSeptember 19th (2)\nOctober 3rd\nOctober 10th\nOctober 17th\n\nFridays group\n\nSeptember 15th\nSeptember 29th\nOctober 6th\nOctober 19th"
   },
   {
-    "objectID": "r/MSA_phylogenetic_trees/index.html#aminoacid-substitution-models-for-dist.ml",
-    "href": "r/MSA_phylogenetic_trees/index.html#aminoacid-substitution-models-for-dist.ml",
-    "title": "Multiple sequence alignment and phylogenetic trees",
-    "section": "Aminoacid substitution models for dist.ml()",
-    "text": "Aminoacid substitution models for dist.ml()\n\n‘BLOSUM62’\n‘WAG’\n‘JTT’\n‘LG’\n‘Dayhoff’\n‘cpREV’\n‘VT’\n‘rtREV’\n‘Dayhoff_DCMut’and ’JTT_DCMut’\n\nSpecific\n\nMitochondrial\n\n‘mtmam’\n‘mtzoa’\n‘mtREV24’\nArthropoda: ‘mtart’\nHIV: ‘HIVb’ and ‘HIVw’"
+    "objectID": "r/Get_read_counts/index.html#data-processing-before-r",
+    "href": "r/Get_read_counts/index.html#data-processing-before-r",
+    "title": "Get read counts",
+    "section": "Data processing before R",
+    "text": "Data processing before R\nShort read sequencing transcriptomic data (in the form of fastq files, sometimes compressed as fastq.gz) pass through the some steps before we can proceed to analysis shown in this class.\nThe pre-processing is typically done in servers (unix/bash language) and includes:\n\nQuality assessment and filtering\nIN THE ABSENCE OF A REFERENCE: Transcriptome assembly\nRead alignment/mapping\nSorting and indexing\n\n\nThe things shown in this class are for alignments onto reference genomes."
   },
   {
-    "objectID": "r/DEA/index.html#the-dataset",
-    "href": "r/DEA/index.html#the-dataset",
-    "title": "Differential expression analysis",
-    "section": "The dataset",
-    "text": "The dataset\nThe input file is the table Arabidopsis_counts.csv.\ncounts = read.csv(\"https://karengoncalves.github.io/Programming_classes/exampleData/Arabidopsis_counts.csv\",\n                  header = T, row.names = 1)\nThis file has 12 columns (3 samples * 4 replicates) and 32833 rows (one per gene).\nSamples are aerial tissue of Arabidopsis thaliana ecotype Col-0, harvested at 14 days post germination, with Basta (glyphosate) resistance gene and:\n\nControl: GFP under the 35S promoter\nMlp37347 and Mlp124499: a candidate effector gene (Mlp37347 or Mlp124499 from the fungus Melampsora larici-populina) tagged with GFP under the 35S promoter"
+    "objectID": "r/Get_read_counts/index.html#things-to-know",
+    "href": "r/Get_read_counts/index.html#things-to-know",
+    "title": "Get read counts",
+    "section": "Things to know",
+    "text": "Things to know\n\nKeep track how many reads passed the quality filtering and how many were mapped.\nIn the case of a new assembly, you can follow steps on TrinityRNASeq wiki for transcript quantification.\nIs it possible to do all the processing in R? YES\n\nIs it worth it? …\n\nWhat you will do in R is use it to connect to another program that will do the job. So you end up using more memory (computer gets slower, takes a lot of time).\nSome programs are not available for windows, so you may install all the packages necessary just to learn that you cannot use them."
   },
   {
-    "objectID": "r/DEA/index.html#create-design-table---part-1",
-    "href": "r/DEA/index.html#create-design-table---part-1",
-    "title": "Differential expression analysis",
-    "section": "Create design table - part 1",
-    "text": "Create design table - part 1\nThe design table explains to R what each column is:\n\nControl or treatment\nWild-type or mutant\nFrom place X or place Y.\nHarvested at time 0, 1, 2, 3…\n\nBasically, you need first one column with the rows containing the same values as the column names of the count matrix.\n\ndesign_matrix = data.frame(Replicates = names(counts))\n\nThen, you need one (or more) columns that indicate the sample that replicate comes from."
+    "objectID": "r/Get_read_counts/index.html#data-processing-before-r---detail",
+    "href": "r/Get_read_counts/index.html#data-processing-before-r---detail",
+    "title": "Get read counts",
+    "section": "Data processing before R - detail",
+    "text": "Data processing before R - detail\n\nQuality assessment and filtering:\n\nfastp (last update: 2023); fastqc (last update: 2023) followed by trimmomatic (last update: 2021)\n\nCreation of a reference transcriptome:\n\ntrinity (last update: 2023); SOAPdenovo-Trans (last update: 2022); Trans-ABySS (last update: 2018); Oases (last update: 2015); Velvet (last update: 2014)\n\nRead alignment/mapping:\n\nAlignment - finds the exact origin of the reads and their differences compared to the reference (like blasting each read against a genome or transcriptome). It is slow - each alignment may take hours depending on the amount of data and size of the reference. These export SAM or BAM files, requiring indexing (step 4):\n\nbowtie2 (last update: 2024); STAR (last update: 2023); HISAT2 (last update: 2020); bwa (last update: 2017); TOPHAT2 (last update: 2016)\n\nPseudoalignment/Mapping - hyper fast - each alignment takes minutes. They only give the genomic/transcriptomic origin of each read. These export the read count tables directly:\n\nSalmon (last update: 2023); Kallisto (last update: 2019)\n\n\nIf the aligner provides the result as SAM or not sorted by genomic coordinates, use samtools view to sort and export into sorted BAM. Then use samtools index to get the bai files.\n\nIn the end, you should have 2 files per sample/replicate: sampleX_repY_Aligned.sortedByCoord.out.bam and sampleX_repY_Aligned.sortedByCoord.out.bam.bai\n\n\n\nNote that if you only want to perform differential expression analysis, GO term enrichment, etc, you do not need to perform read alignment, just mapping suffices."
   },
   {
-    "objectID": "r/DEA/index.html#create-design-table---part-2",
-    "href": "r/DEA/index.html#create-design-table---part-2",
-    "title": "Differential expression analysis",
-    "section": "Create design table - part 2",
-    "text": "Create design table - part 2\nNote that you separate things in the columns, eg. you harvested different tissues at different time points, you would need a design table with three columns: Replicates, tissue_type and Time_point.\nIn this case, the genotypes of the plants is part of their name (just remove the _# to get it):\n\ndesign_matrix = design_matrix %&gt;%\n  mutate(Genotype = gsub(\"_\\\\d+$\", \"\", \n                         # replace the underscore and digits at the end of the text \n                         # with nothing\n                         Replicates))\n\nhead(design_matrix)\n\n  Replicates Genotype\n1  Control_1  Control\n2  Control_2  Control\n3  Control_3  Control\n4  Control_4  Control\n5 Mlp37347_1 Mlp37347\n6 Mlp37347_2 Mlp37347"
+    "objectID": "r/Get_read_counts/index.html#data-processing-before-r---code-example",
+    "href": "r/Get_read_counts/index.html#data-processing-before-r---code-example",
+    "title": "Get read counts",
+    "section": "Data processing before R - code example",
+    "text": "Data processing before R - code example\nThe code below executes the 2 commands of the program STAR: the creation of the index of the genome and the alignment.\nThe texts within ${} are variable that should be created before hand. This ${r1/_R1.fastq} means “remove _R1.fastq” from ${r1} (like a gsub)\n# Note that the adapter sequences depend on the type of sequencer\nfastp -i ${raw_R1} -I ${raw_R2}\\\n -o ${r1} -O ${r2}\\\n --qualified_quality_phred 20\\\n --unqualified_percent_limit 30\\\n --adapter_sequence=TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG\\\n --adapter_sequence_r2=GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG\\\n --cut_front --cut_front_window_size 3\\\n --cut_right --cut_right_window_size 4\\\n --cut_right_mean_quality 15\\\n --length_required 25\\\n --html $DIR/fastpReports/${r1/_R1.fastq}.html\\\n --thread 8 \n\n# Let's decide if we want to map or align\nMODE=\"align\"\n\nif [[ $MODE == \"align\" ]]; then\n  STAR\\\n   --runThreadN ${NCPUS}\\\n   --runMode genomeGenerate\\\n   --genomeDir ${genomeIdxDIR}\\\n   --genomeFastaFiles ${genomeFastaFiles}\\\n   --sjdbGTFfile ${genomeGTFFile}\\\n   --sjdbOverhang ${readLength}\n   \n  STAR --genomeDir ${indexDIR}/\\\n   --runThreadN ${NCPUS} \\\n   --readFilesIn ${DIR}/clean_reads/${r1} ${DIR}/clean_reads/${r2} \\\n   --outFileNamePrefix ${DIR}/alignments/${r1/_R1.fastq}_\\\n   --outSAMtype BAM SortedByCoordinate \\\n   --outSAMunmapped Within\n\nelse\n  kallisto index -i ${genomeIdxDIR} ${genomeFastaFiles}\n  kallisto quant -i ${genomeIdxDIR}\\\n   -o ${DIR}/alignments/${r1/_R1.fastq}\\\n    ${DIR}/clean_reads/${r1}\\\n    ${DIR}/clean_reads/${r2}\nfi"
   },
   {
-    "objectID": "r/DEA/index.html#filtering-read-counts",
-    "href": "r/DEA/index.html#filtering-read-counts",
-    "title": "Differential expression analysis",
-    "section": "Filtering read counts",
-    "text": "Filtering read counts\nNot all genes in a genome will be expressed in a study (even one with many conditions and developmental stages), since some need very specific conditions to be expressed. Check for example the gene AT1G01046 (row 5)\n\ncounts[5,]\n\n          Control_1 Control_2 Control_3 Control_4 Mlp37347_1 Mlp37347_2\nAT1G01046         0         0         0         0          0          0\n          Mlp37347_3 Mlp37347_4 Mlp124499_1 Mlp124499_2 Mlp124499_3 Mlp124499_4\nAT1G01046          0          0           0           0           0           0\n\n\n\nSimple filterComplex filter\n\n\nWe can clean up the data, removing genes that are not expressed ever in our experiment. In theory, genes not expressed will have read count == 0 in all samples.\n\ngenes_not_expressed = rowSums(counts) == 0\ngenes_not_expressed %&gt;% which() %&gt;% length()\n\n[1] 5632\n\n# We keep only rows that are FALSE in the variable genes_not_expressed\ncounts_filtered = counts[ !genes_not_expressed, ]\n\n\n\nAnother way of filtering weakly expressed genes would be with the functions DAFS from the “KarenGoncalves/CustomSelection” package.\nThe function gives you the minimum expression level accepted per replicate (based on the sequencing depth), from there you can filter out the genes that are expressed at a level lower than that threshold.\nYou will need the count matrix and a named vector with the length of each gene.\n# The first thing you do convert the read counts to TPM (transcripts per million):\ntpm = Counts_to_tpm(counts=counts, featureLength=length)[[1]]\n\n# Then you calculate the minimum expression level\ncutv = DAFS(tpm=tpm) # value given as log2 TPM\n# Calculate the mean minimum expression level and convert it to TPM\nmin_expr_level = mean(cutv) ^ 2 \n\n# Now to filter the weakly expressed genes,\n# Remove the ones that are expressed below the min_expr_level\nexpressed_genes = apply(tpm, 1, mean) &gt; min_expr_level\ncounts_filtered = countsData[, expressed_genes]"
+    "objectID": "r/Get_read_counts/index.html#installing-the-packages",
+    "href": "r/Get_read_counts/index.html#installing-the-packages",
+    "title": "Get read counts",
+    "section": "Installing the packages",
+    "text": "Installing the packages\nIf you use the a reference genome for which the annotation is available in Ensembl, you can create your transcript (or 5’/3’-UTR) database while you are waiting for the alignment of your reads.\nFor this, we need the packages “GenomicFeatures”, “GenomicAlignments”, “biomaRt”, “tidyverse”.\n\nbioconductor_pkgs = c(\"GenomicFeatures\", \"GenomicAlignments\", \"biomaRt\", \"Rsamtools\")\ncran_pkgs = \"tidyverse\"\n\ndevtools::source_gist(\"https://gist.github.com/KarenGoncalves/0db105bceff4ff69547ee25460dda978\")\n\ninstall_from_dif_sources(\n    cran_packages = cran_pkgs,\n    bioconductor_packages = bioconductor_pkgs\n)"
   },
   {
-    "objectID": "r/DEA/index.html#deseq2---main-analysis",
-    "href": "r/DEA/index.html#deseq2---main-analysis",
-    "title": "Differential expression analysis",
-    "section": "DESeq2 - main analysis",
-    "text": "DESeq2 - main analysis\nNow that you have the filtered counts matrix and the design table, you can run DESeq2 by first creating the dataset object then running the function DESeq.\nPay attention to always put your control samples at the beginning of the count matrix and the design table, as the first sample is taken as the control.\n\ndeseq_dataset = DESeqDataSetFromMatrix(\n  countData = counts_filtered,\n  colData = design_matrix, # colData means data about the columns of the count matrix\n  design = ~Genotype # basically: expression in function of the genotype\n) %&gt;% DESeq()"
+    "objectID": "r/Get_read_counts/index.html#setting-up-the-scene",
+    "href": "r/Get_read_counts/index.html#setting-up-the-scene",
+    "title": "Get read counts",
+    "section": "Setting up the scene",
+    "text": "Setting up the scene\nThere are several biomarts (databases) stored in different Ensembl pages.\n\nbiomartsSelecting a biomart datasetCreating the transcript databaseWhole script\n\n\n\nThere is a bacteria Ensembl, but there is not a biomart for it\n\n\nAnimals\n\nhost: \"https://ensembl.org\"\nmart: \"ENSEMBL_MART_ENSEMBL\" (currently on version 111)\n\nPlants\n\nhost: \"https://plants.ensembl.org\"\nmart: \"plants_mart\" (currently on version 58)\n\nFungi\n\nhost: \"https://fungi.ensembl.org\"\nmart: \"fungi_mart\" (currently on version 58)\n\nProtists\n\nhost: \"https://protists.ensembl.org\"\nmart: \"protists_mart\" (currently on version 58)\n\n\nThere are other biomarts in the each Ensembl. You can check their names and versions with\n\nhost = \"https://plants.ensembl.org\"\nlistMarts(host = host)\n\n            biomart                      version\n1       plants_mart      Ensembl Plants Genes 58\n2 plants_variations Ensembl Plants Variations 58\n\n\n\n\nNext thing you need is the name of the dataset.\nYou can check the ones available by running:\n\nmart = useMart(host = host, biomart = \"plants_mart\")\nlistDatasets(mart) # this is a table, so we can filter it\n\n\n# If I am working with Arabidopsis thaliana, I can search for it with filter\nlistDatasets(mart) %&gt;%\n  filter(grepl(\"Arabidopsis thaliana\", description))\n\n            dataset                         description version\n1 athaliana_eg_gene Arabidopsis thaliana genes (TAIR10)  TAIR10\n\n# Now I know I have to use the dataset \"athaliana_eg_gene\"\n\n\n\nNow we have all the data we need, we set our variables:\n# Edit the following based on what you need\nbiomart = \"plants_mart\"\ndataset = \"athaliana_eg_gene\"\nprefix = \"ensembl_\"\nhost = \"https://plants.ensembl.org\"\n\n# The result will be saved as a .RData object, so we do not recalculate this every time.\ndir = \"./\" # current directory\noutputPath = paste0(dir, \"Arabidopsis_TxDb.RData\")\nThen we create a Transcript DataBase (txdb) from Biomart:\n# Following takes a while (a few minutes), so it is better to calculate this once than export the result\nTxDb &lt;- makeTxDbFromBiomart(biomart = biomart,\n                            dataset = dataset,\n                            id_prefix = prefix,\n                            host = host)\n\n# TxDb is a weird type of data, difficult to access, so we get the information on the transcripts with the function transcriptsBy\ntx &lt;- transcriptsBy(TxDb,\"gene\")\n\n# Then we save the two databases into the Rdata object.\nsave(TxDb, tx, file = outputPath)\n\n\nIf you want to use the script we worked on here, just copy it below and change the section “VARIABLES” to fit your needs\n###########################################\n################ VARIABLES ################\n###########################################\nspecies = \"Athaliana\"\nbiomart = \"plants_mart\"\ndataset = \"athaliana_eg_gene\"\nprefix = \"ensembl_\"\nhost = \"https://plants.ensembl.org\"\ndir = \"./output_tables/\" \noutputPath = paste0(dir, species, \"_TxDb.RData\")\n\n###########################################\n################ Packages #################\n###########################################\n\nbioconductor_pkgs = c(\"GenomicFeatures\", \"GenomicAlignments\", \"biomaRt\")\n\ndevtools::source_gist(\"https://gist.github.com/KarenGoncalves/0db105bceff4ff69547ee25460dda978\")\n\ninstall_from_dif_sources(\n    bioconductor_packages = bioconductor_pkgs\n)\n\n###########################################\n############# Create databse ##############\n###########################################\n\nTxDb &lt;- makeTxDbFromBiomart(biomart = biomart,\n                            dataset = dataset,\n                            id_prefix = prefix,\n                            host = host)\ntx &lt;- transcriptsBy(TxDb,\"gene\")\n\nsave(TxDb, tx, file = outputPath)"
   },
   {
-    "objectID": "r/DEA/index.html#deseq2---note-on-designs",
-    "href": "r/DEA/index.html#deseq2---note-on-designs",
-    "title": "Differential expression analysis",
-    "section": "DESeq2 - note on designs",
-    "text": "DESeq2 - note on designs\nWe used the design ~Genotype, which is similar to taking the expression level for each gene and compare it between the different genotypes.\nIt takes the first level of the factor Genotype as the control.\nBecause of this, the comparisons we are able to make are only Genotype_x vs Genotype_Control, we cannot compare Genotype_x against Genotype_y\nUse resultsNames to see what comparisons are available\n\nresultsNames(deseq_dataset)\n\n[1] \"Intercept\"                     \"Genotype_Mlp124499_vs_Control\"\n[3] \"Genotype_Mlp37347_vs_Control\""
+    "objectID": "r/Get_read_counts/index.html#getting-the-input-files",
+    "href": "r/Get_read_counts/index.html#getting-the-input-files",
+    "title": "Get read counts",
+    "section": "Getting the input files",
+    "text": "Getting the input files\nNow that we have the .bam, .bam.bai and the transcript database RData, count the number of reads aligned to each gene.\nFor the example here, we will use these files (reads from Arabidopsis thaliana Col-0 GFP plants):\n\nsapply(c(\"output_tables/counts\", \"output_tables/alignments\"),\n       dir.create)\nsite = \"https://karengoncalves.github.io/Programming_classes/exampleData/\"\nsapply(c(\"subset_Col_0_GFP_1_Aligned.sortedByCoord.out.bam\",\n          \"subset_Col_0_GFP_1_Aligned.sortedByCoord.out.bam.bai\"),\n       \\(x) download.file(\n         url = paste0(site, x), \n         destfile = paste0(\"output_tables/alignments\", x))\n)"
   },
   {
-    "objectID": "r/DEA/index.html#deseq2---note-2-on-designs",
-    "href": "r/DEA/index.html#deseq2---note-2-on-designs",
-    "title": "Differential expression analysis",
-    "section": "DESeq2 - note (2) on designs",
-    "text": "DESeq2 - note (2) on designs\nIf we want to make all possible pairwise comparisons, we need to add a 0 to the design function.\n\ndeseq_dataset2 = DESeqDataSetFromMatrix(\n  countData = counts_filtered,\n  colData = design_matrix, \n  design = ~0 + Genotype # basically: expression in function of the genotype\n) %&gt;% DESeq()\n\nresultsNames(deseq_dataset2) \n\n[1] \"GenotypeControl\"   \"GenotypeMlp124499\" \"GenotypeMlp37347\""
+    "objectID": "r/Get_read_counts/index.html#get-the-counts---prepare-the-variables",
+    "href": "r/Get_read_counts/index.html#get-the-counts---prepare-the-variables",
+    "title": "Get read counts",
+    "section": "Get the counts - prepare the variables",
+    "text": "Get the counts - prepare the variables\nNow that we have the files, we need to inform R where they are stored and where to put the results, in other words, prepare the variables.\n\n\n\n\n\n\n\nThe basename here is the name of the sample_rep, without the suffix added by the aligner or samtools nor folder names (these are removed with the function basename)\nFor the example, we will use a single sample, but we will use a loop so the final script can be used fo multiple samples easily\n\n\n\n\nbamFiles &lt;- paste0(\"/output_tables/alignments/\", \n                   list.files(path = \"/output_tables/alignments/\")\n)\n  \nbaiFiles &lt;- paste0(bamFiles, \".bai\")\nbaseNames &lt;- gsub(\"_Aligned.sortedByCoord.out.bam\", \"\",\n                  basename(bamFiles))\nTxDbPath &lt;- \"./output_tables/Arabidopsis_TxDb.RData\"\nload(TxDbPath)\noutPutDir &lt;- \"./output_tables/\"\n\n# Now we load the RData\n# This line tells R where the alignment files for the sample are and how much of them to read at a time\nbfl &lt;- BamFileList(bamFiles, \n                   baiFiles, \n                   yieldSize=200000)"
   },
   {
-    "objectID": "r/DEA/index.html#deseq2---note-3-on-designs",
-    "href": "r/DEA/index.html#deseq2---note-3-on-designs",
-    "title": "Differential expression analysis",
-    "section": "DESeq2 - note (3) on designs",
-    "text": "DESeq2 - note (3) on designs\nIf your samples are defined by 2 factors, say Genotype and Age (both present int the design_matrix data.frame), you can set the design to either:\n\n~Genotype + Age - you will be able to compare genotype1 against genotype2, and age1 against age2, but not genotype1_age1 against genotype1_age2\n\n\n\n~Genotype + Age + Genotype:Age - models the differences:\n\nBetween genotypes at the first Age value\nBetween different time points (grouping all genotypes)\nGenotype-specific across the levels of Age."
+    "objectID": "r/Get_read_counts/index.html#get-the-counts---overlaps",
+    "href": "r/Get_read_counts/index.html#get-the-counts---overlaps",
+    "title": "Get read counts",
+    "section": "Get the counts - overlaps",
+    "text": "Get the counts - overlaps\nSummarize overlaps\n\nCodeExplanationSaving overlaps result\n\n\nThe code below uses summarizedOverlaps to count the number of alignments (bfl object) falling in each transcript (tx object, transcript database)\n\noverlaps &lt;- summarizeOverlaps(\n  features = tx, # genes' coordinates\n  reads = bfl, # bam and bai files\n  mode = \"Union\", \n  # mode can be also \"IntersectStrict\" or \"IntersectNotEmpty\"\n  singleEnd = F, fragments = T, \n  ignore.strand = T\n  )\n\n\n\nIn this case, we have paired-end reads (singleEnd = F, fragments = T), we ignore the strand information and we use the union mode:\n\n\n\n\n\n\n\nAll the bam/bai files are analysed here. So if you have many, R will take very long to run the code. You can increase or decrease the yieldSize in the function BamFileList (previous slide) to use more/less memory and increase/decrease the speed of the code.\n\n\n\n\n\nWe save this result, so if there is an issue with the rest of the code, the heavy part of the program gets saved before R stops.\n# \nsave(overlaps, file = paste0(outPutDir, \"overlaps.RData\"))"
   },
   {
-    "objectID": "r/DEA/index.html#deseq2---note-4-on-designs",
-    "href": "r/DEA/index.html#deseq2---note-4-on-designs",
-    "title": "Differential expression analysis",
-    "section": "DESeq2 - note (4) on designs",
-    "text": "DESeq2 - note (4) on designs\nIf you have a time series experiment, then you need to add a “reduced” design in the DESeq function:\ndeseq_dataset = DESeqDataSetFromMatrix(\n  countData = counts_filtered,\n  colData = design_matrix, \n  design = ~Genotype + Age + Genotype:Age\n) %&gt;% \n  DESeq(test=\"LRT\", # likelyhood ratio test\n        reduced = ~ Genotype + Age)"
+    "objectID": "r/Get_read_counts/index.html#get-counts---export-table",
+    "href": "r/Get_read_counts/index.html#get-counts---export-table",
+    "title": "Get read counts",
+    "section": "Get counts - export table",
+    "text": "Get counts - export table\nNow that we have the overlaps, we can get the counts.\n\n# Then we extract the counts slot, transform into a data.frame and export it as a csv file.\ncountAssays = assays(overlaps)$counts  %&gt;% as.data.frame()\nnames(countAssays) &lt;- baseNames\n\nwrite_csv(x = countAssays, \n          file = paste0(outPutDir, \"counts.csv\"), \n          col_names = T,\n          quote = \"none\")\n\nWe can check the number of reads/fragments that passed the criteria to be considered mapped using colSums. By using this function, we get the result for all datasets included in the table, without needing to explicitly type any specific sample name.\n\ncolSums(countAssays)\n\nsubset_Col_0_GFP_1 \n             51725"
   },
   {
-    "objectID": "r/DEA/index.html#deseq2-results",
-    "href": "r/DEA/index.html#deseq2-results",
-    "title": "Differential expression analysis",
-    "section": "DESeq2 results",
-    "text": "DESeq2 results\nNow the main part of the analysis is done, we use the function results to access the results and inform the type of stats you want performed.\n\nresultsNames(deseq_dataset)\n\n[1] \"Intercept\"                     \"Genotype_Mlp124499_vs_Control\"\n[3] \"Genotype_Mlp37347_vs_Control\" \n\nname_result = resultsNames(deseq_dataset)\n\n\n# Remove the first element of name_result, since it is just the intercept\n\nresults_DESeq2 &lt;- \n  lapply(name_result[-1], \\(comparison) {\n    results(deseq_dataset, \n            name = comparison,\n            pAdjustMethod = \"BH\")@listData %&gt;%\n      as_tibble() %&gt;%\n      mutate(\n        # We need to add the gene names\n        Gene_name = rownames(counts_filtered),\n        # We classify the genes by deregulation\n        State = case_when(\n          log2FoldChange &lt; 2 ~ \"Down-regulated\",\n          log2FoldChange &gt; 2 ~ \"Up-regulated\",\n          .default = \"equal\"),\n        # Indicate from which comparison the data comes from\n        Contrast = comparison\n      )\n  }) %&gt;%\n  list_rbind() \n  \nhead(results_DESeq2)\n\n# A tibble: 6 × 9\n  baseMean log2FoldChange lfcSE   stat     pvalue     padj Gene_name State      \n     &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;      \n1     73.8         -1.28  0.329 -3.89   0.0000989  0.00302 AT1G01010 Down-regul…\n2    149.          -0.296 0.209 -1.42   0.156      0.544   AT1G01020 Down-regul…\n3     71.1         -0.709 0.248 -2.86   0.00430    0.0562  AT1G01030 Down-regul…\n4    800.          -0.122 0.216 -0.563  0.573      0.884   AT1G01040 Down-regul…\n5    482.          -0.308 0.330 -0.933  0.351      0.759   AT1G01050 Down-regul…\n6   3353.          -1.38  0.624 -2.21  NA         NA       AT1G01060 Down-regul…\n# ℹ 1 more variable: Contrast &lt;chr&gt;"
+    "objectID": "r/Get_read_counts/index.html#more-tutorials-and-resources",
+    "href": "r/Get_read_counts/index.html#more-tutorials-and-resources",
+    "title": "Get read counts",
+    "section": "More tutorials and resources",
+    "text": "More tutorials and resources\n\nARTICLE: a survey of best practices for RNA-seq data analysis\nIntroduction to transcript quantification with Salmon\nEnd-to-end analysis - RNAseq\nRNAseq analysis in R - University of Cambridge\nRNAseq-R"
   },
   {
-    "objectID": "r/DEA/index.html#resources",
-    "href": "r/DEA/index.html#resources",
-    "title": "Differential expression analysis",
-    "section": "Resources",
-    "text": "Resources\n\nARTICLES\n\nideal: an R/Bioconductor package for interactive differential expression analysis\n\nTUTORIALS\n\nAngus - DEA and visualization\nCOMBINE Australia - RNASeq\nGriffith lab - DEA with DESeq2\nLove, Anders and Huber - DESeq2"
+    "objectID": "r/Before_1stClass/index.html#first-things-first-download-and-install",
+    "href": "r/Before_1stClass/index.html#first-things-first-download-and-install",
+    "title": "To do before the first class",
+    "section": "First things first, download and install:",
+    "text": "First things first, download and install:\n\nR software\n\nWindows\n\nR 4.3.1\nRtools\n\nMacOS\n\nR 4.3.1\n\nIf you use Linux\n\nselect the right type and follow the instructions there (open the terminal and paste the codes)\n\n\nRStudio\n\nWindows\nMacOS 11+\nUbuntu 20 or 22/Debian 11\nFedora 19/RedHat 7\nFor other operating systems, visit posit.co"
+  },
+  {
+    "objectID": "r/Before_1stClass/index.html#create-a-project-named-r_classes",
+    "href": "r/Before_1stClass/index.html#create-a-project-named-r_classes",
+    "title": "To do before the first class",
+    "section": "Create a project named \"R_classes\"",
+    "text": "Create a project named \"R_classes\"\nBy creating a project, you can be sure that your input and output will all be in the same folder (called a directory in programming)\nFollow one of the tutorials below to create a project:\n\nWatch the following video to see how to create a project\nFollow the instructions here\n\nif you are lazy like me, just look at the figures in the article"
+  },
+  {
+    "objectID": "r/Before_1stClass/index.html#prepare-the-working-directory-project-folder",
+    "href": "r/Before_1stClass/index.html#prepare-the-working-directory-project-folder",
+    "title": "To do before the first class",
+    "section": "Prepare the working directory (project folder)",
+    "text": "Prepare the working directory (project folder)\nCreate 4 folders in the project folder\n\nInputs\nOutputs\nPlots\nScripts\n\n\n\n\n\n\n\nNote: try not to use non-english symbols, spaces or dashes (\"-\") in file or folder names"
+  },
+  {
+    "objectID": "r/Before_1stClass/index.html#prepare-the-input-table",
+    "href": "r/Before_1stClass/index.html#prepare-the-input-table",
+    "title": "To do before the first class",
+    "section": "Prepare the input table",
+    "text": "Prepare the input table\nIf you have data you wish to work on (be it: fluorescence measured in FACS or microplate, concentration of protein, OD of bacteria/algae, gene expression levels), prepare the table as follows:\n\n\n\n\n\nSampleA_rep1\nSampleA_rep2\nSampleA_rep3\nSampleB_rep1\nSampleB_rep2\nSampleB_rep3\n\n\n\n\nMeasurement_1\nvalue\nvalue\nvalue\nvalue\nvalue\nvalue\n\n\nMeasurement_2\nvalue\nvalue\nvalue\nvalue\nvalue\nvalue\n\n\nMeasurement_3\nvalue\nvalue\nvalue\nvalue\nvalue\nvalue\n\n\nMeasurement_4\nvalue\nvalue\nvalue\nvalue\nvalue\nvalue\n\n\nMeasurement_5\nvalue\nvalue\nvalue\nvalue\nvalue\nvalue\n\n\nMeasurement_6\nvalue\nvalue\nvalue\nvalue\nvalue\nvalue\n\n\n\n\n\n\nWhere:\n\nSampleA/SampleB are the different treatments and rep_1/2/3 are the biological replicates\nMeasurement1/2/3/4/5/6 are the proteins/genes measured (several repetitions of the same assay go one per line)\n\n\nIf you have nothing, click here to download an example dataset\nSave the table in excel as *.txt (text; tab-delimited) in the Input folder"
+  },
+  {
+    "objectID": "index.html#r-classes",
+    "href": "index.html#r-classes",
+    "title": "Programming classes",
+    "section": "R classes",
+    "text": "R classes\n\n\n\n\n\n\nTitle\n\n\nDate\n\n\nDescription\n\n\n\n\n\n\nTo do before the first class\n\n\nAug 1, 2023\n\n\n0 R class - check before the first\n\n\n\n\nR class - basics\n\n\nAug 10, 2023\n\n\n1st R class\n\n\n\n\nR class - packages and functions\n\n\nSep 1, 2023\n\n\n2nd R class\n\n\n\n\nMultiple sequence alignment and phylogenetic trees\n\n\nJan 1, 2024\n\n\n3rd R class\n\n\n\n\nGet read counts\n\n\nFeb 16, 2024\n\n\n4th R class - transcriptomics sessions\n\n\n\n\nDifferential expression analysis\n\n\nMar 21, 2024\n\n\n5th R class - transcriptomics sessions\n\n\n\n\nDifferential expression analysis plots\n\n\nMar 28, 2024\n\n\n6th R class - transcriptomics sessions\n\n\n\n\n\n\nNo matching items\n\n\n\nScripts from classesDatasets for classes\n\n\n\nVideo on how to create an R project\n\nFall 2023 - R basics\n\nTuesdays group\n\nSeptember 19th\nSeptember 19th (2)\nOctober 3rd\nOctober 10th\nOctober 17th\n\nFridays group\n\nSeptember 15th\nSeptember 29th\nOctober 6th\nOctober 19th\n\n\n\n\n\n\n\nClass1_exampleData.txt\nTimeSeries_example.csv\nReductases.fasta\nCol-0.bam file\nCol-0.bam.bai file\nArabidopsis_counts.csv"
+  },
+  {
+    "objectID": "index.html#unix-classes",
+    "href": "index.html#unix-classes",
+    "title": "Programming classes",
+    "section": "Unix classes",
+    "text": "Unix classes\n\n\n\n\n\n\nTitle\n\n\nDate\n\n\nDescription\n\n\n\n\n\n\nUnix basic commands\n\n\nJan 26, 2023\n\n\n1st unix class\n\n\n\n\nConnecting to a server\n\n\nJan 26, 2023\n\n\n2nd unix class\n\n\n\n\nRunning Jobs\n\n\nJan 30, 2023\n\n\n3rd unix class\n\n\n\n\nAWK command\n\n\nFeb 13, 2023\n\n\n5th unix class\n\n\n\n\nRunning blast on the server\n\n\nMar 6, 2023\n\n\n4th unix class\n\n\n\n\nSED command\n\n\nApr 4, 2023\n\n\n6th unix class\n\n\n\n\n\n\nNo matching items\n\n\n\nScripts for classDatasets for class\n\n\n\nScripts for the class 4:\n\nmyTry.sh\nmyGeneralBlast.sh\nsbatch_blast.sh\ncreate_master_blast.sh\n\n\n\n\n\nprots.fasta\nblastn_result.txt\ninput_subset.fasta"
   },
   {
     "objectID": "r/basics/index.html#variables",
@@ -882,249 +924,382 @@
     "text": "Cheat-sheet for loading files\nBasics:\n\nNormally, R assumes your data has column names\n\n\n\n\n\n\nFunction\nFile extenion\nColumn separation\nDecimal separation\n\n\n\n\nread.csv\n.csv\nsep = \",\"\ndec = \".\"\n\n\nread.csv2\n.csv\nsep = \";\"\ndec = \",\"\n\n\nread.delim\n.txt, .tsv\nsep = \"\\t\" (tab)\ndec = \".\"\n\n\nread.delim2\n.txt, .tsv\nsep = \"\\t\" (tab)\ndec = \",\"\n\n\n\n\n\n\n\nIf the column separation or the decimal separation is not the one expected by the function you choose, you can specify the correct one inside the function with:\n\nsep = ' '\ndec = '.'"
   },
   {
-    "objectID": "index.html#r-classes",
-    "href": "index.html#r-classes",
-    "title": "Programming classes",
-    "section": "R classes",
-    "text": "R classes\n\n\n\n\n\n\nTitle\n\n\nDate\n\n\nDescription\n\n\n\n\n\n\nTo do before the first class\n\n\nAug 1, 2023\n\n\n0 R class - check before the first\n\n\n\n\nR class - basics\n\n\nAug 10, 2023\n\n\n1st R class\n\n\n\n\nR class - packages and functions\n\n\nSep 1, 2023\n\n\n2nd R class\n\n\n\n\nMultiple sequence alignment and phylogenetic trees\n\n\nJan 1, 2024\n\n\n3rd R class\n\n\n\n\nGet read counts\n\n\nFeb 16, 2024\n\n\n4th R class - transcriptomics sessions\n\n\n\n\nDifferential expression analysis\n\n\nMar 21, 2024\n\n\n5th R class - transcriptomics sessions\n\n\n\n\n\n\nNo matching items\n\n\n\nScripts from classesDatasets for classes\n\n\n\nVideo on how to create an R project\n\nFall 2023 - R basics\n\nTuesdays group\n\nSeptember 19th\nSeptember 19th (2)\nOctober 3rd\nOctober 10th\nOctober 17th\n\nFridays group\n\nSeptember 15th\nSeptember 29th\nOctober 6th\nOctober 19th\n\n\n\n\n\n\n\nClass1_exampleData.txt\nTimeSeries_example.csv\nReductases.fasta\nCol-0.bam file\nCol-0.bam.bai file\nArabidopsis_counts.csv"
+    "objectID": "r/DEA/index.html#the-dataset",
+    "href": "r/DEA/index.html#the-dataset",
+    "title": "Differential expression analysis",
+    "section": "The dataset",
+    "text": "The dataset\nThe input file is the table Arabidopsis_counts.csv.\ncounts = read.csv(\"https://karengoncalves.github.io/Programming_classes/exampleData/Arabidopsis_counts.csv\",\n                  header = T, row.names = 1)\nThis file has 12 columns (3 samples * 4 replicates) and 32833 rows (one per gene).\nSamples are aerial tissue of Arabidopsis thaliana ecotype Col-0, harvested at 14 days post germination, with Basta (glyphosate) resistance gene and:\n\nControl: GFP under the 35S promoter\nMlp37347 and Mlp124499: a candidate effector gene (Mlp37347 or Mlp124499 from the fungus Melampsora larici-populina) tagged with GFP under the 35S promoter"
   },
   {
-    "objectID": "index.html#unix-classes",
-    "href": "index.html#unix-classes",
-    "title": "Programming classes",
-    "section": "Unix classes",
-    "text": "Unix classes\n\n\n\n\n\n\nTitle\n\n\nDate\n\n\nDescription\n\n\n\n\n\n\nUnix basic commands\n\n\nJan 26, 2023\n\n\n1st unix class\n\n\n\n\nConnecting to a server\n\n\nJan 26, 2023\n\n\n2nd unix class\n\n\n\n\nRunning Jobs\n\n\nJan 30, 2023\n\n\n3rd unix class\n\n\n\n\nAWK command\n\n\nFeb 13, 2023\n\n\n5th unix class\n\n\n\n\nRunning blast on the server\n\n\nMar 6, 2023\n\n\n4th unix class\n\n\n\n\nSED command\n\n\nApr 4, 2023\n\n\n6th unix class\n\n\n\n\n\n\nNo matching items\n\n\n\nScripts for classDatasets for class\n\n\n\nScripts for the class 4:\n\nmyTry.sh\nmyGeneralBlast.sh\nsbatch_blast.sh\ncreate_master_blast.sh\n\n\n\n\n\nprots.fasta\nblastn_result.txt\ninput_subset.fasta"
+    "objectID": "r/DEA/index.html#create-design-table---part-1",
+    "href": "r/DEA/index.html#create-design-table---part-1",
+    "title": "Differential expression analysis",
+    "section": "Create design table - part 1",
+    "text": "Create design table - part 1\nThe design table explains to R what each column is:\n\nControl or treatment\nWild-type or mutant\nFrom place X or place Y.\nHarvested at time 0, 1, 2, 3…\n\nBasically, you need first one column with the rows containing the same values as the column names of the count matrix.\n\ndesign_matrix = data.frame(Replicates = names(counts))\n\nThen, you need one (or more) columns that indicate the sample that replicate comes from."
   },
   {
-    "objectID": "r/Before_1stClass/index.html#first-things-first-download-and-install",
-    "href": "r/Before_1stClass/index.html#first-things-first-download-and-install",
-    "title": "To do before the first class",
-    "section": "First things first, download and install:",
-    "text": "First things first, download and install:\n\nR software\n\nWindows\n\nR 4.3.1\nRtools\n\nMacOS\n\nR 4.3.1\n\nIf you use Linux\n\nselect the right type and follow the instructions there (open the terminal and paste the codes)\n\n\nRStudio\n\nWindows\nMacOS 11+\nUbuntu 20 or 22/Debian 11\nFedora 19/RedHat 7\nFor other operating systems, visit posit.co"
+    "objectID": "r/DEA/index.html#create-design-table---part-2",
+    "href": "r/DEA/index.html#create-design-table---part-2",
+    "title": "Differential expression analysis",
+    "section": "Create design table - part 2",
+    "text": "Create design table - part 2\nNote that you separate things in the columns, eg. you harvested different tissues at different time points, you would need a design table with three columns: Replicates, tissue_type and Time_point.\nIn this case, the genotypes of the plants is part of their name (just remove the _# to get it):\n\ndesign_matrix = design_matrix %&gt;%\n  mutate(Genotype = gsub(\"_\\\\d+$\", \"\", \n                         # replace the underscore and digits at the end of the text \n                         # with nothing\n                         Replicates))\n\nhead(design_matrix)\n\n  Replicates Genotype\n1  Control_1  Control\n2  Control_2  Control\n3  Control_3  Control\n4  Control_4  Control\n5 Mlp37347_1 Mlp37347\n6 Mlp37347_2 Mlp37347"
   },
   {
-    "objectID": "r/Before_1stClass/index.html#create-a-project-named-r_classes",
-    "href": "r/Before_1stClass/index.html#create-a-project-named-r_classes",
-    "title": "To do before the first class",
-    "section": "Create a project named \"R_classes\"",
-    "text": "Create a project named \"R_classes\"\nBy creating a project, you can be sure that your input and output will all be in the same folder (called a directory in programming)\nFollow one of the tutorials below to create a project:\n\nWatch the following video to see how to create a project\nFollow the instructions here\n\nif you are lazy like me, just look at the figures in the article"
+    "objectID": "r/DEA/index.html#filtering-read-counts",
+    "href": "r/DEA/index.html#filtering-read-counts",
+    "title": "Differential expression analysis",
+    "section": "Filtering read counts",
+    "text": "Filtering read counts\nNot all genes in a genome will be expressed in a study (even one with many conditions and developmental stages), since some need very specific conditions to be expressed. Check for example the gene AT1G01046 (row 5)\n\ncounts[5,]\n\n          Control_1 Control_2 Control_3 Control_4 Mlp37347_1 Mlp37347_2\nAT1G01046         0         0         0         0          0          0\n          Mlp37347_3 Mlp37347_4 Mlp124499_1 Mlp124499_2 Mlp124499_3 Mlp124499_4\nAT1G01046          0          0           0           0           0           0\n\n\n\nSimple filterComplex filter\n\n\nWe can clean up the data, removing genes that are not expressed ever in our experiment. In theory, genes not expressed will have read count == 0 in all samples.\n\ngenes_not_expressed = rowSums(counts) == 0\ngenes_not_expressed %&gt;% which() %&gt;% length()\n\n[1] 5632\n\n# We keep only rows that are FALSE in the variable genes_not_expressed\ncounts_filtered = counts[ !genes_not_expressed, ]\n\n\n\nAnother way of filtering weakly expressed genes would be with the functions DAFS from the “KarenGoncalves/CustomSelection” package.\nThe function gives you the minimum expression level accepted per replicate (based on the sequencing depth), from there you can filter out the genes that are expressed at a level lower than that threshold.\nYou will need the count matrix and a named vector with the length of each gene.\n# The first thing you do convert the read counts to TPM (transcripts per million):\ntpm = Counts_to_tpm(counts=counts, featureLength=length)[[1]]\n\n# Then you calculate the minimum expression level\ncutv = DAFS(tpm=tpm) # value given as log2 TPM\n# Calculate the mean minimum expression level and convert it to TPM\nmin_expr_level = mean(cutv) ^ 2 \n\n# Now to filter the weakly expressed genes,\n# Remove the ones that are expressed below the min_expr_level\nexpressed_genes = apply(tpm, 1, mean) &gt; min_expr_level\ncounts_filtered = countsData[, expressed_genes]"
   },
   {
-    "objectID": "r/Before_1stClass/index.html#prepare-the-working-directory-project-folder",
-    "href": "r/Before_1stClass/index.html#prepare-the-working-directory-project-folder",
-    "title": "To do before the first class",
-    "section": "Prepare the working directory (project folder)",
-    "text": "Prepare the working directory (project folder)\nCreate 4 folders in the project folder\n\nInputs\nOutputs\nPlots\nScripts\n\n\n\n\n\n\n\nNote: try not to use non-english symbols, spaces or dashes (\"-\") in file or folder names"
+    "objectID": "r/DEA/index.html#deseq2---main-analysis",
+    "href": "r/DEA/index.html#deseq2---main-analysis",
+    "title": "Differential expression analysis",
+    "section": "DESeq2 - main analysis",
+    "text": "DESeq2 - main analysis\nNow that you have the filtered counts matrix and the design table, you can run DESeq2 by first creating the dataset object then running the function DESeq.\nPay attention to always put your control samples at the beginning of the count matrix and the design table, as the first sample is taken as the control.\n\ndeseq_dataset = DESeqDataSetFromMatrix(\n  countData = counts_filtered,\n  colData = design_matrix, # colData means data about the columns of the count matrix\n  design = ~Genotype # basically: expression in function of the genotype\n) %&gt;% DESeq()"
   },
   {
-    "objectID": "r/Before_1stClass/index.html#prepare-the-input-table",
-    "href": "r/Before_1stClass/index.html#prepare-the-input-table",
-    "title": "To do before the first class",
-    "section": "Prepare the input table",
-    "text": "Prepare the input table\nIf you have data you wish to work on (be it: fluorescence measured in FACS or microplate, concentration of protein, OD of bacteria/algae, gene expression levels), prepare the table as follows:\n\n\n\n\n\nSampleA_rep1\nSampleA_rep2\nSampleA_rep3\nSampleB_rep1\nSampleB_rep2\nSampleB_rep3\n\n\n\n\nMeasurement_1\nvalue\nvalue\nvalue\nvalue\nvalue\nvalue\n\n\nMeasurement_2\nvalue\nvalue\nvalue\nvalue\nvalue\nvalue\n\n\nMeasurement_3\nvalue\nvalue\nvalue\nvalue\nvalue\nvalue\n\n\nMeasurement_4\nvalue\nvalue\nvalue\nvalue\nvalue\nvalue\n\n\nMeasurement_5\nvalue\nvalue\nvalue\nvalue\nvalue\nvalue\n\n\nMeasurement_6\nvalue\nvalue\nvalue\nvalue\nvalue\nvalue\n\n\n\n\n\n\nWhere:\n\nSampleA/SampleB are the different treatments and rep_1/2/3 are the biological replicates\nMeasurement1/2/3/4/5/6 are the proteins/genes measured (several repetitions of the same assay go one per line)\n\n\nIf you have nothing, click here to download an example dataset\nSave the table in excel as *.txt (text; tab-delimited) in the Input folder"
+    "objectID": "r/DEA/index.html#deseq2---note-on-designs",
+    "href": "r/DEA/index.html#deseq2---note-on-designs",
+    "title": "Differential expression analysis",
+    "section": "DESeq2 - note on designs",
+    "text": "DESeq2 - note on designs\nWe used the design ~Genotype, which is similar to taking the expression level for each gene and compare it between the different genotypes.\nIt takes the first level of the factor Genotype as the control.\nBecause of this, the comparisons we are able to make are only Genotype_x vs Genotype_Control, we cannot compare Genotype_x against Genotype_y\nUse resultsNames to see what comparisons are available\n\nresultsNames(deseq_dataset)\n\n[1] \"Intercept\"                     \"Genotype_Mlp124499_vs_Control\"\n[3] \"Genotype_Mlp37347_vs_Control\""
   },
   {
-    "objectID": "r/Get_read_counts/index.html#data-processing-before-r",
-    "href": "r/Get_read_counts/index.html#data-processing-before-r",
-    "title": "Get read counts",
-    "section": "Data processing before R",
-    "text": "Data processing before R\nShort read sequencing transcriptomic data (in the form of fastq files, sometimes compressed as fastq.gz) pass through the some steps before we can proceed to analysis shown in this class.\nThe pre-processing is typically done in servers (unix/bash language) and includes:\n\nQuality assessment and filtering\nIN THE ABSENCE OF A REFERENCE: Transcriptome assembly\nRead alignment/mapping\nSorting and indexing\n\n\nThe things shown in this class are for alignments onto reference genomes."
+    "objectID": "r/DEA/index.html#deseq2---note-2-on-designs",
+    "href": "r/DEA/index.html#deseq2---note-2-on-designs",
+    "title": "Differential expression analysis",
+    "section": "DESeq2 - note (2) on designs",
+    "text": "DESeq2 - note (2) on designs\nIf we want to make all possible pairwise comparisons, we need to add a 0 to the design function.\n\ndeseq_dataset2 = DESeqDataSetFromMatrix(\n  countData = counts_filtered,\n  colData = design_matrix, \n  design = ~0 + Genotype # basically: expression in function of the genotype\n) %&gt;% DESeq()\n\nresultsNames(deseq_dataset2) \n\n[1] \"GenotypeControl\"   \"GenotypeMlp124499\" \"GenotypeMlp37347\""
   },
   {
-    "objectID": "r/Get_read_counts/index.html#things-to-know",
-    "href": "r/Get_read_counts/index.html#things-to-know",
-    "title": "Get read counts",
-    "section": "Things to know",
-    "text": "Things to know\n\nKeep track how many reads passed the quality filtering and how many were mapped.\nIn the case of a new assembly, you can follow steps on TrinityRNASeq wiki for transcript quantification.\nIs it possible to do all the processing in R? YES\n\nIs it worth it? …\n\nWhat you will do in R is use it to connect to another program that will do the job. So you end up using more memory (computer gets slower, takes a lot of time).\nSome programs are not available for windows, so you may install all the packages necessary just to learn that you cannot use them."
+    "objectID": "r/DEA/index.html#deseq2---note-3-on-designs",
+    "href": "r/DEA/index.html#deseq2---note-3-on-designs",
+    "title": "Differential expression analysis",
+    "section": "DESeq2 - note (3) on designs",
+    "text": "DESeq2 - note (3) on designs\nIf your samples are defined by 2 factors, say Genotype and Age (both present int the design_matrix data.frame), you can set the design to either:\n\n~Genotype + Age - you will be able to compare genotype1 against genotype2, and age1 against age2, but not genotype1_age1 against genotype1_age2\n\n\n\n~Genotype + Age + Genotype:Age - models the differences:\n\nBetween genotypes at the first Age value\nBetween different time points (grouping all genotypes)\nGenotype-specific across the levels of Age."
   },
   {
-    "objectID": "r/Get_read_counts/index.html#data-processing-before-r---detail",
-    "href": "r/Get_read_counts/index.html#data-processing-before-r---detail",
-    "title": "Get read counts",
-    "section": "Data processing before R - detail",
-    "text": "Data processing before R - detail\n\nQuality assessment and filtering:\n\nfastp (last update: 2023); fastqc (last update: 2023) followed by trimmomatic (last update: 2021)\n\nCreation of a reference transcriptome:\n\ntrinity (last update: 2023); SOAPdenovo-Trans (last update: 2022); Trans-ABySS (last update: 2018); Oases (last update: 2015); Velvet (last update: 2014)\n\nRead alignment/mapping:\n\nAlignment - finds the exact origin of the reads and their differences compared to the reference (like blasting each read against a genome or transcriptome). It is slow - each alignment may take hours depending on the amount of data and size of the reference. These export SAM or BAM files, requiring indexing (step 4):\n\nbowtie2 (last update: 2024); STAR (last update: 2023); HISAT2 (last update: 2020); bwa (last update: 2017); TOPHAT2 (last update: 2016)\n\nPseudoalignment/Mapping - hyper fast - each alignment takes minutes. They only give the genomic/transcriptomic origin of each read. These export the read count tables directly:\n\nSalmon (last update: 2023); Kallisto (last update: 2019)\n\n\nIf the aligner provides the result as SAM or not sorted by genomic coordinates, use samtools view to sort and export into sorted BAM. Then use samtools index to get the bai files.\n\nIn the end, you should have 2 files per sample/replicate: sampleX_repY_Aligned.sortedByCoord.out.bam and sampleX_repY_Aligned.sortedByCoord.out.bam.bai\n\n\n\nNote that if you only want to perform differential expression analysis, GO term enrichment, etc, you do not need to perform read alignment, just mapping suffices."
+    "objectID": "r/DEA/index.html#deseq2---note-4-on-designs",
+    "href": "r/DEA/index.html#deseq2---note-4-on-designs",
+    "title": "Differential expression analysis",
+    "section": "DESeq2 - note (4) on designs",
+    "text": "DESeq2 - note (4) on designs\nIf you have a time series experiment, then you need to add a “reduced” design in the DESeq function:\ndeseq_dataset = DESeqDataSetFromMatrix(\n  countData = counts_filtered,\n  colData = design_matrix, \n  design = ~Genotype + Age + Genotype:Age\n) %&gt;% \n  DESeq(test=\"LRT\", # likelyhood ratio test\n        reduced = ~ Genotype + Age)"
   },
   {
-    "objectID": "r/Get_read_counts/index.html#data-processing-before-r---code-example",
-    "href": "r/Get_read_counts/index.html#data-processing-before-r---code-example",
-    "title": "Get read counts",
-    "section": "Data processing before R - code example",
-    "text": "Data processing before R - code example\nThe code below executes the 2 commands of the program STAR: the creation of the index of the genome and the alignment.\nThe texts within ${} are variable that should be created before hand. This ${r1/_R1.fastq} means “remove _R1.fastq” from ${r1} (like a gsub)\n# Note that the adapter sequences depend on the type of sequencer\nfastp -i ${raw_R1} -I ${raw_R2}\\\n -o ${r1} -O ${r2}\\\n --qualified_quality_phred 20\\\n --unqualified_percent_limit 30\\\n --adapter_sequence=TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG\\\n --adapter_sequence_r2=GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG\\\n --cut_front --cut_front_window_size 3\\\n --cut_right --cut_right_window_size 4\\\n --cut_right_mean_quality 15\\\n --length_required 25\\\n --html $DIR/fastpReports/${r1/_R1.fastq}.html\\\n --thread 8 \n\n# Let's decide if we want to map or align\nMODE=\"align\"\n\nif [[ $MODE == \"align\" ]]; then\n  STAR\\\n   --runThreadN ${NCPUS}\\\n   --runMode genomeGenerate\\\n   --genomeDir ${genomeIdxDIR}\\\n   --genomeFastaFiles ${genomeFastaFiles}\\\n   --sjdbGTFfile ${genomeGTFFile}\\\n   --sjdbOverhang ${readLength}\n   \n  STAR --genomeDir ${indexDIR}/\\\n   --runThreadN ${NCPUS} \\\n   --readFilesIn ${DIR}/clean_reads/${r1} ${DIR}/clean_reads/${r2} \\\n   --outFileNamePrefix ${DIR}/alignments/${r1/_R1.fastq}_\\\n   --outSAMtype BAM SortedByCoordinate \\\n   --outSAMunmapped Within\n\nelse\n  kallisto index -i ${genomeIdxDIR} ${genomeFastaFiles}\n  kallisto quant -i ${genomeIdxDIR}\\\n   -o ${DIR}/alignments/${r1/_R1.fastq}\\\n    ${DIR}/clean_reads/${r1}\\\n    ${DIR}/clean_reads/${r2}\nfi"
+    "objectID": "r/DEA/index.html#deseq2-results",
+    "href": "r/DEA/index.html#deseq2-results",
+    "title": "Differential expression analysis",
+    "section": "DESeq2 results",
+    "text": "DESeq2 results\nNow the main part of the analysis is done, we use the function results to access the results and inform the type of stats you want performed.\n\nresultsNames(deseq_dataset)\n\n[1] \"Intercept\"                     \"Genotype_Mlp124499_vs_Control\"\n[3] \"Genotype_Mlp37347_vs_Control\" \n\nname_result = resultsNames(deseq_dataset)\n\n\n# Remove the first element of name_result, since it is just the intercept\n\nresults_DESeq2 &lt;- \n  lapply(name_result[-1], \\(comparison) {\n    results(deseq_dataset, \n            name = comparison,\n            pAdjustMethod = \"BH\")@listData %&gt;%\n      as_tibble() %&gt;%\n      mutate(\n        # We need to add the gene names\n        Gene_name = rownames(counts_filtered),\n        # We classify the genes by deregulation\n        State = case_when(\n          log2FoldChange &lt; 2 ~ \"Down-regulated\",\n          log2FoldChange &gt; 2 ~ \"Up-regulated\",\n          .default = \"equal\"),\n        # Indicate from which comparison the data comes from\n        Contrast = comparison\n      )\n  }) %&gt;%\n  list_rbind() \n  \nhead(results_DESeq2)\n\n# A tibble: 6 × 9\n  baseMean log2FoldChange lfcSE   stat     pvalue     padj Gene_name State      \n     &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;      \n1     73.8         -1.28  0.329 -3.89   0.0000989  0.00302 AT1G01010 Down-regul…\n2    149.          -0.296 0.209 -1.42   0.156      0.544   AT1G01020 Down-regul…\n3     71.1         -0.709 0.248 -2.86   0.00430    0.0562  AT1G01030 Down-regul…\n4    800.          -0.122 0.216 -0.563  0.573      0.884   AT1G01040 Down-regul…\n5    482.          -0.308 0.330 -0.933  0.351      0.759   AT1G01050 Down-regul…\n6   3353.          -1.38  0.624 -2.21  NA         NA       AT1G01060 Down-regul…\n# ℹ 1 more variable: Contrast &lt;chr&gt;"
   },
   {
-    "objectID": "r/Get_read_counts/index.html#installing-the-packages",
-    "href": "r/Get_read_counts/index.html#installing-the-packages",
-    "title": "Get read counts",
-    "section": "Installing the packages",
-    "text": "Installing the packages\nIf you use the a reference genome for which the annotation is available in Ensembl, you can create your transcript (or 5’/3’-UTR) database while you are waiting for the alignment of your reads.\nFor this, we need the packages “GenomicFeatures”, “GenomicAlignments”, “biomaRt”, “tidyverse”.\n\nbioconductor_pkgs = c(\"GenomicFeatures\", \"GenomicAlignments\", \"biomaRt\", \"Rsamtools\")\ncran_pkgs = \"tidyverse\"\n\ndevtools::source_gist(\"https://gist.github.com/KarenGoncalves/0db105bceff4ff69547ee25460dda978\")\n\ninstall_from_dif_sources(\n    cran_packages = cran_pkgs,\n    bioconductor_packages = bioconductor_pkgs\n)"
+    "objectID": "r/DEA/index.html#resources",
+    "href": "r/DEA/index.html#resources",
+    "title": "Differential expression analysis",
+    "section": "Resources",
+    "text": "Resources\n\nARTICLES\n\nideal: an R/Bioconductor package for interactive differential expression analysis\n\nTUTORIALS\n\nAngus - DEA and visualization\nCOMBINE Australia - RNASeq\nGriffith lab - DEA with DESeq2\nLove, Anders and Huber - DESeq2"
   },
   {
-    "objectID": "r/Get_read_counts/index.html#setting-up-the-scene",
-    "href": "r/Get_read_counts/index.html#setting-up-the-scene",
-    "title": "Get read counts",
-    "section": "Setting up the scene",
-    "text": "Setting up the scene\nThere are several biomarts (databases) stored in different Ensembl pages.\n\nbiomartsSelecting a biomart datasetCreating the transcript databaseWhole script\n\n\n\nThere is a bacteria Ensembl, but there is not a biomart for it\n\n\nAnimals\n\nhost: \"https://ensembl.org\"\nmart: \"ENSEMBL_MART_ENSEMBL\" (currently on version 111)\n\nPlants\n\nhost: \"https://plants.ensembl.org\"\nmart: \"plants_mart\" (currently on version 58)\n\nFungi\n\nhost: \"https://fungi.ensembl.org\"\nmart: \"fungi_mart\" (currently on version 58)\n\nProtists\n\nhost: \"https://protists.ensembl.org\"\nmart: \"protists_mart\" (currently on version 58)\n\n\nThere are other biomarts in the each Ensembl. You can check their names and versions with\n\nhost = \"https://plants.ensembl.org\"\nlistMarts(host = host)\n\n            biomart                      version\n1       plants_mart      Ensembl Plants Genes 58\n2 plants_variations Ensembl Plants Variations 58\n\n\n\n\nNext thing you need is the name of the dataset.\nYou can check the ones available by running:\n\nmart = useMart(host = host, biomart = \"plants_mart\")\nlistDatasets(mart) # this is a table, so we can filter it\n\n\n# If I am working with Arabidopsis thaliana, I can search for it with filter\nlistDatasets(mart) %&gt;%\n  filter(grepl(\"Arabidopsis thaliana\", description))\n\n            dataset                         description version\n1 athaliana_eg_gene Arabidopsis thaliana genes (TAIR10)  TAIR10\n\n# Now I know I have to use the dataset \"athaliana_eg_gene\"\n\n\n\nNow we have all the data we need, we set our variables:\n# Edit the following based on what you need\nbiomart = \"plants_mart\"\ndataset = \"athaliana_eg_gene\"\nprefix = \"ensembl_\"\nhost = \"https://plants.ensembl.org\"\n\n# The result will be saved as a .RData object, so we do not recalculate this every time.\ndir = \"./\" # current directory\noutputPath = paste0(dir, \"Arabidopsis_TxDb.RData\")\nThen we create a Transcript DataBase (txdb) from Biomart:\n# Following takes a while (a few minutes), so it is better to calculate this once than export the result\nTxDb &lt;- makeTxDbFromBiomart(biomart = biomart,\n                            dataset = dataset,\n                            id_prefix = prefix,\n                            host = host)\n\n# TxDb is a weird type of data, difficult to access, so we get the information on the transcripts with the function transcriptsBy\ntx &lt;- transcriptsBy(TxDb,\"gene\")\n\n# Then we save the two databases into the Rdata object.\nsave(TxDb, tx, file = outputPath)\n\n\nIf you want to use the script we worked on here, just copy it below and change the section “VARIABLES” to fit your needs\n###########################################\n################ VARIABLES ################\n###########################################\nspecies = \"Athaliana\"\nbiomart = \"plants_mart\"\ndataset = \"athaliana_eg_gene\"\nprefix = \"ensembl_\"\nhost = \"https://plants.ensembl.org\"\ndir = \"./output_tables/\" \noutputPath = paste0(dir, species, \"_TxDb.RData\")\n\n###########################################\n################ Packages #################\n###########################################\n\nbioconductor_pkgs = c(\"GenomicFeatures\", \"GenomicAlignments\", \"biomaRt\")\n\ndevtools::source_gist(\"https://gist.github.com/KarenGoncalves/0db105bceff4ff69547ee25460dda978\")\n\ninstall_from_dif_sources(\n    bioconductor_packages = bioconductor_pkgs\n)\n\n###########################################\n############# Create databse ##############\n###########################################\n\nTxDb &lt;- makeTxDbFromBiomart(biomart = biomart,\n                            dataset = dataset,\n                            id_prefix = prefix,\n                            host = host)\ntx &lt;- transcriptsBy(TxDb,\"gene\")\n\nsave(TxDb, tx, file = outputPath)"
-  },
-  {
-    "objectID": "r/Get_read_counts/index.html#getting-the-input-files",
-    "href": "r/Get_read_counts/index.html#getting-the-input-files",
-    "title": "Get read counts",
-    "section": "Getting the input files",
-    "text": "Getting the input files\nNow that we have the .bam, .bam.bai and the transcript database RData, count the number of reads aligned to each gene.\nFor the example here, we will use these files (reads from Arabidopsis thaliana Col-0 GFP plants):\n\nsapply(c(\"output_tables/counts\", \"output_tables/alignments\"),\n       dir.create)\nsite = \"https://karengoncalves.github.io/Programming_classes/exampleData/\"\nsapply(c(\"subset_Col_0_GFP_1_Aligned.sortedByCoord.out.bam\",\n          \"subset_Col_0_GFP_1_Aligned.sortedByCoord.out.bam.bai\"),\n       \\(x) download.file(\n         url = paste0(site, x), \n         destfile = paste0(\"output_tables/alignments\", x))\n)"
-  },
-  {
-    "objectID": "r/Get_read_counts/index.html#get-the-counts---prepare-the-variables",
-    "href": "r/Get_read_counts/index.html#get-the-counts---prepare-the-variables",
-    "title": "Get read counts",
-    "section": "Get the counts - prepare the variables",
-    "text": "Get the counts - prepare the variables\nNow that we have the files, we need to inform R where they are stored and where to put the results, in other words, prepare the variables.\n\n\n\n\n\n\n\nThe basename here is the name of the sample_rep, without the suffix added by the aligner or samtools nor folder names (these are removed with the function basename)\nFor the example, we will use a single sample, but we will use a loop so the final script can be used fo multiple samples easily\n\n\n\n\nbamFiles &lt;- paste0(\"/output_tables/alignments/\", \n                   list.files(path = \"/output_tables/alignments/\")\n)\n  \nbaiFiles &lt;- paste0(bamFiles, \".bai\")\nbaseNames &lt;- gsub(\"_Aligned.sortedByCoord.out.bam\", \"\",\n                  basename(bamFiles))\nTxDbPath &lt;- \"./output_tables/Arabidopsis_TxDb.RData\"\nload(TxDbPath)\noutPutDir &lt;- \"./output_tables/\"\n\n# Now we load the RData\n# This line tells R where the alignment files for the sample are and how much of them to read at a time\nbfl &lt;- BamFileList(bamFiles, \n                   baiFiles, \n                   yieldSize=200000)"
-  },
-  {
-    "objectID": "r/Get_read_counts/index.html#get-the-counts---overlaps",
-    "href": "r/Get_read_counts/index.html#get-the-counts---overlaps",
-    "title": "Get read counts",
-    "section": "Get the counts - overlaps",
-    "text": "Get the counts - overlaps\nSummarize overlaps\n\nCodeExplanationSaving overlaps result\n\n\nThe code below uses summarizedOverlaps to count the number of alignments (bfl object) falling in each transcript (tx object, transcript database)\n\noverlaps &lt;- summarizeOverlaps(\n  features = tx, # genes' coordinates\n  reads = bfl, # bam and bai files\n  mode = \"Union\", \n  # mode can be also \"IntersectStrict\" or \"IntersectNotEmpty\"\n  singleEnd = F, fragments = T, \n  ignore.strand = T\n  )\n\n\n\nIn this case, we have paired-end reads (singleEnd = F, fragments = T), we ignore the strand information and we use the union mode:\n\n\n\n\n\n\n\nAll the bam/bai files are analysed here. So if you have many, R will take very long to run the code. You can increase or decrease the yieldSize in the function BamFileList (previous slide) to use more/less memory and increase/decrease the speed of the code.\n\n\n\n\n\nWe save this result, so if there is an issue with the rest of the code, the heavy part of the program gets saved before R stops.\n# \nsave(overlaps, file = paste0(outPutDir, \"overlaps.RData\"))"
-  },
-  {
-    "objectID": "r/Get_read_counts/index.html#get-counts---export-table",
-    "href": "r/Get_read_counts/index.html#get-counts---export-table",
-    "title": "Get read counts",
-    "section": "Get counts - export table",
-    "text": "Get counts - export table\nNow that we have the overlaps, we can get the counts.\n\n# Then we extract the counts slot, transform into a data.frame and export it as a csv file.\ncountAssays = assays(overlaps)$counts  %&gt;% as.data.frame()\nnames(countAssays) &lt;- baseNames\n\nwrite_csv(x = countAssays, \n          file = paste0(outPutDir, \"counts.csv\"), \n          col_names = T,\n          quote = \"none\")\n\nWe can check the number of reads/fragments that passed the criteria to be considered mapped using colSums. By using this function, we get the result for all datasets included in the table, without needing to explicitly type any specific sample name.\n\ncolSums(countAssays)\n\nsubset_Col_0_GFP_1 \n             51725"
-  },
-  {
-    "objectID": "r/Get_read_counts/index.html#more-tutorials-and-resources",
-    "href": "r/Get_read_counts/index.html#more-tutorials-and-resources",
-    "title": "Get read counts",
-    "section": "More tutorials and resources",
-    "text": "More tutorials and resources\n\nARTICLE: a survey of best practices for RNA-seq data analysis\nIntroduction to transcript quantification with Salmon\nEnd-to-end analysis - RNAseq\nRNAseq analysis in R - University of Cambridge\nRNAseq-R"
-  },
-  {
-    "objectID": "r/Packages_Functions/index.html#be-lazy",
-    "href": "r/Packages_Functions/index.html#be-lazy",
-    "title": "R class - packages and functions",
-    "section": "Be lazy!",
-    "text": "Be lazy!\nThe most certain way to make mistakes when programming is typing everything.\nThink of when you are writing a text, how many typos do you make? This will happen when you are coding!\nRealizing there are typos or bigger mistakes in your code is more difficult than in a text to a friend.\nSo, be lazy and copy/paste codes when possible.\n\nAlso, don’t try to re-invent the wheel. Check on stack-overflow, bioconductor or github to see if other people already tried what you are doing and the solutions they came up with. You can always edit their code!"
-  },
-  {
-    "objectID": "r/Packages_Functions/index.html#packages",
-    "href": "r/Packages_Functions/index.html#packages",
-    "title": "R class - packages and functions",
+    "objectID": "r/MSA_phylogenetic_trees/index.html#packages",
+    "href": "r/MSA_phylogenetic_trees/index.html#packages",
+    "title": "Multiple sequence alignment and phylogenetic trees",
     "section": "Packages",
-    "text": "Packages\nThese are simply folders containing files with many functions.\nThey may contain data so you can test the functions.\nHow to use packages\n\nInstallLoadAdvanced install and load\n\n\nIf you never used the package, it probably is not installed in your computer, so you need to use the function “install.packages”\ninstall.packages(\"vegan\") # a package with functions for multivariate stats functions\n\n# You can install many packages at once\ninstall.packages(c(\"venn\", \"tidyverse\"))\n\n\ninstall.packages just installs the package, but it does not load it (open in R). To load, use the function library\nlibrary(cluster)\nlibrary(\"tidyverse\") # you do not need the quotes with the function library\n\n\n\n\n\n\nYou cannot put multiple package names in the library function You need to load them one by one\n\n\n\n\n\nCome back to this part once you are more comfortable with programming.\nYou cannot put a vector (ie. c(\"a\", \"b\", \"c\")) inside library(), but you can write a code that loads the packages one by one without you writing that manually.\n# start by creating a vector with all the packages you need\npkgs = c(\"rmarkdown\", \"tidyverse\", \"venn\")\n\n# We check which packages are NOT (!) installed\npkgs.To.Install = ! pkgs %in% installed.packages()\n\n# any() checks if there is at least one TRUE in the vector\nif (any(pkgs.To.Install)) install.packages(pkgs[pkgs.To.Install])\n\nfor (curPkg in pkgs) library(curPkg, character.only = T) \n# curPkg is a variable that takes the value of each element in pkgs\n# Every time the function library() is run, curPkg changes value"
+    "text": "Packages\nBefore, we installed packages with the code below\npkgs = c(\"rmarkdown\", \"tidyverse\", \"venn\")\npkgs.To.Install = which(! pkgs %in% installed.packages())\nif (length(pkgs.To.Install) != 0) install.packages(pkgs[pkgs.To.Install])\nfor (curPkg in pkgs) library(curPkg, character.only = T) \nHowever, most packages for bioinformatics are not downloadable with a simple install.packages, as they are not stored in CRAN, the basic website for R packages.\nInstead, they are in Bioconductor, and some are in specific github repositories (think about the R_class_examples)."
   },
   {
-    "objectID": "r/Packages_Functions/index.html#loops",
-    "href": "r/Packages_Functions/index.html#loops",
-    "title": "R class - packages and functions",
-    "section": "loops",
-    "text": "loops\nLet’s create a function and a vector of elements that we will use in the function\n\nthesisDefense = function(x) {return(paste(\"Ph.D.\", x))}\ncandidates = c(\"Serge\", \"Fadoua\", \"Arghavan\", \n           \"Snehi\", \"Basanta\", \"Sajjad\", \n           \"Mahsa\", \"Archana\")\n\n\n\nfor\n\nFunction that will repeat what you ask for everything in the group you give it. Eg: every PhD candidate has to defend their theses: - Useful when you do not want to save the results or when you need to save separated objects for each elements in the loop (each candidate below)\n\n\n\nfor (phd in candidates) { thesisDefense(phd) }\n\n\n\n\n# To see an output, we would have to either print it or create an object to save it\ndefenseResults = c()\nfor (phd in candidates) { defenseResults[phd] = thesisDefense(phd) }\ndefenseResults\n\n           Serge           Fadoua         Arghavan            Snehi \n   \"Ph.D. Serge\"   \"Ph.D. Fadoua\" \"Ph.D. Arghavan\"    \"Ph.D. Snehi\" \n         Basanta           Sajjad            Mahsa          Archana \n \"Ph.D. Basanta\"   \"Ph.D. Sajjad\"    \"Ph.D. Mahsa\"  \"Ph.D. Archana\" \n\n\n\n\n\napply functions\n\nSimilar to for, but generates an output\nUseful when you want a single output for each element of the loop\nSeveral options: apply, sapply, lapply, mapply, vapply\n\n\n\ndefenseResults = sapply(candidates, \\(phd) thesisDefense(phd) )\n\ndefenseResults\n\n\n\n           Serge           Fadoua         Arghavan            Snehi \n   \"Ph.D. Serge\"   \"Ph.D. Fadoua\" \"Ph.D. Arghavan\"    \"Ph.D. Snehi\" \n         Basanta           Sajjad            Mahsa          Archana \n \"Ph.D. Basanta\"   \"Ph.D. Sajjad\"    \"Ph.D. Mahsa\"  \"Ph.D. Archana\""
+    "objectID": "r/MSA_phylogenetic_trees/index.html#installing-packages-from-other-sources",
+    "href": "r/MSA_phylogenetic_trees/index.html#installing-packages-from-other-sources",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "Installing packages from other sources",
+    "text": "Installing packages from other sources\n\nBioconductor packagesGithub packagesSimplified install\n\n\nFor these, we use the package BiocManager.\nif (!require(\"BiocManager\", quietly = TRUE))\n    install.packages(\"BiocManager\")\npkgs.bioconductor = c(\"msa\", \"Biostrings\")\npkgs.To.Install = which(! pkgs.bioconductor %in% installed.packages())\nif (length(pkgs.To.Install) != 0) {\n    BiocManager::install(pkgs.bioconductor[pkgs.To.Install])    \n}\n\n\n\n\n\n\nIn BiocManager::install, the :: indicates that the function install comes from the package BiocManager.\nSo even if there is another package with the same function, R will know which one to use.\n\n\n\n\n\n\n\n\n\n\n\nGithub is a website that has folders for each user, and each user may have multiple folders: one for each project. Example, in:\n\nhttps://github.com/KarenGoncalves/R_class_examples\n\nKarenGoncalves/ is my folder in the website, in there I have over 20 folders, one for each project.\nR_class_examples is one of them.\n\n\n\n\n\nif (! \"devtools\" %in% installed.packages()) {\n    install.packages(\"devtools\")\n}\n\nrepos.github = c(\"YuLab-SMU/ggmsa\")\npkgs.github = gsub(\".+/\", \"\", repos.github) # remove the folder name\npkgs.To.Install = which(! pkgs.github %in% installed.packages())\n\nif (length(pkgs.To.Install) != 0) {\n    # To install the package, we need the folder + package name\n    devtools::install_github(repos.github[pkgs.To.Install]) \n}\n\n\nCopy the code below to load all the necessary packages.\nIn future, just come back here, copy the code below and change the list of packages.\n\ndevtools::source_gist(\"https://gist.github.com/KarenGoncalves/0db105bceff4ff69547ee25460dda978\")\n\ninstall_from_dif_sources(\n    cran_packages = c(\"tidyverse\", \"tinytex\", \"patchwork\"),\n    bioconductor_packages = c(\"Biostrings\", \"msa\", \"treeio\", \"ggtree\", \"ape\", \"seqinr\", \"phangorn\"),\n    github_packages = \"YuLab-SMU/ggmsa\"\n)\n\n\n\n\n\n\n\nThe link https://gist.github.com/KarenGoncalves/0db105bceff4ff69547ee25460dda978 contains the R script that creates functions to load the packages from different sources: CRAN (the typical source), Bioconductor and github.\nSo you just need to give the link to the function devtools::source_gist() and then you can use the function install_from_dif_sources"
   },
   {
-    "objectID": "r/Packages_Functions/index.html#tidyverse---many-packages-that-make-your-life-easier",
-    "href": "r/Packages_Functions/index.html#tidyverse---many-packages-that-make-your-life-easier",
-    "title": "R class - packages and functions",
-    "section": "Tidyverse - many packages that make your life easier",
-    "text": "Tidyverse - many packages that make your life easier\nWhen you load the package “tidyverse”, it tells you that it loaded many others (packages from the universe tidy)\n\nTables and data.frames\n\ndplyr: many functions to work with tables\ntibble: construct data frames (tables)\ntidyr: tools to better organize data (make it tidyier)\nreadr: fast and friendly functions to read table data\n\nText-like data\n\nforcats: (anagram of factors) tools to work with factors (tutorial)\nstringr: work with text (character variables)\nlubridate: work with dates\n\nPlots\n\nggplot2: create better plots\n\nProgramming\n\npurrr: functional programming in R (cheatsheet)"
+    "objectID": "r/MSA_phylogenetic_trees/index.html#a-note-about-classes",
+    "href": "r/MSA_phylogenetic_trees/index.html#a-note-about-classes",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "A note about classes",
+    "text": "A note about classes\nR objects (the things in the environment tab) belong to different classes. The basic ones you already know:\n\nvectors have one dimension and data inside has to be all the same type: character vector; numeric vector; factor vector\nmatrices: vectors, but with columns and rows\ndata.frames: table made of vectors (columns) of the same size\nlists: anything goes! If the objects stored in it have names, you can access them like list$object_name, as if the object inside was a column of a table\n\n\nTo check the class of an object you can use:\nclass(object)\n\n\nA package may create it’s own object class. Sometimes you need to convert an object from one class to another, like:\n\n(numeric_vector &lt;- 1:10)\n\n [1]  1  2  3  4  5  6  7  8  9 10\n\nclass(numeric_vector)\n\n[1] \"integer\"\n\n(character_vector &lt;- as.character(numeric_vector)) # change class\n\n [1] \"1\"  \"2\"  \"3\"  \"4\"  \"5\"  \"6\"  \"7\"  \"8\"  \"9\"  \"10\"\n\nclass(character_vector)\n\n[1] \"character\"\n\n\n\n\nSo, just remember that, if a function starts with as., it is changing the class of the object."
   },
   {
-    "objectID": "r/Packages_Functions/index.html#pipe-or",
-    "href": "r/Packages_Functions/index.html#pipe-or",
-    "title": "R class - packages and functions",
-    "section": "Pipe (|> or %>%)",
-    "text": "Pipe (|&gt; or %&gt;%)\nThink of the pipe as a tube connecting two functions. When the first function is done, instead of presenting its output, you use it to start a new function.\n\nEg. To start a postdoc, I had to finish my Ph.D: phd(\"Karen\") %&gt;% postdoc\n\n\n\n\n\n\n\nIf you use |&gt;, you need to put the parenthesis in the function in front of it. Meaning:\n\nphd(\"Karen\") %&gt;% postdoc works same as phd(\"Karen\") %&gt;% postdoc() and phd(\"Karen\") |&gt; postdoc()\nphd(\"Karen\") |&gt; postdoc does not work\n\n\n\n\nLet’s say you just want to check if R will read your file right or if you need to add more things to it before really working on the file.\n\nExerciseSolution 1Solution 2\n\n\nRun the function str on your input file or on the example from Class 0\n\n\n\n\n\n\nYou can load files from the internet without needing to download them to your computer!\n\n\n\n\n\n\n# You could first put the path to the file in a variable, it would make things easier\nmyFile = \"https://karengoncalves.github.io/Programming_classes/exampleData/Class1_exampleData.txt\"\n\nstr(read.delim(myFile))\n\n'data.frame':   8 obs. of  7 variables:\n $ X        : chr  \"A\" \"B\" \"C\" \"D\" ...\n $ Control_1: num  0.1229 0.0907 0.1068 0.0161 0.1533 ...\n $ Control_2: num  0.827 0.11 0.469 0.359 0.462 ...\n $ Control_3: num  0.1486 0.3352 0.2419 0.0933 0.9419 ...\n $ Treated_1: num  0.086 0.1403 0.1132 0.0271 0.3284 ...\n $ Treated_2: num  0.3145 0.2441 0.2793 0.0352 0.0909 ...\n $ Treated_3: num  0.22 0.433 0.326 0.107 0.316 ...\n\n\n\n\nUsing pipe, you can see the progression of the pipeline, eg.: bachelor(\"Karen\") %&gt;% phd() %&gt;% postdoc instead of postdoc(phd(bachelor(\"Karen\")))\nBasically, the first function written is the first one used, not the last.\n# You can also use a pipe ( %&gt;% )\nmyFile = \"https://karengoncalves.github.io/Programming_classes/exampleData/Class1_exampleData.txt\"\n\nread.delim(myFile) %&gt;% str"
+    "objectID": "r/MSA_phylogenetic_trees/index.html#reading-and-writing-fasta-files",
+    "href": "r/MSA_phylogenetic_trees/index.html#reading-and-writing-fasta-files",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "Reading and writing fasta files",
+    "text": "Reading and writing fasta files\nIf you have protein sequences in a fasta file, copy it to your inputs folder, else use the following: Reductases.fasta\n\n# To open a fasta file with multiple sequences, use the function readDNAStringSet() or readAAStringSet()\nfasta_input = \"https://karengoncalves.github.io/Programming_classes/exampleData/Reductases.fasta\" %&gt;%\n    readAAStringSet(format = \"fasta\")\nhead(fasta_input)\n\nAAStringSet object of length 6:\n    width seq                                               names               \n[1]   318 MATENKILILGPTGAIGRHIVWA...IEASEAYPDVTYTTADEYLNQFV IFR Medicago sativa\n[2]   330 MAAGFLFHMGSLPAIATVGHKSK...GEATKLYPEVGYTTVVEYMKRYV PILR2 Linum usita...\n[3]   598 MVGSIVGSNMAATDARFLSSNFG...VAHLPDKANNYLTPALSVLEKNT HC173 Arabidopsis...\n[4]   323 MTTGKGKILILGATGYLGKYMVK...EYLKICLVNPPKPKLATYAQPST IGS1 Petunia hybrida\n[5]   314 MEENGMKSKILIFGGTGYIGNHM...FTTIDELLDIFVHDPPPPASAAF EGS1 Ocimum basil...\n[6]   310 MVASEKSKILIIGGTGYIGKYLV...VEATELYPKVKYTTVDEFYNKFV IFRH Nicotiana gl...\n\n# If you want to select just one or two sequences and export it, you can do:\nwriteXStringSet(fasta_input[1:3], \n        filepath = \"input_subset.fasta\", \n        format = \"fasta\")"
   },
   {
-    "objectID": "r/Packages_Functions/index.html#readxl-package---open-excel-files",
-    "href": "r/Packages_Functions/index.html#readxl-package---open-excel-files",
-    "title": "R class - packages and functions",
-    "section": "readxl package - open excel files",
-    "text": "readxl package - open excel files\nPart of the tidyverse package\nAllows you to:\n\nCheck the names of the sheets of an excel file: excel_sheets(MY_EXCEL_FILE)\nRead sheets of an excel file as tibbles (a type of data.frame):\n\nread_excel(file = MY_EXCEL_FILE, sheet = MY_SHEET)\nYou can specify what defines NA: read_excel(file = MY_EXCEL_FILE, sheet = MY_SHEET, na = \".\")\nInstead of header = T, you use col_names = T\nYou can specify the number of rows to skip in the beginning with skip = N\nYou can specify the number of rows to read with n_max = N\nYou can specify which cols and rows to read with range = \"H40:T80\"\n\nIf range is specified, skip and n_max are ignored\nYou can include the name of the sheet: range = \"MY_SHEET!H40:T80\"\n\nSHEET EXCLAMATION_POINT CELL_RANGE"
+    "objectID": "r/MSA_phylogenetic_trees/index.html#multiple-sequence-alignment-msa",
+    "href": "r/MSA_phylogenetic_trees/index.html#multiple-sequence-alignment-msa",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "Multiple Sequence Alignment (MSA)",
+    "text": "Multiple Sequence Alignment (MSA)\nMake things easy for yourself later, add the names of the parameters of each function so you know what you need to put next time.\n\nThere are 4 functions for MSA:\n\nmsaClustalW - ClustalW is a general purpose multiple alignment program for DNA or proteins. 1\n\ncluster parameter can be either Neighbor Joining (\"nj\") or Unweighted Pair Group Method with Arithmetic mean (\"upgma\")\n\nDo not use \"upgma\" if you are on windows and your R version is 4.x (x being any number) - R crashes\n\n\nmsaClustalOmega - New MSA tool that uses seeded guide trees and HMM profile-profile techniques to generate alignments. Suitable for medium-large alignments.2\n\ndefault substitutionMatrix: \"Gonnet\"; other options: \"BLOSUM30\", \"BLOSUM40, \"BLOSUM50\", \"BLOSUM65\" and \"BLOSUM80\".\n\nmsaMuscle - Accurate MSA tool, especially good with proteins. Suitable for medium alignments.2\n\ncluster parameter can be either NJ (\"neighborjoining\") or UPGMA (\"upgma\") - UPGMA gives better results 3\n\nmsa - you can set the method with the argument method or just put the sequences and use the default (\"Clustalw\") (other options: \"ClustalOmega\", \"Muscle\")\n\nAdd verbose = T so that the parameters used are printed to the screen and you can take note for your publications."
   },
   {
-    "objectID": "r/Packages_Functions/index.html#ggplot2",
-    "href": "r/Packages_Functions/index.html#ggplot2",
-    "title": "R class - packages and functions",
-    "section": "ggplot2",
-    "text": "ggplot2\n\nExerciseSolution 1Solution 2Solution 3\n\n\nCreate a colored boxplot with the dataset iris, with nice axes titles\n\n\nCode from the previous class\n\ncolors = c(\"red\", \"green\", \"blue\")\nboxplot(Sepal.Length ~ Species, \n    data = iris, col = colors, \n    ylab = \"Sepal length (mm)\", xlab = \"Species epithet\")\n\n\n\n\n\n\nUse ggplot. The syntax may take a while to get used to, but it is easier to read.\n\n# aes is short for aesthetics, basically what columns hold the values you want to plot\n# fill is the color that will be inside the box, color is just for the border\nggplot(data = iris,\n       aes(x = Species,\n           y = Sepal.Length,\n           fill = Species)) +\n    geom_boxplot() + # the type of plot you want\n    ylab(\"Sepal length (mm)\") +\n    xlab(\"Species epithet\")\n\n\n\n\n\n\nImprove ggplot by setting a better theme (check here see the options)\n\n# Set a theme for all future plots in this session\ntheme_set(theme_bw()) \n\n# Use different colors to fill and remove the legend\ncolors = c(\"red\", \"green\", \"blue\")\n\nggplot(data = iris,\n       aes(x = Species,\n           y = Sepal.Length,\n           fill = Species)) +\n    geom_boxplot(show.legend = F) + # the type of plot you want\n    ylab(\"Sepal length (mm)\") +\n    xlab(\"Species epithet\") +\n    scale_fill_manual(values = colors)"
+    "objectID": "r/MSA_phylogenetic_trees/index.html#running-msa",
+    "href": "r/MSA_phylogenetic_trees/index.html#running-msa",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "Running MSA",
+    "text": "Running MSA\n\n# The dataset used as example has 48 sequences, we will subset it for the alignment, selecting only 10\nfasta_for_alignment &lt;- fasta_input[1:10]\n# use ?msa to know what you need to put in the function and what the default values are\nmyFirstAlignment &lt;- msa(fasta_for_alignment, \n            method = \"ClustalOmega\",\n            verbose = T\n)\n\nparams: clustalo --R -o tempClustalOmega.aln --outfmt=clustal --seqtype=protein --force --gapopen=6.000000 --gapext=1.000000 --cluster-size=100 --iter=0 --output-order=tree-order\nusing Gonnet\n\nmyFirstAlignment\n\nClustalOmega 1.2.0 \n\nCall:\n   msa(fasta_for_alignment, method = \"ClustalOmega\", verbose = T)\n\nMsaAAMultipleAlignment with 10 rows and 780 columns\n     aln                                                   names\n [1] -------------------------...------------------------- 5BPOR Digitalis l...\n [2] -------------------------...----------ATYAQPST------- IGS1 Petunia hybrida\n [3] -------------------------...----------AAF------------ EGS1 Ocimum basil...\n [4] -------------------------...------------------------- PILR2 Linum usita...\n [5] -------------------------...------------------------- IFR Medicago sativa\n [6] -------------------------...------------------------- IFRH Nicotiana gl...\n [7] MVGSIVGSNMAATDARFLSSNFGNS...ELVAHLPDKANNYLTPALSVLEKNT HC173 Arabidopsis...\n [8] -------------------------...------------------------- ADH1 Catharanthus...\n [9] -------------------------...------------------------- ADH1 Euphorbia la...\n[10] -------------------------...------------------------- ADRC1 Arabidopsis...\n Con -------------------------...------------------------- Consensus \n\n\n\n\n\n\n\n\nVisualizing the result\n\n\nJust calling the MSA result will not show the whole alignment. For that you can use print()\nprint(myFirstAlignment, show = \"complete\", showConsensus = T)"
   },
   {
-    "objectID": "r/Packages_Functions/index.html#ggplot---part-2",
-    "href": "r/Packages_Functions/index.html#ggplot---part-2",
-    "title": "R class - packages and functions",
-    "section": "ggplot - part 2",
-    "text": "ggplot - part 2\nGraphics are layers of data and images put on top of each other. That is why the pieces of the ggplot function are connected by a +.\nThe codes below construct the plot from the previous slide piece by piece.\n\nBasic plotDecorations\n\n\n\n# Set a theme for all future plots in this session\ntheme_set(theme_bw()) \n\n# Use different colors to fill and remove the legend\n(plot1 = ggplot(data = iris,\n       aes(x = Species,\n           y = Sepal.Length,\n           fill = Species)))\n\n\n\n\n\n(plot2 = plot1 +\n    geom_boxplot(show.legend = F)) # the type of plot you want\n\n\n\n\n\n\nlabs adds labels:\n\nx and y - will add the labels to the axes (you can use the functions xlab or ylab instead)\ntitle - Normally at the top of the figure (you can use the function ggtitle instead)\nsubtitle - Goes under the title and is a bit smaller\ncaption - Normally goes at the bottom of the figure and is a small text\ntag - the letter that goes at the top-left corner of a plot that is one part of several in a figure\n\n\n(plot3 = plot2 +\n    labs(y = \"Sepal length (mm)\", x = \"Species epithet\"))\n\n\n\nplot3\n\n\n\n\n\ncolors = c(\"red\", \"green\", \"blue\")\n\nplot3 + scale_fill_manual(values = colors)"
+    "objectID": "r/MSA_phylogenetic_trees/index.html#use-ggmsa-for-visualization",
+    "href": "r/MSA_phylogenetic_trees/index.html#use-ggmsa-for-visualization",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "Use ggmsa for visualization",
+    "text": "Use ggmsa for visualization\nTo see the alignment as a plot, we can use ggmsa.\n\n\n\n\n\n\nWe need to change the type of object of the alignment result, as ggmsa only accepts \"AAMultipleAlignment\" objects\n\n\n\n\n# The original result is of class MsaAAMultipleAlignment\nmyFirstAlignment2 &lt;- myFirstAlignment # keep the original, make a copy to modify it\nclass(myFirstAlignment2) &lt;-  \"AAMultipleAlignment\"\n\n# We will plot only a part of the alignment - from the AA 220 to the AA 250 - so it is visible \nggmsa(myFirstAlignment2, \n      start = 220, end = 250, \n      seq_name = T)\n\n\n\n# We can see also the consensus highlighted\nggmsa(myFirstAlignment2, \n      start = 220, end = 250, \n      seq_name = T, consensus_views = T)\n\n\n\n# Remove the # below if you want to save the figure\n#ggsave(\"First_alignment_consensus_220_250.tiff\")"
   },
   {
-    "objectID": "r/Packages_Functions/index.html#dplyr-prepare-your-data-for-ggplot",
-    "href": "r/Packages_Functions/index.html#dplyr-prepare-your-data-for-ggplot",
-    "title": "R class - packages and functions",
-    "section": "dplyr: prepare your data for ggplot",
-    "text": "dplyr: prepare your data for ggplot\nIn the example dataset, the names of the groups are in the middle not specified, they are inside the replicate name. We need one column with the values and one with the names of the treatments.\n\nInput dataPivot-longerNew columnPlot\n\n\n\nmyFile = \"https://karengoncalves.github.io/Programming_classes/exampleData/Class1_exampleData.txt\"\n\n\nrawData = read.delim(myFile)\nnames(rawData)\n\n[1] \"X\"         \"Control_1\" \"Control_2\" \"Control_3\" \"Treated_1\" \"Treated_2\"\n[7] \"Treated_3\"\n\n# Let's change x to \"Measured\"\nnames(rawData)[1] = \"Measured\"\n\n\n\nThe table now is in the format “wide”, the one we want is called “long”\n\nlongData = pivot_longer(\n    data = rawData,\n    cols = !Measured, # gets all the columns of the table, except for the one in front of !\n    names_to = \"Replicates\", # name of the column that will contain column names from rawData\n    values_to = \"Measurements\"\n    )\n\nstr(longData)\n\ntibble [48 × 3] (S3: tbl_df/tbl/data.frame)\n $ Measured    : chr [1:48] \"A\" \"A\" \"A\" \"A\" ...\n $ Replicates  : chr [1:48] \"Control_1\" \"Control_2\" \"Control_3\" \"Treated_1\" ...\n $ Measurements: num [1:48] 0.123 0.827 0.149 0.086 0.314 ...\n\n\n\n\nLet’s split the values from “Replicates” using str_split from stringr\nmutate will return the input table with the new column we create\n\n# pattern is what separates (_)\n# i is the part that we want to see: Control_1 has 2 pieces, i=1 returns \"Control\"\n\nlongDataTreatments = longData %&gt;%\n    mutate(Treatment = str_split_i(Replicates, pattern = \"_\", i = 1))\n\nstr(longDataTreatments)\n\ntibble [48 × 4] (S3: tbl_df/tbl/data.frame)\n $ Measured    : chr [1:48] \"A\" \"A\" \"A\" \"A\" ...\n $ Replicates  : chr [1:48] \"Control_1\" \"Control_2\" \"Control_3\" \"Treated_1\" ...\n $ Measurements: num [1:48] 0.123 0.827 0.149 0.086 0.314 ...\n $ Treatment   : chr [1:48] \"Control\" \"Control\" \"Control\" \"Treated\" ...\n\n\n\n\n\nlongDataTreatments %&gt;%\n    ggplot(aes(x = Treatment, y = Measurements, fill = Measured)) +\n    geom_boxplot()\n\n\n\nlongDataTreatments %&gt;%\n    ggplot(aes(x = Measured, y = Measurements, fill = Treatment)) +\n    geom_boxplot()"
+    "objectID": "r/MSA_phylogenetic_trees/index.html#more-ggmsa-options",
+    "href": "r/MSA_phylogenetic_trees/index.html#more-ggmsa-options",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "More ggmsa options",
+    "text": "More ggmsa options\n\nResidue sizeSeqLogoConsensus as bar graph\n\n\nWe can set the width of the characters (use char_width = #), so the residues are not so big\n\nggmsa(myFirstAlignment2, \n      start = 220, end = 250, \n      seq_name = T, char_width = 0.5)\n\n\n\n\n\n\nA seqlogo is a plot with letters on top of each other representing their frequency at each position in the alignment. The bigger a letter, the more frequent it is at a given position.\n\nWe can add this plot with + geom_seqlogo()\n\nyou can use different color schemes with geom_seqlogo(color = #)1\nyou can set your color scheme with geom_seqlogo(custom_color = data.frame)1\n\n\n\nggmsa(myFirstAlignment2, \n      start = 220, end = 250, \n      seq_name = T, char_width = 0.5) + \n    geom_seqlogo() \n\n\n\n# Note that the gaps are also represented in the seqlogo!\n\n\n\n\n\n\n\n1 Check the options with ?geom_seqlogo\n\n\n\n\n\n\nggmsa(myFirstAlignment2, \n      start = 220, end = 250, \n      seq_name = T, char_width = 0.5) + \n    geom_seqlogo() +\n    geom_msaBar()"
   },
   {
-    "objectID": "r/Packages_Functions/index.html#types-of-plots---sample-distribution",
-    "href": "r/Packages_Functions/index.html#types-of-plots---sample-distribution",
-    "title": "R class - packages and functions",
-    "section": "Types of plots - sample distribution",
-    "text": "Types of plots - sample distribution\n\nBoxplot - check this slide\n\ngeom_boxplot\nAllows the visual comparison of groups, like a bar chart, as well as the distribution of the replicates\n\nYou can see the minimum, maximum and the median of the sample, as well as the outliers\n\n\nViolin plot\n\ngeom_violin\nSame as boxplot, but without the quantiles drawn\n\n\n\n\n\n\n\n\nYou can put different types of plot and multiple data in the same graphic.\nOver the violin or boxplot layer, you can add the points representing the value measured for each replicate, the mean, etc.\n\n\n\n\n\n\n\n\n\nIf you have few replicates (&lt; 5), use a barplot with the standard deviation (make sure the color of the bar allows the visualization of the error bar)\nIf many replicates per group, use a boxplot or violin plot."
+    "objectID": "r/MSA_phylogenetic_trees/index.html#make-a-phylogenetic-tree",
+    "href": "r/MSA_phylogenetic_trees/index.html#make-a-phylogenetic-tree",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "Make a phylogenetic tree",
+    "text": "Make a phylogenetic tree\nLearn what is necessary to make a tree, how to read it and what conclusions you can and cannot draw from them.\n\nSequences used for the tree are the leaves/tips.\nThe point where the tree starts (the center if it is circular, or the first tip to separate from the rest of the tree) is the root\nThe lines drawing the tree are the branches/edges.\nGoing from the leaves to the root, the point where two branches connect is called a node"
   },
   {
-    "objectID": "r/Packages_Functions/index.html#example-violin-plot",
-    "href": "r/Packages_Functions/index.html#example-violin-plot",
-    "title": "R class - packages and functions",
-    "section": "Example violin plot",
-    "text": "Example violin plot\nThe code to get a violin plot is the same as the one for a boxplot, the only difference is the geom_violin.\n\n# Set a theme for all future plots in this session\ntheme_set(theme_bw()) \n\n# Use different colors to fill and remove the legend\ncolors = c(\"red\", \"green\", \"blue\")\n\nggplot(data = iris,\n       aes(x = Species,\n           y = Sepal.Length,\n           fill = Species)) +\n    geom_violin(show.legend = F) + # violin instead of boxplot\n    ylab(\"Sepal length (mm)\") +\n    xlab(\"Species epithet\") +\n    scale_fill_manual(values = colors)"
+    "objectID": "r/MSA_phylogenetic_trees/index.html#compute-the-distance-matrix",
+    "href": "r/MSA_phylogenetic_trees/index.html#compute-the-distance-matrix",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "Compute the distance matrix",
+    "text": "Compute the distance matrix\nWe will use ape and seqinr to create a tree from the alignment. But we need to, again, transform the type of object we got from the msa.\nThen we calculate a distance matrix.\n\n\n\n\n\n\nA distance matrix shows how different each sequence is from the others. It has as many rows as columns, since every sequence is compared to the others.\n\nIts diagonal is all 0s, since the difference between a sequence and itself is 0.\nThe other rows and columns are values that indicate the amount of mismatches between two sequences. The greater the number, the less similar the two sequences are.\n\n\n\n\n\n# We need to first export the alignment and import it again to transform it \nmyFirstAlignment3 &lt;- \n    myFirstAlignment %&gt;% as.phyDat()\n\n# Then, we create a distance matrix\ndistance_alignment &lt;- \n    dist.ml(x = myFirstAlignment3, \n        model = \"Blosum62\")"
   },
   {
-    "objectID": "r/Packages_Functions/index.html#types-of-plots---bar-chart",
-    "href": "r/Packages_Functions/index.html#types-of-plots---bar-chart",
-    "title": "R class - packages and functions",
-    "section": "Types of plots - Bar chart",
-    "text": "Types of plots - Bar chart\n\nWhat and howgeom_colgeom_bar(stat = \"identity\")Pie chart\n\n\n\nUses\n\nVisually compare means when the number of replicates is low\nVisually compare counts (number of occurences) - number of students per lab\n\nHow\n\nUse either geom_col or geom_bar(stat = \"identity\")\nAdd standard deviation bar with geom_errorbar\n\ngeom_errorbar(aes(ymin=Mean-sd, ymax=Mean+sd), width=.2)\n\n\n\n\n\n\ndf &lt;- data.frame(\n  group = c(\"Male\", \"Female\", \"Child\"),\n  value = c(25, 25, 50)\n  )\n\n# Barplot like geom_col\nggplot(df, aes(x = group, y = value, fill = group)) +\n    geom_col(width = 1)\n\n\n\n\n\n\n\nidentity means that the size of the bar will be the value you put instead of calculating something\n\n\ndf &lt;- data.frame(\n  group = c(\"Male\", \"Female\", \"Child\"),\n  value = c(25, 25, 50)\n  )\n\n# Barplot like geom_col\nggplot(df, aes(x = group, y = value, fill = group)) +\n    geom_bar(width = 1,  stat = \"identity\")\n\n\n\n\n\n\n\nUsing either geom_bar or geom_col, you can make a pie chart with + coord_polar(\"y\")\n\n\ndf &lt;- data.frame(\n  group = c(\"Male\", \"Female\", \"Child\"),\n  value = c(25, 25, 50)\n  )\n\n# Barplot like geom_col\nggplot(df, aes(x = \"\", y = value, fill = group)) +\n    # x has to be \"\" - check how it looks if you put x = group\n    geom_bar(width = 1,  stat = \"identity\") +\n    coord_polar(\"y\", start = 1) +\n    theme_void() # clean up grids, borders, and labels"
+    "objectID": "r/MSA_phylogenetic_trees/index.html#tree-computation",
+    "href": "r/MSA_phylogenetic_trees/index.html#tree-computation",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "Tree computation",
+    "text": "Tree computation\nThen, we use the distance matrix to compute the tree, joining sequences most similar, then joining groups of sequences. Each method of computing will do this joining differently.\n\nnjbionjfastmeUPGMA/WPGMA\n\n\nThis function performs the neighbor-joining tree estimation of Saitou and Nei (1987).\n\nnj(X = distance_alignment) %&gt;% plot(main = \"ape::nj()\")\n\n\n\nnj(X = distance_alignment) %&gt;% \n    plot(main = \"phangorn::NJ()\")\n\n\n\n\n\n\nThis function performs the BIONJ algorithm of Gascuel (1997).\n\nbionj(X = distance_alignment) %&gt;% plot(main = \"ape::bionj\")\n\n\n\nUNJ(distance_alignment) %&gt;% plot(main = \"phangorn::UNJ\")\n\n\n\n\n\n\nThe two FastME (fast minimum evolution) functions (balanced - bal - and ordinary least-squares - ols) perform the minimum evolution algorithm of Desper and Gascuel (2002).\n\nfastme.bal(distance_alignment) %&gt;% plot(main = \"FastME BAL\")\n\n\n\nfastme.ols(distance_alignment) %&gt;% plot(main = \"FastME OLS\")\n\n\n\n\n\n\n\nUPGMA: uses the function hclust (hierarchical clustering) with method = \"average\", then transforms the dendrogram into the class phylo.\nWPGMA: uses the function hclust with method = \"mcquitty\", then transforms the dendrogram into the class phylo.\n\nRun ?hclust then look the section “Details”: the methods are explained with more details with references.\n\nupgma(distance_alignment) %&gt;% plot(main = \"UPGMA\")\n\n\n\nwpgma(distance_alignment) %&gt;% plot(main = \"WPGMA\")"
   },
   {
-    "objectID": "r/Packages_Functions/index.html#types-of-plot---proportions",
-    "href": "r/Packages_Functions/index.html#types-of-plot---proportions",
-    "title": "R class - packages and functions",
-    "section": "Types of plot - proportions",
-    "text": "Types of plot - proportions\nYou can use geom_bar(stat = \"count\") if you do not have the number of occurrences of each category computed. This way, ggplot counts it and plots. - Eg. A table with metabolites detected separated by category: how many metabolites of each category were detected?\nIf you want proportions in %, use stat = \"density\" instead of stat = \"count\"\n\ngeom_bar - count\n\n\n\nWith geom_bar, you can have the same plot as with geom_col if you use stat = \"identity\"\nidentity means that the size of the bar will be the value you put instead of calculating something\n\n\n# Datasets about US states\nUS_statesInfo = data.frame(Name = state.name,\n               Region = state.region,\n               Division = state.division)\nx = \"Number of states\"\n# Plot the number of states in each division\nggplot(US_statesInfo, aes(y = Division)) +\n    geom_bar(stat = \"count\") +\n    xlab(x)\n\n\n\n# Plot the number of states in each region\nggplot(US_statesInfo, aes(y = Region)) +\n    geom_bar() +\n    xlab(x)\n\n\n\n# Plot the number of states in each division, and color by the region\nggplot(US_statesInfo, aes(y = Division, fill = Region)) +\n    geom_bar(stat = \"count\") +\n    xlab(x)"
+    "objectID": "r/MSA_phylogenetic_trees/index.html#customizing-the-plot",
+    "href": "r/MSA_phylogenetic_trees/index.html#customizing-the-plot",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "Customizing the plot",
+    "text": "Customizing the plot\nWe can use dplyr to separate protein and species names.\n\nGet the treePrepare the labelsPlot the labels\n\n\n\nupgma_tree &lt;- upgma(distance_alignment)\n# We save the tree in a object so we can access the leaf labes with $tip.label\n\n\n\nWe will use a function called parse to italicize only the species name. It evaluates the text and executes functions inside it! Example, in:\n\"'TYDC '~italic('Narcissus pseudonarcissus')\"\nThe texts 'TYDC ' and 'Narcissus pseudonarcissus' (in italic) are joined by the symbol ~.\nIn this case, the protein name has just letters and numbers and is at the start of the sequence name, followed by the species name. So we can use gsub to create the label we want.\n\nSeqnames_tree &lt;- \n    gsub(\"(\\\\w+) (.+)\", \n         \"'\\\\1 '~italic('\\\\2')\",\n         upgma_tree$tip.label)\nupgma_tree$tip.label &lt;- Seqnames_tree\n\n\n\n\n\n\n\nCheck the result before plotting. See that your result looks like the example with TYDC above, as you need to use both double and single quotes.\n\n\n\n\n\n\nggtree(upgma_tree) +\n    # use geom_tiplab to plot the seqnames\n    # add parse = T so R executes the function inside the text\n    geom_tiplab(parse = T) +\n    xlim(c(0, 2)) \n\n\n\n    # the upper x limit may change depending on the length of your labels, play around until you get the whole label but little empty space"
   },
   {
-    "objectID": "r/Packages_Functions/index.html#types-of-plots---part-3",
-    "href": "r/Packages_Functions/index.html#types-of-plots---part-3",
-    "title": "R class - packages and functions",
-    "section": "Types of plots - part 3",
-    "text": "Types of plots - part 3\nLine graph - geom_line\n\nVisualize data across time - points are connected because they are the same sample at different times.\n\nLet’s say we want to see how the labs of 2 PIs have grown across the years and compare the two.\n\n# Let's create a time series to plot\n\nLabSize = data.frame(Isabel = c(0, 3, 5, 10, 30),\n             Hugo = c(2, 2, 6, 9, 9),\n             Year = seq(2014, 2022, 2))\nLabSize.Long = pivot_longer(LabSize,\n                cols = !Year, # all columns from LabSize, except \"Year\"\n                names_to = \"PI\", \n                values_to = \"LabMembers\")\n\nggplot(LabSize.Long, \n       aes(x = Year, y = LabMembers, color = PI)) +\n    geom_line()"
+    "objectID": "r/MSA_phylogenetic_trees/index.html#more-customization",
+    "href": "r/MSA_phylogenetic_trees/index.html#more-customization",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "More customization",
+    "text": "More customization\nLet’s say you want to add bars marking different groups in a tree, like the vertical bars marking the clades in the figure below (Figure 3 in Hori et al. 2006):"
   },
   {
-    "objectID": "r/Packages_Functions/index.html#advanced-line-graph",
-    "href": "r/Packages_Functions/index.html#advanced-line-graph",
-    "title": "R class - packages and functions",
-    "section": "Advanced line graph",
-    "text": "Advanced line graph\n\nInputPrepare the dataLine chartCalculate statsLine chart with error bars\n\n\nWe will use the time series data\n\n# Load the data\ntimeSeries.File = \"https://karengoncalves.github.io/Programming_classes/exampleData/TimeSeries_example.csv\"\ntimeSeries = read.csv(timeSeries.File)\n\n\nstr(timeSeries)\n\n'data.frame':   12 obs. of  10 variables:\n $ X           : chr  \"Day_1\" \"Day_2\" \"Day_3\" \"Day_4\" ...\n $ Control_3   : num  0 1.96 3.98 6.18 7.52 ...\n $ Control_2   : num  0 2.04 4.02 6 8 ...\n $ Control_1   : num  0 2 4 5.82 8.48 ...\n $ TreatmentA_1: num  0 2.94 6.03 8.73 12 ...\n $ TreatmentA_2: num  0 3 6 9.27 11.28 ...\n $ TreatmentA_3: num  0 3.06 5.97 9 12.72 ...\n $ TreatmentB_3: num  0 1.53 3 4.5 6.36 ...\n $ TreatmentB_2: num  0 1.47 2.98 4.37 5.64 ...\n $ TreatmentB_1: num  0 1.5 3.02 4.63 6 ...\n\n# Let's rename the first column that indicate the time points\nnames(timeSeries)[1] = \"TimePoint\" \ntimeSeries$TimePoint = \n    gsub(\"Day_\", \"\", timeSeries$TimePoint) |&gt;\n    as.numeric()\n\n\n\nLet’s transform the data to format long and add a column with the name of the treatment group\n\nlibrary(tidyverse)\n\ntimeSeriesLong = pivot_longer(\n    timeSeries,\n    cols = !TimePoint, \n    names_to = c(\"Treatment\", \"Replicates\"),\n    names_sep = \"_\",\n    values_to = \"Growth_measure\"\n)\n\nhead(timeSeriesLong)    \n\n# A tibble: 6 × 4\n  TimePoint Treatment  Replicates Growth_measure\n      &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;\n1         1 Control    3                       0\n2         1 Control    2                       0\n3         1 Control    1                       0\n4         1 TreatmentA 1                       0\n5         1 TreatmentA 2                       0\n6         1 TreatmentA 3                       0\n\n\n\n\n\nggplot(timeSeriesLong) +\n    geom_line(aes(x = TimePoint, y = Growth_measure, \n              group = Treatment, \n              color = Treatment)) +\n    scale_x_continuous(breaks = 1:12)\n\n\n\n\n\n\nNow let’s create another table with the mean, standard deviation and coefficient of variation of each treatment per time point\n\nGrowthMeasureStats = timeSeriesLong %&gt;%\n    group_by(Treatment, TimePoint) %&gt;%\n    summarise(\n        Mean = mean(Growth_measure),\n        StdEnv = sd(Growth_measure)\n    )\n\n\n\nFor the error bars, we cannot simply say “here, this is the standard deviation”.\nWe need to tell it “use this value as maximum and this as minimum”\nSee that we set “ymin” and “ymax”. If you have standard deviation for the x-axis, you can add it with “xmin” and “xmax”.\n\n# We put inside ggplot() what is common to all layers\np1 = ggplot(GrowthMeasureStats, \n       aes(x = TimePoint, \n           color = Treatment)) +\n    geom_line(aes(y = Mean)) \np1 \n\n\n\np1 + geom_errorbar(aes(ymin = Mean - StdEnv,\n               ymax = Mean + StdEnv),\n           width = 0.2) +\n    scale_x_continuous(breaks = 1:12)"
+    "objectID": "r/MSA_phylogenetic_trees/index.html#highlight-important-nodes",
+    "href": "r/MSA_phylogenetic_trees/index.html#highlight-important-nodes",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "Highlight important nodes",
+    "text": "Highlight important nodes\n\nIdentify the nodesMark groupsHighlight groups\n\n\nJust as we added the names of the leaves, we can add the names of the nodes with geom_text(aes(label=node))\nWe may need to play around with the hjust, which goes after aes(), inside geom_text()\n\nggtree(upgma_tree) +\n    geom_text(aes(label = node), hjust = -.2) +\n    geom_tiplab(parse = T, hjust = -.15) +\n    xlim(c(0, 2))\n\n\n\n\n\n\nIn our example tree, there are 2 main groups: nodes 12 and 13. We can use the functiongeom_cladelabel to mark each one\n\n\n\n\n\n\nThere is also geom_cladelab, but you cannot change the color of the text with it\n\n\n\n\nggtree(upgma_tree) +\n    # we do not need the line below anymore\n    #geom_text(aes(label = node), hjust = -.2) +\n    geom_tiplab(parse = T) +\n    geom_cladelabel(node = 12, label = \"Node 12\",\n            color = \"red\", offset = 1) +\n    geom_cladelabel(node = 13, label = \"Node 13\",\n            color = \"green4\", offset = 1,\n            barsize = 2) +\n    xlim(c(0, 2.5))\n\n\n\n\n\n\nYou can draw a rectangle around the node and its branches using geom_highlight\n\nggtree(upgma_tree) +\n    # we do not need the line below anymore\n    #geom_text(aes(label = node), hjust = -.2) +\n    geom_tiplab(parse = T) +\n    geom_highlight(node = 12,\n               fill = \"red\") +\n    # change the transparency of the rectangle with alpha\n    geom_cladelabel(node = 13, label = \"Node 13\",\n            color = \"green4\", offset = 1,\n            barsize = 2) +\n    xlim(c(0, 2.5))"
   },
   {
-    "objectID": "r/Packages_Functions/index.html#test-if-the-curves-are-different",
-    "href": "r/Packages_Functions/index.html#test-if-the-curves-are-different",
-    "title": "R class - packages and functions",
-    "section": "Test if the curves are different",
-    "text": "Test if the curves are different\n\nLinear model (regression)Check which curves are different\n\n\n\n# Create the linear model of Growth_measure ~ TimePoint, adding the Treatment interaction\nlinear.model = lm(Growth_measure ~ TimePoint*Treatment, data = timeSeriesLong)\nsummary(linear.model)\n\n\nCall:\nlm(formula = Growth_measure ~ TimePoint * Treatment, data = timeSeriesLong)\n\nResiduals:\n   Min     1Q Median     3Q    Max \n -1.80  -0.06   0.00   0.06   1.80 \n\nCoefficients:\n                              Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)                   -2.00000    0.14189 -14.095  &lt; 2e-16 ***\nTimePoint                      2.00000    0.01928 103.740  &lt; 2e-16 ***\nTreatmentTreatmentA           -1.00000    0.20066  -4.984 2.56e-06 ***\nTreatmentTreatmentB            0.50000    0.20066   2.492   0.0143 *  \nTimePoint:TreatmentTreatmentA  1.00000    0.02726  36.678  &lt; 2e-16 ***\nTimePoint:TreatmentTreatmentB -0.50000    0.02726 -18.339  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.3993 on 102 degrees of freedom\nMultiple R-squared:  0.9979,    Adjusted R-squared:  0.9978 \nF-statistic:  9800 on 5 and 102 DF,  p-value: &lt; 2.2e-16\n\n\n\n\n\ninstall.packages(\"lsmeans\"); library(\"lsmeans\")\n\npackage 'lsmeans' successfully unpacked and MD5 sums checked\n\nThe downloaded binary packages are in\n    C:\\Users\\Karen\\AppData\\Local\\Temp\\RtmpEjEd3Q\\downloaded_packages\n\n\n\nlinear.model.trends &lt;- lstrends(linear.model, \"Treatment\", var=\"TimePoint\")\nsummary(linear.model.trends)\n\n Treatment  TimePoint.trend     SE  df lower.CL upper.CL\n Control                2.0 0.0193 102     1.96     2.04\n TreatmentA             3.0 0.0193 102     2.96     3.04\n TreatmentB             1.5 0.0193 102     1.46     1.54\n\nConfidence level used: 0.95 \n\npairs(linear.model.trends)\n\n contrast                estimate     SE  df t.ratio p.value\n Control - TreatmentA        -1.0 0.0273 102 -36.678  &lt;.0001\n Control - TreatmentB         0.5 0.0273 102  18.339  &lt;.0001\n TreatmentA - TreatmentB      1.5 0.0273 102  55.016  &lt;.0001\n\nP value adjustment: tukey method for comparing a family of 3 estimates"
+    "objectID": "r/MSA_phylogenetic_trees/index.html#statistical-support",
+    "href": "r/MSA_phylogenetic_trees/index.html#statistical-support",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "Statistical support",
+    "text": "Statistical support\nThe statistical support on phylogenetic trees is calculated with bootstrap. In simple terms, bootstrap is repetition. In more complicated terms, the tree computation (including the calculation of the distance matrix) is repeated n times1, and the result shows the proportion of times the node appeared.\nIf out of 1000 times, a given group appears 100 times, its support is 10%.\n1 n is determined by the number of sequences you are working with.\n\nn is the number of times the calculation was repeated, so it includes the first time. That is why you may see it reported as ‘bootstrap was performed with 999 replicates’ (plus the original tree calculation, you get 1 000 replicates)\nAlthough more is better, using n=10 000 for a tree of 10 sequences is overkill and may take too much time to calculate.\nThe most typical n used (for &lt; 50 sequences in a tree) is 999"
   },
   {
-    "objectID": "r/Packages_Functions/index.html#references",
-    "href": "r/Packages_Functions/index.html#references",
-    "title": "R class - packages and functions",
-    "section": "References",
-    "text": "References\n\nAll tidyverse packages\nTutorials on all types of plots with ggplot2\n\nr-statistics\nCedric Scherer - advanced\n\nTutorials on data manipulation with dplyr\n\nTidyverse\nR official\nGenomics class"
+    "objectID": "r/MSA_phylogenetic_trees/index.html#bootstrap-support",
+    "href": "r/MSA_phylogenetic_trees/index.html#bootstrap-support",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "Bootstrap support",
+    "text": "Bootstrap support\nLet’s consider that we want to use upgma to calculate our tree and we want to calculate the support of the branches.\n\nComputationTree preparationPlotExport\n\n\nWe use the function bootstrap.phyDat the same way we use sapply: using this dataset, perform this set of functions.\n\nupgma_tree &lt;- myFirstAlignment3 |&gt;\n    dist.ml() |&gt; upgma()\nbs_upgma &lt;- bootstrap.phyDat(\n    myFirstAlignment3, \n    bs = 100, \\(x){\n        dist.ml (x) |&gt; upgma()\n    })\n\nbs_plot &lt;- plotBS(upgma_tree, bs_upgma)\n\n\n\n# The data stored in bs_plot is exactly what we need for ggtree\n\n\n\nSince this is a new file, we need to correct the sequence names again.\nWe also set a threshold for bootstrap. Only values passing the threshold are shown.\n\nbs_plot2 &lt;- bs_plot\n\n# We correct the sequence names\nSeqnames_tree &lt;- \n    gsub(\"(\\\\w+) (.+)\", \n         \"'\\\\1 '~italic('\\\\2')\",\n         bs_plot$tip.label)\nbs_plot2$tip.label &lt;- Seqnames_tree\n\n# Bootstrap threshold\nbs_threshold &lt;- 50\nbs_plot2$node.label &lt;- \n    ifelse(bs_plot$node.label &lt; bs_threshold,\n           \"\", bs_plot$node.label)\n\n\n\n\nggtree(bs_plot2) +\n    geom_tiplab(parse = T) +\n    geom_highlight(node = 12,\n               fill = \"red\") +\n    geom_nodelab(nudge_x = 0.03) +\n    # we use nudge_x to move the label away from the branches\n    xlim(c(0, 1.5))\n\n\n\n\n\n\nWe export the trees to a newick (.nwk) file\nThis format is readable by any program working with trees.\n\nwrite.tree(bs_upgma, file = \"bootstrap_upgma_trees.nwk\")"
   },
   {
-    "objectID": "r/Packages_Functions/index.html#code-from-class",
-    "href": "r/Packages_Functions/index.html#code-from-class",
-    "title": "R class - packages and functions",
-    "section": "Code from class",
-    "text": "Code from class\nTuesdays group\n\nSeptember 19th\nSeptember 19th (2)\nOctober 3rd\nOctober 10th\nOctober 17th\n\nFridays group\n\nSeptember 15th\nSeptember 29th\nOctober 6th\nOctober 19th"
+    "objectID": "r/MSA_phylogenetic_trees/index.html#resources",
+    "href": "r/MSA_phylogenetic_trees/index.html#resources",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "Resources",
+    "text": "Resources\n\nMultiple sequence alignment in R - msa\nape: phylogenetic trees\nggmsa\nggtree\nphangorn"
+  },
+  {
+    "objectID": "r/MSA_phylogenetic_trees/index.html#aminoacid-substitution-models-for-dist.ml",
+    "href": "r/MSA_phylogenetic_trees/index.html#aminoacid-substitution-models-for-dist.ml",
+    "title": "Multiple sequence alignment and phylogenetic trees",
+    "section": "Aminoacid substitution models for dist.ml()",
+    "text": "Aminoacid substitution models for dist.ml()\n\n‘BLOSUM62’\n‘WAG’\n‘JTT’\n‘LG’\n‘Dayhoff’\n‘cpREV’\n‘VT’\n‘rtREV’\n‘Dayhoff_DCMut’and ’JTT_DCMut’\n\nSpecific\n\nMitochondrial\n\n‘mtmam’\n‘mtzoa’\n‘mtREV24’\nArthropoda: ‘mtart’\nHIV: ‘HIVb’ and ‘HIVw’"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#input-data-and-deseq2-analysis",
+    "href": "r/plots_DEA/index.html#input-data-and-deseq2-analysis",
+    "title": "Differential expression analysis plots",
+    "section": "Input data and DESeq2 analysis",
+    "text": "Input data and DESeq2 analysis\n\ndevtools::source_gist(\"https://gist.github.com/KarenGoncalves/0db105bceff4ff69547ee25460dda978\")\n\ninstall_from_dif_sources(\n    cran_packages = c(\"tidyverse\", \"patchwork\"),\n    bioconductor_packages = c(\"Biostrings\", \"DESeq2\", \"ggtree\")\n)\n\ntheme_classic() %&gt;% theme_set"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#code-from-previous-class-prepare-input",
+    "href": "r/plots_DEA/index.html#code-from-previous-class-prepare-input",
+    "title": "Differential expression analysis plots",
+    "section": "Code from previous class: Prepare input",
+    "text": "Code from previous class: Prepare input\n\ncounts = read.csv(\"https://karengoncalves.github.io/Programming_classes/exampleData/Arabidopsis_counts.csv\",\n                  header = T, row.names = 1)"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#code-from-previous-class-prepare-input-1",
+    "href": "r/plots_DEA/index.html#code-from-previous-class-prepare-input-1",
+    "title": "Differential expression analysis plots",
+    "section": "Code from previous class: Prepare input",
+    "text": "Code from previous class: Prepare input\n\ncounts = read.csv(\"https://karengoncalves.github.io/Programming_classes/exampleData/Arabidopsis_counts.csv\",\n                  header = T, row.names = 1)\n\ndesign_matrix = \n  data.frame(Replicates = names(counts)) %&gt;%\n  mutate(Genotype = \n           gsub(\"_\\\\d+$\", \"\", \n                Replicates))"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#code-from-previous-class-prepare-input-2",
+    "href": "r/plots_DEA/index.html#code-from-previous-class-prepare-input-2",
+    "title": "Differential expression analysis plots",
+    "section": "Code from previous class: Prepare input",
+    "text": "Code from previous class: Prepare input\n\ncounts = read.csv(\"https://karengoncalves.github.io/Programming_classes/exampleData/Arabidopsis_counts.csv\",\n                  header = T, row.names = 1)\n\ndesign_matrix = \n  data.frame(Replicates = names(counts)) %&gt;%\n  mutate(Genotype = \n           gsub(\"_\\\\d+$\", \"\", \n                Replicates))\n\ngenes_not_expressed = rowSums(counts) == 0\ncounts_filtered = counts[ !genes_not_expressed, ]"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#code-from-previous-class-main-analysis",
+    "href": "r/plots_DEA/index.html#code-from-previous-class-main-analysis",
+    "title": "Differential expression analysis plots",
+    "section": "Code from previous class: Main analysis",
+    "text": "Code from previous class: Main analysis\n\ndeseq_dataset = DESeqDataSetFromMatrix(\n  countData = counts_filtered,\n  colData = design_matrix, # colData means data about the columns of the count matrix\n  design = ~Genotype # basically: expression in function of the genotype\n) %&gt;% DESeq()"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#code-from-previous-class-get-the-results",
+    "href": "r/plots_DEA/index.html#code-from-previous-class-get-the-results",
+    "title": "Differential expression analysis plots",
+    "section": "Code from previous class: Get the results",
+    "text": "Code from previous class: Get the results\n\nresults_DESeq2 &lt;- \n  lapply(resultsNames(deseq_dataset)[-1], \\(comparison) {\n    results(deseq_dataset, \n            name = comparison,\n            pAdjustMethod = \"BH\")@listData %&gt;%\n      as_tibble() %&gt;%\n      mutate(\n        Gene_name = rownames(counts_filtered),\n        State = case_when(\n          log2FoldChange &lt; -2 & padj &lt; 0.01 ~ \"Down-regulated\",\n          log2FoldChange &gt; 2 & padj &lt; 0.01 ~ \"Up-regulated\",\n          .default = \"equal\"),\n        Contrast = comparison\n      )\n  }) %&gt;%\n  list_rbind()"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#normalize-counts",
+    "href": "r/plots_DEA/index.html#normalize-counts",
+    "title": "Differential expression analysis plots",
+    "section": "Normalize counts",
+    "text": "Normalize counts\nYou can either use rlogTransformation or varianceStabilizingTransformation for PCA, as they return an object that includes the metadata. The first takes about 5x longer than the second, but results are similar. Check the help page for details on the computation.\nTo see the transformed counts, you need to run assay on the result.\n\nrlogTransformation\n\n\nrlog_transformed = rlogTransformation(deseq_dataset)\nassay(rlog_transformed) %&gt;% head\n\n          Control_1 Control_2 Control_3 Control_4 Mlp37347_1 Mlp37347_2\nAT1G01010  6.856238  6.614363  6.614790  6.165110   5.471233   5.796102\nAT1G01020  7.337836  7.045180  7.355484  7.501417   7.186908   7.253583\nAT1G01030  6.490673  6.253299  6.147981  6.267220   6.017791   6.081412\nAT1G01040  9.989951  9.705570  9.593858  9.700406   9.418827   9.425975\nAT1G01050  8.486265  8.897727  9.000133  9.285109   8.968637   8.808020\nAT1G01060 12.205905 12.287763 12.279939 11.944880   9.507479   9.424758\n          Mlp37347_3 Mlp37347_4 Mlp124499_1 Mlp124499_2 Mlp124499_3 Mlp124499_4\nAT1G01010   5.535472   5.900682    5.783818    5.766419    6.128911    5.693272\nAT1G01020   7.104379   7.029025    7.304103    7.097543    7.095395    7.089999\nAT1G01030   6.232429   6.298843    5.790084    5.812633    5.870933    6.115346\nAT1G01040   9.402218   9.495822    9.673989    9.839446    9.826400    9.283701\nAT1G01050   8.940594   9.085135    8.816797    8.795406    8.148923    9.082900\nAT1G01060   9.575817  10.642220   10.511861   10.605765   10.339630   12.211014\n\n\n\nvarianceStabilizingTransformation (VST)\n\n\nVST_data = varianceStabilizingTransformation(deseq_dataset)\nassay(VST_data) %&gt;% head\n\n          Control_1 Control_2 Control_3 Control_4 Mlp37347_1 Mlp37347_2\nAT1G01010  7.590094  7.234199  7.235298  6.594604   5.592357   6.065537\nAT1G01020  7.590094  7.149626  7.613059  7.822869   7.363027   7.462015\nAT1G01030  7.025739  6.670862  6.517423  6.687298   6.327689   6.420063\nAT1G01040 10.215535  9.790676  9.620667  9.782615   9.349971   9.360973\nAT1G01050  8.335243  8.978957  9.133170  9.552363   9.085613   8.842539\nAT1G01060 12.768174 12.878989 12.868370 12.406869   8.429246   8.248008\n          Mlp37347_3 Mlp37347_4 Mlp124499_1 Mlp124499_2 Mlp124499_3 Mlp124499_4\nAT1G01010   5.660322   6.212961    6.038054    6.014203    6.547341    5.910029\nAT1G01020   7.238271   7.122962    7.538112    7.228004    7.224890    7.217355\nAT1G01030   6.642055   6.739925    5.976459    6.014203    6.103966    6.469575\nAT1G01040   9.323073   9.469278    9.742963    9.991844    9.972339    9.135749\nAT1G01050   9.043900   9.260498    8.855706    8.822978    7.784839    9.256563\nAT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#pca",
+    "href": "r/plots_DEA/index.html#pca",
+    "title": "Differential expression analysis plots",
+    "section": "PCA",
+    "text": "PCA\nDESeq2 offers a function for PCA that takes the result from either of the two functions and returns a ggplot object.\nBecause of this, we can add things to the plot as if it was a ggplot.\n\nplotPCA(rlog_transformed, \n        intgroup = \"Genotype\", # color samples by\n        ntop = nrow(counts_filtered)) #use how many genes for the computation"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#pca-1",
+    "href": "r/plots_DEA/index.html#pca-1",
+    "title": "Differential expression analysis plots",
+    "section": "PCA",
+    "text": "PCA\nDESeq2 offers a function for PCA that takes the result from either of the two functions and returns a ggplot object.\nBecause of this, we can add things to the plot as if it was a ggplot.\n\nplotPCA(rlog_transformed, \n        intgroup = \"Genotype\", # color samples by\n        ntop = nrow(counts_filtered)) + #use how many genes for the computation\n  theme_classic() +\n  labs(color =  \"\") +\n  scale_color_manual(values = c(\"Control\" = \"black\",\n                                  \"Mlp37347\" = \"red\",\n                                  \"Mlp124499\" = \"blue\")\n  )"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#clustering",
+    "href": "r/plots_DEA/index.html#clustering",
+    "title": "Differential expression analysis plots",
+    "section": "Clustering",
+    "text": "Clustering\nHierarchical clustering is a graphical way to show the pairwise similarity between samples.\nWe just need to edit the rlog_transformed or the VST_data so that the samples are shown in the rows and the genes in the columns.\n\ndistance_data = \n  rlog_transformed %&gt;%\n  assay() %&gt;%\n  t %&gt;% dist() # default is euclidean\n\ncluster_hc = hclust(distance_data)\nplot(cluster_hc)"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#add-a-heatmap",
+    "href": "r/plots_DEA/index.html#add-a-heatmap",
+    "title": "Differential expression analysis plots",
+    "section": "Add a heatmap",
+    "text": "Add a heatmap\nYou can show the dendrogram and the distance matrix in a heatmap\n\ndistance_data %&gt;%\n  as.matrix %&gt;%\n  stats::heatmap(Rowv = as.dendrogram(cluster_hc),\n                 symm = T)"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#improved-heatmap-dendrogram-prepare-data",
+    "href": "r/plots_DEA/index.html#improved-heatmap-dendrogram-prepare-data",
+    "title": "Differential expression analysis plots",
+    "section": "Improved heatmap + dendrogram: prepare data",
+    "text": "Improved heatmap + dendrogram: prepare data\nIf you want to plot it with ggplot to have more control, you need to do some transformations\n\n# Pivot longer the distance matrix and add the row names\nlong_distance &lt;- \n  distance_data %&gt;% as.matrix() %&gt;% as_tibble() %&gt;%\n  # rownames of the distance matrix are in the attr(ibute) Labels\n  mutate(Rep1 = attr(distance_data, which = \"Labels\")) %&gt;% \n  pivot_longer(cols = !Rep1,\n               names_to = \"Rep2\", \n               values_to = \"distance\")"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#improved-heatmap-dendrogram-prepare-data-1",
+    "href": "r/plots_DEA/index.html#improved-heatmap-dendrogram-prepare-data-1",
+    "title": "Differential expression analysis plots",
+    "section": "Improved heatmap + dendrogram: prepare data",
+    "text": "Improved heatmap + dendrogram: prepare data\nIf you want to plot it with ggplot to have more control, you need to do some transformations\n\n# Pivot longer the distance matrix and add the row names\nlong_distance &lt;- \n  distance_data %&gt;% as.matrix() %&gt;% as_tibble() %&gt;%\n  # rownames of the distance matrix are in the attr(ibute) Labels\n  mutate(Rep1 = attr(distance_data, which = \"Labels\")) %&gt;% \n  pivot_longer(cols = !Rep1,\n               names_to = \"Rep2\", \n               values_to = \"distance\")\n\n# Add a column with the relative distance of the samples\n(max_distance = max(long_distance$distance))\n\n[1] 106.0121\n\nlong_distance = long_distance %&gt;%\n  mutate(Rel_distance = (distance / max_distance) * 100)"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#improved-heatmap-dendrogram-prepare-data-2",
+    "href": "r/plots_DEA/index.html#improved-heatmap-dendrogram-prepare-data-2",
+    "title": "Differential expression analysis plots",
+    "section": "Improved heatmap + dendrogram: prepare data",
+    "text": "Improved heatmap + dendrogram: prepare data\nIf you want to plot it with ggplot to have more control, you need to do some transformations\n\n# Pivot longer the distance matrix and add the row names\nlong_distance &lt;- \n  distance_data %&gt;% as.matrix() %&gt;% as_tibble() %&gt;%\n  # rownames of the distance matrix are in the attr(ibute) Labels\n  mutate(Rep1 = attr(distance_data, which = \"Labels\")) %&gt;% \n  pivot_longer(cols = !Rep1,\n               names_to = \"Rep2\", \n               values_to = \"distance\")\n\n# Add a column with the relative distance of the samples\n(max_distance = max(long_distance$distance))\n\n[1] 106.0121\n\nlong_distance = long_distance %&gt;%\n  mutate(Rel_distance = (distance / max_distance) * 100)\n\n# Sort the sample names according to the dendrogram\nlong_distance$Rep1 = \n  factor(long_distance$Rep1, \n         levels = cluster_hc$labels[cluster_hc$order]\n  )\nlong_distance$Rep2 = \n  factor(long_distance$Rep2, \n         levels = cluster_hc$labels[cluster_hc$order]\n  )"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#improved-heatmap-dendrogram-plots",
+    "href": "r/plots_DEA/index.html#improved-heatmap-dendrogram-plots",
+    "title": "Differential expression analysis plots",
+    "section": "Improved heatmap + dendrogram: plots",
+    "text": "Improved heatmap + dendrogram: plots\n\nTree should not have the tip labels, cause the labels will be the axis of the heatmap\n\n\n(sample_dendro = ggtree(cluster_hc, \n                        branch.length = \"none\", \n                        ladderize = F) +\n    coord_cartesian(xlim = c(0, 7))\n)\n\n\n\n\n\nPrepare the heatmap without axes titles and remove the text from the x-axis.\n\n\n(heatmap_distance = long_distance %&gt;%\n  ggplot() +\n  geom_tile(aes(x = Rep1, y = Rep2, fill = Rel_distance)) +\n  scale_fill_gradient(high = \"white\",\n                      low = \"black\",\n                      name = \"Relative\\nDistance (%)\") +\n  theme_classic() +\n  theme(axis.text.x = element_blank(),\n        axis.title = element_blank()) \n)\n\n\n\n\n\nJoin plots\n\n\nwrap_plots(sample_dendro, heatmap_distance, \n           widths = c(2, 8))"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#volcano-plots---basic",
+    "href": "r/plots_DEA/index.html#volcano-plots---basic",
+    "title": "Differential expression analysis plots",
+    "section": "Volcano plots - Basic",
+    "text": "Volcano plots - Basic\nNormally, we want to plot the deregulated genes, find patterns among them, etc. The first thing we can plot is a volcano plot for each contrast checked.\nIt is simply the fold change in the x-axis and the -log10p-adj in the y-axis.\nNote that there are cases where the p-value, and thus the adjusted p-value, are NA, so we will create a new variable that replaces NA with 1 (those genes are not deregulated)\n\n(basic_volcanos = results_DESeq2 %&gt;%\n  mutate(new_padj = ifelse(is.na(padj), 1, padj)) %&gt;%\n  ggplot(aes(x = log2FoldChange, y = -log10(new_padj),\n             color = State, alpha = State)) +\n  geom_point() +\n  facet_wrap(~Contrast)\n)"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#improve-aesthetics",
+    "href": "r/plots_DEA/index.html#improve-aesthetics",
+    "title": "Differential expression analysis plots",
+    "section": "Improve aesthetics",
+    "text": "Improve aesthetics\n\nbasic_volcanos +\n  xlim(-10, 10) +\n  scale_color_manual(name = \"\", values =\n                       c(\"Up-regulated\" = \"red\",\n                         \"Down-regulated\" = \"blue\",\n                         \"equal\" = \"grey\"))"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#improve-aesthetics-1",
+    "href": "r/plots_DEA/index.html#improve-aesthetics-1",
+    "title": "Differential expression analysis plots",
+    "section": "Improve aesthetics",
+    "text": "Improve aesthetics\n\nbasic_volcanos +\n  xlim(-10, 10) +\n  scale_color_manual(name = \"\", values =\n                       c(\"Up-regulated\" = \"red\",\n                         \"Down-regulated\" = \"blue\",\n                         \"equal\" = \"grey\")) +\n  scale_alpha_manual(name = \"\", values =\n                       c(\"Up-regulated\" = 1,\n                         \"Down-regulated\" = 1,\n                         \"equal\" = 0.3))"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#improve-aesthetics-2",
+    "href": "r/plots_DEA/index.html#improve-aesthetics-2",
+    "title": "Differential expression analysis plots",
+    "section": "Improve aesthetics",
+    "text": "Improve aesthetics\n\nbasic_volcanos +\n  xlim(-10, 10) +\n  scale_color_manual(name = \"\", values =\n                       c(\"Up-regulated\" = \"red\",\n                         \"Down-regulated\" = \"blue\",\n                         \"equal\" = \"grey\")) +\n  scale_alpha_manual(name = \"\", values =\n                       c(\"Up-regulated\" = 1,\n                         \"Down-regulated\" = 1,\n                         \"equal\" = 0.3)) +\n   labs(x = expression(\"log\"[2]~\"Fold Change\"),\n       y = expression(\"-log\"[10]~\"adjusted p-Value\")) +\n  theme(legend.position = \"bottom\")"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#heatmap-of-deregulated-genes---prepare-input",
+    "href": "r/plots_DEA/index.html#heatmap-of-deregulated-genes---prepare-input",
+    "title": "Differential expression analysis plots",
+    "section": "Heatmap of deregulated genes - prepare input",
+    "text": "Heatmap of deregulated genes - prepare input\nIn our case, we just have one factor (Genotype) in the design formula, and both contrasts are against the control sample.\nSo we can modify the table of results to remove the redundant information\n\nresults_DESeq2_filtered = results_DESeq2 %&gt;%\n  mutate(shortContrast = gsub(\"Genotype_(\\\\w+)_vs_Control\",\n                              \"\\\\1\", Contrast)\n  ) %&gt;%\n  filter(abs(log2FoldChange) &gt; 2 & padj &lt; 0.01)\n\nNow we also want to sort the genes so that the ones with similar deregulation are grouped together. We can use a cluster analysis for that.\nBut, we need to use a wide table, not a long one, to compute the distance matrix. We will also filter out the genes that are not deregulated, so that the analysis don’t consider non-significant differences.\n\nwide_results =  results_DESeq2_filtered %&gt;%\n  pivot_wider(id_cols = \"Gene_name\", \n              names_from = shortContrast, \n              values_from = log2FoldChange,\n              values_fill = 0) %&gt;%\n  as.data.frame()\nrownames(wide_results) = wide_results$Gene_name\n\n\nvalues_fill = 0: after filtering, there will be genes with fold change levels present for only one contrast because they are not deregulated in the other condition. Since in the wide format, we need values for both contrasts, we replace the empty cell with 0."
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#heatmap-of-deregulated-genes---gene-clustering",
+    "href": "r/plots_DEA/index.html#heatmap-of-deregulated-genes---gene-clustering",
+    "title": "Differential expression analysis plots",
+    "section": "Heatmap of deregulated genes - gene clustering",
+    "text": "Heatmap of deregulated genes - gene clustering\nNow we can use wide_results in the dist function?\nYes, after we remove the Gene_name column (dist only accepts numbers)\n\ncluster_genes = \n  wide_results[-1] %&gt;%\n  dist() %&gt;%\n  hclust\n\nggtree(cluster_genes, layout = \"dendrogram\")\n\n\nNow we just make a column of ordered genes\n\nresults_DESeq2_filtered =\n  results_DESeq2_filtered %&gt;%\n  mutate(orderedGenes = \n           factor(Gene_name, \n                  levels = cluster_genes$labels[cluster_genes$order])\n         )"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#heatmap-of-deregulated-genes---plot",
+    "href": "r/plots_DEA/index.html#heatmap-of-deregulated-genes---plot",
+    "title": "Differential expression analysis plots",
+    "section": "Heatmap of deregulated genes - plot",
+    "text": "Heatmap of deregulated genes - plot\nWhether you plot the genes in the x or in the y axis depends on how readable the plot is in the end (how many genes are deregulated, how many contrasts you have, etc)\n\nresults_DESeq2_filtered %&gt;%\n  ggplot(aes(x = orderedGenes, y = shortContrast, \n             fill = ifelse(abs(log2FoldChange) &gt; 2 & padj &lt; 0.01,\n                           log2FoldChange, 0)\n  )) +\n    geom_tile()"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#heatmap-of-deregulated-genes---plot-1",
+    "href": "r/plots_DEA/index.html#heatmap-of-deregulated-genes---plot-1",
+    "title": "Differential expression analysis plots",
+    "section": "Heatmap of deregulated genes - plot",
+    "text": "Heatmap of deregulated genes - plot\nWhether you plot the genes in the x or in the y axis depends on how readable the plot is in the end (how many genes are deregulated, how many contrasts you have, etc)\n\nresults_DESeq2_filtered %&gt;%\n  ggplot(aes(x = orderedGenes, y = shortContrast, \n             fill = ifelse(abs(log2FoldChange) &gt; 2 & padj &lt; 0.01,\n                           log2FoldChange, 0)\n  )) +\n    geom_tile() +\n  scale_fill_gradient2(name = \"Fold change\",\n                       mid = \"white\", \n                       low = \"midnightblue\", \n                       high = \"red\")"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#heatmap-of-deregulated-genes---plot-2",
+    "href": "r/plots_DEA/index.html#heatmap-of-deregulated-genes---plot-2",
+    "title": "Differential expression analysis plots",
+    "section": "Heatmap of deregulated genes - plot",
+    "text": "Heatmap of deregulated genes - plot\nWhether you plot the genes in the x or in the y axis depends on how readable the plot is in the end (how many genes are deregulated, how many contrasts you have, etc)\n\nresults_DESeq2_filtered %&gt;%\n  ggplot(aes(x = orderedGenes, y = shortContrast, \n             fill = ifelse(abs(log2FoldChange) &gt; 2 & padj &lt; 0.01,\n                           log2FoldChange, 0)\n  )) +\n    geom_tile() +\n  scale_fill_gradient2(name = \"Fold change\",\n                       mid = \"white\", \n                       low = \"midnightblue\", \n                       high = \"red\") +\n  theme(axis.title = element_blank(),\n        axis.text.x = element_blank(),\n        legend.position = \"bottom\",\n        axis.ticks = element_blank())"
+  },
+  {
+    "objectID": "r/plots_DEA/index.html#resources",
+    "href": "r/plots_DEA/index.html#resources",
+    "title": "Differential expression analysis plots",
+    "section": "Resources",
+    "text": "Resources\n\nHierarchical clustering\nPCA\nVariance stabilizing transformation\nRegularized log transformation"
   },
   {
     "objectID": "unix/Class1_BasicCommands/index.html#basics",
