@@ -9,7 +9,7 @@
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.551">
+  <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Karen Cristine Goncalves, Ph.D.">
   <meta name="dcterms.date" content="2023-09-01">
@@ -33,7 +33,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -223,8 +223,7 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    padding-bottom: 0.5rem;
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -426,15 +425,15 @@ Karen Cristine Goncalves, Ph.D.
 <div class="tab-content">
 <div id="tabset-1-1">
 <p>If you never used the package, it probably is not installed in your computer, so you need to use the function “install.packages”</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">install.packages</span>(<span class="st">"vegan"</span>) <span class="co"># a package with functions for multivariate stats functions</span></span>
-<span id="cb1-2"><a></a></span>
-<span id="cb1-3"><a></a><span class="co"># You can install many packages at once</span></span>
-<span id="cb1-4"><a></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"venn"</span>, <span class="st">"tidyverse"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="st">"vegan"</span>) <span class="co"># a package with functions for multivariate stats functions</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># You can install many packages at once</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"venn"</span>, <span class="st">"tidyverse"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="tabset-1-2">
 <p><code>install.packages</code> just installs the package, but it does not load it (open in R). To load, use the function library</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(cluster)</span>
-<span id="cb2-2"><a></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>) <span class="co"># you do not need the quotes with the function library</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(cluster)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>) <span class="co"># you do not need the quotes with the function library</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-caution callout-style-simple">
 <div class="callout-body">
 <div class="callout-icon-container">
@@ -449,18 +448,18 @@ Karen Cristine Goncalves, Ph.D.
 <div id="tabset-1-3">
 <p>Come back to this part once you are more comfortable with programming.</p>
 <p>You cannot put a vector (ie. <code>c("a", "b", "c")</code>) inside <code>library()</code>, but you can write a code that loads the packages one by one without you writing that manually.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="co"># start by creating a vector with all the packages you need</span></span>
-<span id="cb3-2"><a></a>pkgs <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"rmarkdown"</span>, <span class="st">"tidyverse"</span>, <span class="st">"venn"</span>)</span>
-<span id="cb3-3"><a></a></span>
-<span id="cb3-4"><a></a><span class="co"># We check which packages are NOT (!) installed</span></span>
-<span id="cb3-5"><a></a>pkgs.To.Install <span class="ot">=</span> <span class="sc">!</span> pkgs <span class="sc">%in%</span> <span class="fu">installed.packages</span>()</span>
-<span id="cb3-6"><a></a></span>
-<span id="cb3-7"><a></a><span class="co"># any() checks if there is at least one TRUE in the vector</span></span>
-<span id="cb3-8"><a></a><span class="cf">if</span> (<span class="fu">any</span>(pkgs.To.Install)) <span class="fu">install.packages</span>(pkgs[pkgs.To.Install])</span>
-<span id="cb3-9"><a></a></span>
-<span id="cb3-10"><a></a><span class="cf">for</span> (curPkg <span class="cf">in</span> pkgs) <span class="fu">library</span>(curPkg, <span class="at">character.only =</span> T) </span>
-<span id="cb3-11"><a></a><span class="co"># curPkg is a variable that takes the value of each element in pkgs</span></span>
-<span id="cb3-12"><a></a><span class="co"># Every time the function library() is run, curPkg changes value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># start by creating a vector with all the packages you need</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>pkgs <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"rmarkdown"</span>, <span class="st">"tidyverse"</span>, <span class="st">"venn"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># We check which packages are NOT (!) installed</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>pkgs.To.Install <span class="ot">=</span> <span class="sc">!</span> pkgs <span class="sc">%in%</span> <span class="fu">installed.packages</span>()</span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co"># any() checks if there is at least one TRUE in the vector</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="cf">if</span> (<span class="fu">any</span>(pkgs.To.Install)) <span class="fu">install.packages</span>(pkgs[pkgs.To.Install])</span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="cf">for</span> (curPkg <span class="cf">in</span> pkgs) <span class="fu">library</span>(curPkg, <span class="at">character.only =</span> T) </span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co"># curPkg is a variable that takes the value of each element in pkgs</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co"># Every time the function library() is run, curPkg changes value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -469,10 +468,10 @@ Karen Cristine Goncalves, Ph.D.
 <h2>loops</h2>
 <p>Let’s create a function and a vector of elements that we will use in the function</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>thesisDefense <span class="ot">=</span> <span class="cf">function</span>(x) {<span class="fu">return</span>(<span class="fu">paste</span>(<span class="st">"Ph.D."</span>, x))}</span>
-<span id="cb4-2"><a></a>candidates <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Serge"</span>, <span class="st">"Fadoua"</span>, <span class="st">"Arghavan"</span>, </span>
-<span id="cb4-3"><a></a>           <span class="st">"Snehi"</span>, <span class="st">"Basanta"</span>, <span class="st">"Sajjad"</span>, </span>
-<span id="cb4-4"><a></a>           <span class="st">"Mahsa"</span>, <span class="st">"Archana"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>thesisDefense <span class="ot">=</span> <span class="cf">function</span>(x) {<span class="fu">return</span>(<span class="fu">paste</span>(<span class="st">"Ph.D."</span>, x))}</span>
+<span id="cb4-2"><a href="#cb4-2"></a>candidates <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Serge"</span>, <span class="st">"Fadoua"</span>, <span class="st">"Arghavan"</span>, </span>
+<span id="cb4-3"><a href="#cb4-3"></a>           <span class="st">"Snehi"</span>, <span class="st">"Basanta"</span>, <span class="st">"Sajjad"</span>, </span>
+<span id="cb4-4"><a href="#cb4-4"></a>           <span class="st">"Mahsa"</span>, <span class="st">"Archana"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment" data-fragment-index="1">
 <ul>
@@ -482,15 +481,15 @@ Karen Cristine Goncalves, Ph.D.
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="cf">for</span> (phd <span class="cf">in</span> candidates) { <span class="fu">thesisDefense</span>(phd) }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="cf">for</span> (phd <span class="cf">in</span> candidates) { <span class="fu">thesisDefense</span>(phd) }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment" data-fragment-index="2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="co"># To see an output, we would have to either print it or create an object to save it</span></span>
-<span id="cb6-2"><a></a>defenseResults <span class="ot">=</span> <span class="fu">c</span>()</span>
-<span id="cb6-3"><a></a><span class="cf">for</span> (phd <span class="cf">in</span> candidates) { defenseResults[phd] <span class="ot">=</span> <span class="fu">thesisDefense</span>(phd) }</span>
-<span id="cb6-4"><a></a>defenseResults</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># To see an output, we would have to either print it or create an object to save it</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>defenseResults <span class="ot">=</span> <span class="fu">c</span>()</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="cf">for</span> (phd <span class="cf">in</span> candidates) { defenseResults[phd] <span class="ot">=</span> <span class="fu">thesisDefense</span>(phd) }</span>
+<span id="cb6-4"><a href="#cb6-4"></a>defenseResults</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Serge           Fadoua         Arghavan            Snehi 
    "Ph.D. Serge"   "Ph.D. Fadoua" "Ph.D. Arghavan"    "Ph.D. Snehi" 
@@ -509,9 +508,9 @@ Karen Cristine Goncalves, Ph.D.
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>defenseResults <span class="ot">=</span> <span class="fu">sapply</span>(candidates, \(phd) <span class="fu">thesisDefense</span>(phd) )</span>
-<span id="cb8-2"><a></a></span>
-<span id="cb8-3"><a></a>defenseResults</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>defenseResults <span class="ot">=</span> <span class="fu">sapply</span>(candidates, \(phd) <span class="fu">thesisDefense</span>(phd) )</span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a>defenseResults</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -523,7 +522,7 @@ Karen Cristine Goncalves, Ph.D.
 </div>
 </div>
 </section>
-<section id="tidyverse---many-packages-that-make-your-life-easier" class="slide level2 scrollable">
+<section id="tidyverse---many-packages-that-make-your-life-easier" class="slide level2">
 <h2>Tidyverse - many packages that make your life easier</h2>
 <p>When you load the package “tidyverse”, it tells you that it loaded many others (packages from the uni<em>verse</em> <strong>tidy</strong>)</p>
 <ol type="1">
@@ -589,10 +588,10 @@ Karen Cristine Goncalves, Ph.D.
 </div>
 <div id="tabset-2-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="co"># You could first put the path to the file in a variable, it would make things easier</span></span>
-<span id="cb10-2"><a></a>myFile <span class="ot">=</span> <span class="st">"https://karengoncalves.github.io/Programming_classes/exampleData/Class1_exampleData.txt"</span></span>
-<span id="cb10-3"><a></a></span>
-<span id="cb10-4"><a></a><span class="fu">str</span>(<span class="fu">read.delim</span>(myFile))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># You could first put the path to the file in a variable, it would make things easier</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>myFile <span class="ot">=</span> <span class="st">"https://karengoncalves.github.io/Programming_classes/exampleData/Class1_exampleData.txt"</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="fu">str</span>(<span class="fu">read.delim</span>(myFile))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   8 obs. of  7 variables:
  $ X        : chr  "A" "B" "C" "D" ...
@@ -608,10 +607,10 @@ Karen Cristine Goncalves, Ph.D.
 <div id="tabset-2-3">
 <p>Using pipe, you can see the progression of the pipeline, eg.: <br><code>bachelor("Karen") %&gt;% phd() %&gt;% postdoc</code> <br>instead of <br><code>postdoc(phd(bachelor("Karen")))</code></p>
 <p>Basically, the first function written is the first one used, not the last.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="co"># You can also use a pipe ( %&gt;% )</span></span>
-<span id="cb12-2"><a></a>myFile <span class="ot">=</span> <span class="st">"https://karengoncalves.github.io/Programming_classes/exampleData/Class1_exampleData.txt"</span></span>
-<span id="cb12-3"><a></a></span>
-<span id="cb12-4"><a></a><span class="fu">read.delim</span>(myFile) <span class="sc">%&gt;%</span> str</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># You can also use a pipe ( %&gt;% )</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>myFile <span class="ot">=</span> <span class="st">"https://karengoncalves.github.io/Programming_classes/exampleData/Class1_exampleData.txt"</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="fu">read.delim</span>(myFile) <span class="sc">%&gt;%</span> str</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -651,63 +650,51 @@ Karen Cristine Goncalves, Ph.D.
 <div id="tabset-3-2">
 <p>Code from the previous class</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>colors <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>)</span>
-<span id="cb13-2"><a></a><span class="fu">boxplot</span>(Sepal.Length <span class="sc">~</span> Species, </span>
-<span id="cb13-3"><a></a>    <span class="at">data =</span> iris, <span class="at">col =</span> colors, </span>
-<span id="cb13-4"><a></a>    <span class="at">ylab =</span> <span class="st">"Sepal length (mm)"</span>, <span class="at">xlab =</span> <span class="st">"Species epithet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>colors <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">boxplot</span>(Sepal.Length <span class="sc">~</span> Species, </span>
+<span id="cb13-3"><a href="#cb13-3"></a>    <span class="at">data =</span> iris, <span class="at">col =</span> colors, </span>
+<span id="cb13-4"><a href="#cb13-4"></a>    <span class="at">ylab =</span> <span class="st">"Sepal length (mm)"</span>, <span class="at">xlab =</span> <span class="st">"Species epithet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/first graph - colored-formatted boxplot-1.png" width="960"></p>
-</figure>
-</div>
 </div>
 </div>
 </div>
 <div id="tabset-3-3">
 <p>Use ggplot. The syntax may take a while to get used to, but it is easier to read.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="co"># aes is short for aesthetics, basically what columns hold the values you want to plot</span></span>
-<span id="cb14-2"><a></a><span class="co"># fill is the color that will be inside the box, color is just for the border</span></span>
-<span id="cb14-3"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> iris,</span>
-<span id="cb14-4"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> Species,</span>
-<span id="cb14-5"><a></a>           <span class="at">y =</span> Sepal.Length,</span>
-<span id="cb14-6"><a></a>           <span class="at">fill =</span> Species)) <span class="sc">+</span></span>
-<span id="cb14-7"><a></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="co"># the type of plot you want</span></span>
-<span id="cb14-8"><a></a>    <span class="fu">ylab</span>(<span class="st">"Sepal length (mm)"</span>) <span class="sc">+</span></span>
-<span id="cb14-9"><a></a>    <span class="fu">xlab</span>(<span class="st">"Species epithet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># aes is short for aesthetics, basically what columns hold the values you want to plot</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="co"># fill is the color that will be inside the box, color is just for the border</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="fu">ggplot</span>(<span class="at">data =</span> iris,</span>
+<span id="cb14-4"><a href="#cb14-4"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Species,</span>
+<span id="cb14-5"><a href="#cb14-5"></a>           <span class="at">y =</span> Sepal.Length,</span>
+<span id="cb14-6"><a href="#cb14-6"></a>           <span class="at">fill =</span> Species)) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="co"># the type of plot you want</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a>    <span class="fu">ylab</span>(<span class="st">"Sepal length (mm)"</span>) <span class="sc">+</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a>    <span class="fu">xlab</span>(<span class="st">"Species epithet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
-</figure>
-</div>
 </div>
 </div>
 </div>
 <div id="tabset-3-4">
 <p>Improve ggplot by setting a better theme <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">(check here see the options)</a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="co"># Set a theme for all future plots in this session</span></span>
-<span id="cb15-2"><a></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>()) </span>
-<span id="cb15-3"><a></a></span>
-<span id="cb15-4"><a></a><span class="co"># Use different colors to fill and remove the legend</span></span>
-<span id="cb15-5"><a></a>colors <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>)</span>
-<span id="cb15-6"><a></a></span>
-<span id="cb15-7"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> iris,</span>
-<span id="cb15-8"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> Species,</span>
-<span id="cb15-9"><a></a>           <span class="at">y =</span> Sepal.Length,</span>
-<span id="cb15-10"><a></a>           <span class="at">fill =</span> Species)) <span class="sc">+</span></span>
-<span id="cb15-11"><a></a>    <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> <span class="co"># the type of plot you want</span></span>
-<span id="cb15-12"><a></a>    <span class="fu">ylab</span>(<span class="st">"Sepal length (mm)"</span>) <span class="sc">+</span></span>
-<span id="cb15-13"><a></a>    <span class="fu">xlab</span>(<span class="st">"Species epithet"</span>) <span class="sc">+</span></span>
-<span id="cb15-14"><a></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Set a theme for all future plots in this session</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>()) </span>
+<span id="cb15-3"><a href="#cb15-3"></a></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="co"># Use different colors to fill and remove the legend</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a>colors <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6"></a></span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="fu">ggplot</span>(<span class="at">data =</span> iris,</span>
+<span id="cb15-8"><a href="#cb15-8"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Species,</span>
+<span id="cb15-9"><a href="#cb15-9"></a>           <span class="at">y =</span> Sepal.Length,</span>
+<span id="cb15-10"><a href="#cb15-10"></a>           <span class="at">fill =</span> Species)) <span class="sc">+</span></span>
+<span id="cb15-11"><a href="#cb15-11"></a>    <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> <span class="co"># the type of plot you want</span></span>
+<span id="cb15-12"><a href="#cb15-12"></a>    <span class="fu">ylab</span>(<span class="st">"Sepal length (mm)"</span>) <span class="sc">+</span></span>
+<span id="cb15-13"><a href="#cb15-13"></a>    <span class="fu">xlab</span>(<span class="st">"Species epithet"</span>) <span class="sc">+</span></span>
+<span id="cb15-14"><a href="#cb15-14"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
-</figure>
-</div>
 </div>
 </div>
 </div>
@@ -723,31 +710,23 @@ Karen Cristine Goncalves, Ph.D.
 <div class="tab-content">
 <div id="tabset-4-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="co"># Set a theme for all future plots in this session</span></span>
-<span id="cb16-2"><a></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>()) </span>
-<span id="cb16-3"><a></a></span>
-<span id="cb16-4"><a></a><span class="co"># Use different colors to fill and remove the legend</span></span>
-<span id="cb16-5"><a></a>(<span class="at">plot1 =</span> <span class="fu">ggplot</span>(<span class="at">data =</span> iris,</span>
-<span id="cb16-6"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> Species,</span>
-<span id="cb16-7"><a></a>           <span class="at">y =</span> Sepal.Length,</span>
-<span id="cb16-8"><a></a>           <span class="at">fill =</span> Species)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># Set a theme for all future plots in this session</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>()) </span>
+<span id="cb16-3"><a href="#cb16-3"></a></span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="co"># Use different colors to fill and remove the legend</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a>(<span class="at">plot1 =</span> <span class="fu">ggplot</span>(<span class="at">data =</span> iris,</span>
+<span id="cb16-6"><a href="#cb16-6"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Species,</span>
+<span id="cb16-7"><a href="#cb16-7"></a>           <span class="at">y =</span> Sepal.Length,</span>
+<span id="cb16-8"><a href="#cb16-8"></a>           <span class="at">fill =</span> Species)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
-</figure>
-</div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>(<span class="at">plot2 =</span> plot1 <span class="sc">+</span></span>
-<span id="cb17-2"><a></a>    <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> F)) <span class="co"># the type of plot you want</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>(<span class="at">plot2 =</span> plot1 <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>    <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> F)) <span class="co"># the type of plot you want</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-10-1.png" width="960"></p>
-</figure>
-</div>
 </div>
 </div>
 </div>
@@ -761,34 +740,22 @@ Karen Cristine Goncalves, Ph.D.
 <li><code>tag</code> - the letter that goes at the top-left corner of a plot that is one part of several in a figure</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>(<span class="at">plot3 =</span> plot2 <span class="sc">+</span></span>
-<span id="cb18-2"><a></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Sepal length (mm)"</span>, <span class="at">x =</span> <span class="st">"Species epithet"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>(<span class="at">plot3 =</span> plot2 <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Sepal length (mm)"</span>, <span class="at">x =</span> <span class="st">"Species epithet"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
-</figure>
 </div>
-</div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>plot3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>plot3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-11-2.png" width="960"></p>
-</figure>
-</div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>colors <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>)</span>
-<span id="cb20-2"><a></a></span>
-<span id="cb20-3"><a></a>plot3 <span class="sc">+</span> <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>colors <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a>plot3 <span class="sc">+</span> <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
-</figure>
-</div>
 </div>
 </div>
 </div>
@@ -803,30 +770,30 @@ Karen Cristine Goncalves, Ph.D.
 <div class="tab-content">
 <div id="tabset-5-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>myFile <span class="ot">=</span> <span class="st">"https://karengoncalves.github.io/Programming_classes/exampleData/Class1_exampleData.txt"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>myFile <span class="ot">=</span> <span class="st">"https://karengoncalves.github.io/Programming_classes/exampleData/Class1_exampleData.txt"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>rawData <span class="ot">=</span> <span class="fu">read.delim</span>(myFile)</span>
-<span id="cb22-2"><a></a><span class="fu">names</span>(rawData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>rawData <span class="ot">=</span> <span class="fu">read.delim</span>(myFile)</span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">names</span>(rawData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "X"         "Control_1" "Control_2" "Control_3" "Treated_1" "Treated_2"
 [7] "Treated_3"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="co"># Let's change x to "Measured"</span></span>
-<span id="cb24-2"><a></a><span class="fu">names</span>(rawData)[<span class="dv">1</span>] <span class="ot">=</span> <span class="st">"Measured"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># Let's change x to "Measured"</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="fu">names</span>(rawData)[<span class="dv">1</span>] <span class="ot">=</span> <span class="st">"Measured"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-5-2">
 <p>The table now is in the format “wide”, the one we want is called “long”</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>longData <span class="ot">=</span> <span class="fu">pivot_longer</span>(</span>
-<span id="cb25-2"><a></a>    <span class="at">data =</span> rawData,</span>
-<span id="cb25-3"><a></a>    <span class="at">cols =</span> <span class="sc">!</span>Measured, <span class="co"># gets all the columns of the table, except for the one in front of !</span></span>
-<span id="cb25-4"><a></a>    <span class="at">names_to =</span> <span class="st">"Replicates"</span>, <span class="co"># name of the column that will contain column names from rawData</span></span>
-<span id="cb25-5"><a></a>    <span class="at">values_to =</span> <span class="st">"Measurements"</span></span>
-<span id="cb25-6"><a></a>    )</span>
-<span id="cb25-7"><a></a></span>
-<span id="cb25-8"><a></a><span class="fu">str</span>(longData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>longData <span class="ot">=</span> <span class="fu">pivot_longer</span>(</span>
+<span id="cb25-2"><a href="#cb25-2"></a>    <span class="at">data =</span> rawData,</span>
+<span id="cb25-3"><a href="#cb25-3"></a>    <span class="at">cols =</span> <span class="sc">!</span>Measured, <span class="co"># gets all the columns of the table, except for the one in front of !</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a>    <span class="at">names_to =</span> <span class="st">"Replicates"</span>, <span class="co"># name of the column that will contain column names from rawData</span></span>
+<span id="cb25-5"><a href="#cb25-5"></a>    <span class="at">values_to =</span> <span class="st">"Measurements"</span></span>
+<span id="cb25-6"><a href="#cb25-6"></a>    )</span>
+<span id="cb25-7"><a href="#cb25-7"></a></span>
+<span id="cb25-8"><a href="#cb25-8"></a><span class="fu">str</span>(longData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [48 × 3] (S3: tbl_df/tbl/data.frame)
  $ Measured    : chr [1:48] "A" "A" "A" "A" ...
@@ -839,13 +806,13 @@ Karen Cristine Goncalves, Ph.D.
 <p>Let’s split the values from “Replicates” using <code>str_split</code> from <code>stringr</code></p>
 <p><code>mutate</code> will return the input table with the new column we create</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="co"># pattern is what separates (_)</span></span>
-<span id="cb27-2"><a></a><span class="co"># i is the part that we want to see: Control_1 has 2 pieces, i=1 returns "Control"</span></span>
-<span id="cb27-3"><a></a></span>
-<span id="cb27-4"><a></a>longDataTreatments <span class="ot">=</span> longData <span class="sc">%&gt;%</span></span>
-<span id="cb27-5"><a></a>    <span class="fu">mutate</span>(<span class="at">Treatment =</span> <span class="fu">str_split_i</span>(Replicates, <span class="at">pattern =</span> <span class="st">"_"</span>, <span class="at">i =</span> <span class="dv">1</span>))</span>
-<span id="cb27-6"><a></a></span>
-<span id="cb27-7"><a></a><span class="fu">str</span>(longDataTreatments)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># pattern is what separates (_)</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="co"># i is the part that we want to see: Control_1 has 2 pieces, i=1 returns "Control"</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a></span>
+<span id="cb27-4"><a href="#cb27-4"></a>longDataTreatments <span class="ot">=</span> longData <span class="sc">%&gt;%</span></span>
+<span id="cb27-5"><a href="#cb27-5"></a>    <span class="fu">mutate</span>(<span class="at">Treatment =</span> <span class="fu">str_split_i</span>(Replicates, <span class="at">pattern =</span> <span class="st">"_"</span>, <span class="at">i =</span> <span class="dv">1</span>))</span>
+<span id="cb27-6"><a href="#cb27-6"></a></span>
+<span id="cb27-7"><a href="#cb27-7"></a><span class="fu">str</span>(longDataTreatments)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [48 × 4] (S3: tbl_df/tbl/data.frame)
  $ Measured    : chr [1:48] "A" "A" "A" "A" ...
@@ -857,32 +824,24 @@ Karen Cristine Goncalves, Ph.D.
 </div>
 <div id="tabset-5-4">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>longDataTreatments <span class="sc">%&gt;%</span></span>
-<span id="cb29-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Treatment, <span class="at">y =</span> Measurements, <span class="at">fill =</span> Measured)) <span class="sc">+</span></span>
-<span id="cb29-3"><a></a>    <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>longDataTreatments <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Treatment, <span class="at">y =</span> Measurements, <span class="at">fill =</span> Measured)) <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>    <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
-</figure>
 </div>
-</div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>longDataTreatments <span class="sc">%&gt;%</span></span>
-<span id="cb30-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Measured, <span class="at">y =</span> Measurements, <span class="at">fill =</span> Treatment)) <span class="sc">+</span></span>
-<span id="cb30-3"><a></a>    <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>longDataTreatments <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Measured, <span class="at">y =</span> Measurements, <span class="at">fill =</span> Treatment)) <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>    <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-17-2.png" width="960"></p>
-</figure>
-</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="types-of-plots---sample-distribution" class="slide level2 scrollable">
+<section id="types-of-plots---sample-distribution" class="slide level2">
 <h2>Types of plots - sample distribution</h2>
 <ol type="1">
 <li>Boxplot - <a href="#/ggplot2">check this slide</a>
@@ -926,20 +885,20 @@ Karen Cristine Goncalves, Ph.D.
 <h2>Example violin plot</h2>
 <p>The code to get a violin plot is the same as the one for a boxplot, the only difference is the <em>geom_violin</em>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="co"># Set a theme for all future plots in this session</span></span>
-<span id="cb31-2"><a></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>()) </span>
-<span id="cb31-3"><a></a></span>
-<span id="cb31-4"><a></a><span class="co"># Use different colors to fill and remove the legend</span></span>
-<span id="cb31-5"><a></a>colors <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>)</span>
-<span id="cb31-6"><a></a></span>
-<span id="cb31-7"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> iris,</span>
-<span id="cb31-8"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> Species,</span>
-<span id="cb31-9"><a></a>           <span class="at">y =</span> Sepal.Length,</span>
-<span id="cb31-10"><a></a>           <span class="at">fill =</span> Species)) <span class="sc">+</span></span>
-<span id="cb31-11"><a></a>    <span class="fu">geom_violin</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> <span class="co"># violin instead of boxplot</span></span>
-<span id="cb31-12"><a></a>    <span class="fu">ylab</span>(<span class="st">"Sepal length (mm)"</span>) <span class="sc">+</span></span>
-<span id="cb31-13"><a></a>    <span class="fu">xlab</span>(<span class="st">"Species epithet"</span>) <span class="sc">+</span></span>
-<span id="cb31-14"><a></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># Set a theme for all future plots in this session</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>()) </span>
+<span id="cb31-3"><a href="#cb31-3"></a></span>
+<span id="cb31-4"><a href="#cb31-4"></a><span class="co"># Use different colors to fill and remove the legend</span></span>
+<span id="cb31-5"><a href="#cb31-5"></a>colors <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>)</span>
+<span id="cb31-6"><a href="#cb31-6"></a></span>
+<span id="cb31-7"><a href="#cb31-7"></a><span class="fu">ggplot</span>(<span class="at">data =</span> iris,</span>
+<span id="cb31-8"><a href="#cb31-8"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Species,</span>
+<span id="cb31-9"><a href="#cb31-9"></a>           <span class="at">y =</span> Sepal.Length,</span>
+<span id="cb31-10"><a href="#cb31-10"></a>           <span class="at">fill =</span> Species)) <span class="sc">+</span></span>
+<span id="cb31-11"><a href="#cb31-11"></a>    <span class="fu">geom_violin</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> <span class="co"># violin instead of boxplot</span></span>
+<span id="cb31-12"><a href="#cb31-12"></a>    <span class="fu">ylab</span>(<span class="st">"Sepal length (mm)"</span>) <span class="sc">+</span></span>
+<span id="cb31-13"><a href="#cb31-13"></a>    <span class="fu">xlab</span>(<span class="st">"Species epithet"</span>) <span class="sc">+</span></span>
+<span id="cb31-14"><a href="#cb31-14"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="index_files/figure-revealjs/unnamed-chunk-18-1.png" width="960" class="r-stretch"></section>
@@ -967,20 +926,16 @@ Karen Cristine Goncalves, Ph.D.
 </div>
 <div id="tabset-6-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb32-2"><a></a>  <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>, <span class="st">"Child"</span>),</span>
-<span id="cb32-3"><a></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">50</span>)</span>
-<span id="cb32-4"><a></a>  )</span>
-<span id="cb32-5"><a></a></span>
-<span id="cb32-6"><a></a><span class="co"># Barplot like geom_col</span></span>
-<span id="cb32-7"><a></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> value, <span class="at">fill =</span> group)) <span class="sc">+</span></span>
-<span id="cb32-8"><a></a>    <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>, <span class="st">"Child"</span>),</span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">50</span>)</span>
+<span id="cb32-4"><a href="#cb32-4"></a>  )</span>
+<span id="cb32-5"><a href="#cb32-5"></a></span>
+<span id="cb32-6"><a href="#cb32-6"></a><span class="co"># Barplot like geom_col</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> value, <span class="at">fill =</span> group)) <span class="sc">+</span></span>
+<span id="cb32-8"><a href="#cb32-8"></a>    <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-19-1.png" width="960"></p>
-</figure>
-</div>
 </div>
 </div>
 </div>
@@ -989,20 +944,16 @@ Karen Cristine Goncalves, Ph.D.
 <li><strong>identity</strong> means that the size of the bar will be the value you put instead of calculating something</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb33-2"><a></a>  <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>, <span class="st">"Child"</span>),</span>
-<span id="cb33-3"><a></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">50</span>)</span>
-<span id="cb33-4"><a></a>  )</span>
-<span id="cb33-5"><a></a></span>
-<span id="cb33-6"><a></a><span class="co"># Barplot like geom_col</span></span>
-<span id="cb33-7"><a></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> value, <span class="at">fill =</span> group)) <span class="sc">+</span></span>
-<span id="cb33-8"><a></a>    <span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="dv">1</span>,  <span class="at">stat =</span> <span class="st">"identity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>, <span class="st">"Child"</span>),</span>
+<span id="cb33-3"><a href="#cb33-3"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">50</span>)</span>
+<span id="cb33-4"><a href="#cb33-4"></a>  )</span>
+<span id="cb33-5"><a href="#cb33-5"></a></span>
+<span id="cb33-6"><a href="#cb33-6"></a><span class="co"># Barplot like geom_col</span></span>
+<span id="cb33-7"><a href="#cb33-7"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> value, <span class="at">fill =</span> group)) <span class="sc">+</span></span>
+<span id="cb33-8"><a href="#cb33-8"></a>    <span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="dv">1</span>,  <span class="at">stat =</span> <span class="st">"identity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
-</figure>
-</div>
 </div>
 </div>
 </div>
@@ -1011,23 +962,19 @@ Karen Cristine Goncalves, Ph.D.
 <li>Using either geom_bar or geom_col, you can make a pie chart with <code>+ coord_polar("y")</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb34-2"><a></a>  <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>, <span class="st">"Child"</span>),</span>
-<span id="cb34-3"><a></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">50</span>)</span>
-<span id="cb34-4"><a></a>  )</span>
-<span id="cb34-5"><a></a></span>
-<span id="cb34-6"><a></a><span class="co"># Barplot like geom_col</span></span>
-<span id="cb34-7"><a></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> value, <span class="at">fill =</span> group)) <span class="sc">+</span></span>
-<span id="cb34-8"><a></a>    <span class="co"># x has to be "" - check how it looks if you put x = group</span></span>
-<span id="cb34-9"><a></a>    <span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="dv">1</span>,  <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb34-10"><a></a>    <span class="fu">coord_polar</span>(<span class="st">"y"</span>, <span class="at">start =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb34-11"><a></a>    <span class="fu">theme_void</span>() <span class="co"># clean up grids, borders, and labels</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb34-2"><a href="#cb34-2"></a>  <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>, <span class="st">"Child"</span>),</span>
+<span id="cb34-3"><a href="#cb34-3"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">50</span>)</span>
+<span id="cb34-4"><a href="#cb34-4"></a>  )</span>
+<span id="cb34-5"><a href="#cb34-5"></a></span>
+<span id="cb34-6"><a href="#cb34-6"></a><span class="co"># Barplot like geom_col</span></span>
+<span id="cb34-7"><a href="#cb34-7"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> value, <span class="at">fill =</span> group)) <span class="sc">+</span></span>
+<span id="cb34-8"><a href="#cb34-8"></a>    <span class="co"># x has to be "" - check how it looks if you put x = group</span></span>
+<span id="cb34-9"><a href="#cb34-9"></a>    <span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="dv">1</span>,  <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb34-10"><a href="#cb34-10"></a>    <span class="fu">coord_polar</span>(<span class="st">"y"</span>, <span class="at">start =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb34-11"><a href="#cb34-11"></a>    <span class="fu">theme_void</span>() <span class="co"># clean up grids, borders, and labels</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
-</figure>
-</div>
 </div>
 </div>
 </div>
@@ -1047,43 +994,31 @@ Karen Cristine Goncalves, Ph.D.
 <li><strong>identity</strong> means that the size of the bar will be the value you put instead of calculating something</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="co"># Datasets about US states</span></span>
-<span id="cb35-2"><a></a>US_statesInfo <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">Name =</span> state.name,</span>
-<span id="cb35-3"><a></a>               <span class="at">Region =</span> state.region,</span>
-<span id="cb35-4"><a></a>               <span class="at">Division =</span> state.division)</span>
-<span id="cb35-5"><a></a>x <span class="ot">=</span> <span class="st">"Number of states"</span></span>
-<span id="cb35-6"><a></a><span class="co"># Plot the number of states in each division</span></span>
-<span id="cb35-7"><a></a><span class="fu">ggplot</span>(US_statesInfo, <span class="fu">aes</span>(<span class="at">y =</span> Division)) <span class="sc">+</span></span>
-<span id="cb35-8"><a></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>) <span class="sc">+</span></span>
-<span id="cb35-9"><a></a>    <span class="fu">xlab</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># Datasets about US states</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>US_statesInfo <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">Name =</span> state.name,</span>
+<span id="cb35-3"><a href="#cb35-3"></a>               <span class="at">Region =</span> state.region,</span>
+<span id="cb35-4"><a href="#cb35-4"></a>               <span class="at">Division =</span> state.division)</span>
+<span id="cb35-5"><a href="#cb35-5"></a>x <span class="ot">=</span> <span class="st">"Number of states"</span></span>
+<span id="cb35-6"><a href="#cb35-6"></a><span class="co"># Plot the number of states in each division</span></span>
+<span id="cb35-7"><a href="#cb35-7"></a><span class="fu">ggplot</span>(US_statesInfo, <span class="fu">aes</span>(<span class="at">y =</span> Division)) <span class="sc">+</span></span>
+<span id="cb35-8"><a href="#cb35-8"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>) <span class="sc">+</span></span>
+<span id="cb35-9"><a href="#cb35-9"></a>    <span class="fu">xlab</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-22-1.png" width="960"></p>
-</figure>
 </div>
-</div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="co"># Plot the number of states in each region</span></span>
-<span id="cb36-2"><a></a><span class="fu">ggplot</span>(US_statesInfo, <span class="fu">aes</span>(<span class="at">y =</span> Region)) <span class="sc">+</span></span>
-<span id="cb36-3"><a></a>    <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb36-4"><a></a>    <span class="fu">xlab</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># Plot the number of states in each region</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="fu">ggplot</span>(US_statesInfo, <span class="fu">aes</span>(<span class="at">y =</span> Region)) <span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a>    <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb36-4"><a href="#cb36-4"></a>    <span class="fu">xlab</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-22-2.png" width="960"></p>
-</figure>
 </div>
-</div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="co"># Plot the number of states in each division, and color by the region</span></span>
-<span id="cb37-2"><a></a><span class="fu">ggplot</span>(US_statesInfo, <span class="fu">aes</span>(<span class="at">y =</span> Division, <span class="at">fill =</span> Region)) <span class="sc">+</span></span>
-<span id="cb37-3"><a></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>) <span class="sc">+</span></span>
-<span id="cb37-4"><a></a>    <span class="fu">xlab</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="co"># Plot the number of states in each division, and color by the region</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a><span class="fu">ggplot</span>(US_statesInfo, <span class="fu">aes</span>(<span class="at">y =</span> Division, <span class="at">fill =</span> Region)) <span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>) <span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4"></a>    <span class="fu">xlab</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-22-3.png" width="960"></p>
-</figure>
-</div>
 </div>
 </div>
 </div>
@@ -1098,19 +1033,19 @@ Karen Cristine Goncalves, Ph.D.
 </ul>
 <p>Let’s say we want to see how the labs of 2 PIs have grown across the years and compare the two.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="co"># Let's create a time series to plot</span></span>
-<span id="cb38-2"><a></a></span>
-<span id="cb38-3"><a></a>LabSize <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">Isabel =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">30</span>),</span>
-<span id="cb38-4"><a></a>             <span class="at">Hugo =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">9</span>),</span>
-<span id="cb38-5"><a></a>             <span class="at">Year =</span> <span class="fu">seq</span>(<span class="dv">2014</span>, <span class="dv">2022</span>, <span class="dv">2</span>))</span>
-<span id="cb38-6"><a></a>LabSize.Long <span class="ot">=</span> <span class="fu">pivot_longer</span>(LabSize,</span>
-<span id="cb38-7"><a></a>                <span class="at">cols =</span> <span class="sc">!</span>Year, <span class="co"># all columns from LabSize, except "Year"</span></span>
-<span id="cb38-8"><a></a>                <span class="at">names_to =</span> <span class="st">"PI"</span>, </span>
-<span id="cb38-9"><a></a>                <span class="at">values_to =</span> <span class="st">"LabMembers"</span>)</span>
-<span id="cb38-10"><a></a></span>
-<span id="cb38-11"><a></a><span class="fu">ggplot</span>(LabSize.Long, </span>
-<span id="cb38-12"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> LabMembers, <span class="at">color =</span> PI)) <span class="sc">+</span></span>
-<span id="cb38-13"><a></a>    <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># Let's create a time series to plot</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a></span>
+<span id="cb38-3"><a href="#cb38-3"></a>LabSize <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">Isabel =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">30</span>),</span>
+<span id="cb38-4"><a href="#cb38-4"></a>             <span class="at">Hugo =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">9</span>),</span>
+<span id="cb38-5"><a href="#cb38-5"></a>             <span class="at">Year =</span> <span class="fu">seq</span>(<span class="dv">2014</span>, <span class="dv">2022</span>, <span class="dv">2</span>))</span>
+<span id="cb38-6"><a href="#cb38-6"></a>LabSize.Long <span class="ot">=</span> <span class="fu">pivot_longer</span>(LabSize,</span>
+<span id="cb38-7"><a href="#cb38-7"></a>                <span class="at">cols =</span> <span class="sc">!</span>Year, <span class="co"># all columns from LabSize, except "Year"</span></span>
+<span id="cb38-8"><a href="#cb38-8"></a>                <span class="at">names_to =</span> <span class="st">"PI"</span>, </span>
+<span id="cb38-9"><a href="#cb38-9"></a>                <span class="at">values_to =</span> <span class="st">"LabMembers"</span>)</span>
+<span id="cb38-10"><a href="#cb38-10"></a></span>
+<span id="cb38-11"><a href="#cb38-11"></a><span class="fu">ggplot</span>(LabSize.Long, </span>
+<span id="cb38-12"><a href="#cb38-12"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> LabMembers, <span class="at">color =</span> PI)) <span class="sc">+</span></span>
+<span id="cb38-13"><a href="#cb38-13"></a>    <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="index_files/figure-revealjs/unnamed-chunk-23-1.png" width="960" class="r-stretch"></section>
@@ -1122,12 +1057,12 @@ Karen Cristine Goncalves, Ph.D.
 <div id="tabset-8-1">
 <p>We will use the <a href="../../exampleData/TimeSeries_example.csv">time series data</a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="co"># Load the data</span></span>
-<span id="cb39-2"><a></a>timeSeries.File <span class="ot">=</span> <span class="st">"https://karengoncalves.github.io/Programming_classes/exampleData/TimeSeries_example.csv"</span></span>
-<span id="cb39-3"><a></a>timeSeries <span class="ot">=</span> <span class="fu">read.csv</span>(timeSeries.File)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="co"># Load the data</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a>timeSeries.File <span class="ot">=</span> <span class="st">"https://karengoncalves.github.io/Programming_classes/exampleData/TimeSeries_example.csv"</span></span>
+<span id="cb39-3"><a href="#cb39-3"></a>timeSeries <span class="ot">=</span> <span class="fu">read.csv</span>(timeSeries.File)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">str</span>(timeSeries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">str</span>(timeSeries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   12 obs. of  10 variables:
  $ X           : chr  "Day_1" "Day_2" "Day_3" "Day_4" ...
@@ -1141,27 +1076,27 @@ Karen Cristine Goncalves, Ph.D.
  $ TreatmentB_2: num  0 1.47 2.98 4.37 5.64 ...
  $ TreatmentB_1: num  0 1.5 3.02 4.63 6 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="co"># Let's rename the first column that indicate the time points</span></span>
-<span id="cb42-2"><a></a><span class="fu">names</span>(timeSeries)[<span class="dv">1</span>] <span class="ot">=</span> <span class="st">"TimePoint"</span> </span>
-<span id="cb42-3"><a></a>timeSeries<span class="sc">$</span>TimePoint <span class="ot">=</span> </span>
-<span id="cb42-4"><a></a>    <span class="fu">gsub</span>(<span class="st">"Day_"</span>, <span class="st">""</span>, timeSeries<span class="sc">$</span>TimePoint) <span class="sc">|&gt;</span></span>
-<span id="cb42-5"><a></a>    <span class="fu">as.numeric</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># Let's rename the first column that indicate the time points</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="fu">names</span>(timeSeries)[<span class="dv">1</span>] <span class="ot">=</span> <span class="st">"TimePoint"</span> </span>
+<span id="cb42-3"><a href="#cb42-3"></a>timeSeries<span class="sc">$</span>TimePoint <span class="ot">=</span> </span>
+<span id="cb42-4"><a href="#cb42-4"></a>    <span class="fu">gsub</span>(<span class="st">"Day_"</span>, <span class="st">""</span>, timeSeries<span class="sc">$</span>TimePoint) <span class="sc">|&gt;</span></span>
+<span id="cb42-5"><a href="#cb42-5"></a>    <span class="fu">as.numeric</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-8-2">
 <p>Let’s transform the data to format long and add a column with the name of the treatment group</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb43-2"><a></a></span>
-<span id="cb43-3"><a></a>timeSeriesLong <span class="ot">=</span> <span class="fu">pivot_longer</span>(</span>
-<span id="cb43-4"><a></a>    timeSeries,</span>
-<span id="cb43-5"><a></a>    <span class="at">cols =</span> <span class="sc">!</span>TimePoint, </span>
-<span id="cb43-6"><a></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"Treatment"</span>, <span class="st">"Replicates"</span>),</span>
-<span id="cb43-7"><a></a>    <span class="at">names_sep =</span> <span class="st">"_"</span>,</span>
-<span id="cb43-8"><a></a>    <span class="at">values_to =</span> <span class="st">"Growth_measure"</span></span>
-<span id="cb43-9"><a></a>)</span>
-<span id="cb43-10"><a></a></span>
-<span id="cb43-11"><a></a><span class="fu">head</span>(timeSeriesLong)    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb43-2"><a href="#cb43-2"></a></span>
+<span id="cb43-3"><a href="#cb43-3"></a>timeSeriesLong <span class="ot">=</span> <span class="fu">pivot_longer</span>(</span>
+<span id="cb43-4"><a href="#cb43-4"></a>    timeSeries,</span>
+<span id="cb43-5"><a href="#cb43-5"></a>    <span class="at">cols =</span> <span class="sc">!</span>TimePoint, </span>
+<span id="cb43-6"><a href="#cb43-6"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"Treatment"</span>, <span class="st">"Replicates"</span>),</span>
+<span id="cb43-7"><a href="#cb43-7"></a>    <span class="at">names_sep =</span> <span class="st">"_"</span>,</span>
+<span id="cb43-8"><a href="#cb43-8"></a>    <span class="at">values_to =</span> <span class="st">"Growth_measure"</span></span>
+<span id="cb43-9"><a href="#cb43-9"></a>)</span>
+<span id="cb43-10"><a href="#cb43-10"></a></span>
+<span id="cb43-11"><a href="#cb43-11"></a><span class="fu">head</span>(timeSeriesLong)    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   TimePoint Treatment  Replicates Growth_measure
@@ -1177,29 +1112,25 @@ Karen Cristine Goncalves, Ph.D.
 </div>
 <div id="tabset-8-3">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a><span class="fu">ggplot</span>(timeSeriesLong) <span class="sc">+</span></span>
-<span id="cb45-2"><a></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> TimePoint, <span class="at">y =</span> Growth_measure, </span>
-<span id="cb45-3"><a></a>              <span class="at">group =</span> Treatment, </span>
-<span id="cb45-4"><a></a>              <span class="at">color =</span> Treatment)) <span class="sc">+</span></span>
-<span id="cb45-5"><a></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">ggplot</span>(timeSeriesLong) <span class="sc">+</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> TimePoint, <span class="at">y =</span> Growth_measure, </span>
+<span id="cb45-3"><a href="#cb45-3"></a>              <span class="at">group =</span> Treatment, </span>
+<span id="cb45-4"><a href="#cb45-4"></a>              <span class="at">color =</span> Treatment)) <span class="sc">+</span></span>
+<span id="cb45-5"><a href="#cb45-5"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-27-1.png" width="960"></p>
-</figure>
-</div>
 </div>
 </div>
 </div>
 <div id="tabset-8-4">
 <p>Now let’s create another table with the mean, standard deviation and coefficient of variation of each treatment per time point</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>GrowthMeasureStats <span class="ot">=</span> timeSeriesLong <span class="sc">%&gt;%</span></span>
-<span id="cb46-2"><a></a>    <span class="fu">group_by</span>(Treatment, TimePoint) <span class="sc">%&gt;%</span></span>
-<span id="cb46-3"><a></a>    <span class="fu">summarise</span>(</span>
-<span id="cb46-4"><a></a>        <span class="at">Mean =</span> <span class="fu">mean</span>(Growth_measure),</span>
-<span id="cb46-5"><a></a>        <span class="at">StdEnv =</span> <span class="fu">sd</span>(Growth_measure)</span>
-<span id="cb46-6"><a></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>GrowthMeasureStats <span class="ot">=</span> timeSeriesLong <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a>    <span class="fu">group_by</span>(Treatment, TimePoint) <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb46-4"><a href="#cb46-4"></a>        <span class="at">Mean =</span> <span class="fu">mean</span>(Growth_measure),</span>
+<span id="cb46-5"><a href="#cb46-5"></a>        <span class="at">StdEnv =</span> <span class="fu">sd</span>(Growth_measure)</span>
+<span id="cb46-6"><a href="#cb46-6"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-8-5">
@@ -1207,29 +1138,21 @@ Karen Cristine Goncalves, Ph.D.
 <p>We need to tell it “use this value as maximum and this as minimum”</p>
 <p>See that we set “ymin” and “ymax”. If you have standard deviation for the x-axis, you can add it with “xmin” and “xmax”.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a><span class="co"># We put inside ggplot() what is common to all layers</span></span>
-<span id="cb47-2"><a></a>p1 <span class="ot">=</span> <span class="fu">ggplot</span>(GrowthMeasureStats, </span>
-<span id="cb47-3"><a></a>       <span class="fu">aes</span>(<span class="at">x =</span> TimePoint, </span>
-<span id="cb47-4"><a></a>           <span class="at">color =</span> Treatment)) <span class="sc">+</span></span>
-<span id="cb47-5"><a></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Mean)) </span>
-<span id="cb47-6"><a></a>p1 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co"># We put inside ggplot() what is common to all layers</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a>p1 <span class="ot">=</span> <span class="fu">ggplot</span>(GrowthMeasureStats, </span>
+<span id="cb47-3"><a href="#cb47-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> TimePoint, </span>
+<span id="cb47-4"><a href="#cb47-4"></a>           <span class="at">color =</span> Treatment)) <span class="sc">+</span></span>
+<span id="cb47-5"><a href="#cb47-5"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Mean)) </span>
+<span id="cb47-6"><a href="#cb47-6"></a>p1 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-29-1.png" width="960"></p>
-</figure>
 </div>
-</div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a>p1 <span class="sc">+</span> <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> Mean <span class="sc">-</span> StdEnv,</span>
-<span id="cb48-2"><a></a>               <span class="at">ymax =</span> Mean <span class="sc">+</span> StdEnv),</span>
-<span id="cb48-3"><a></a>           <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb48-4"><a></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>p1 <span class="sc">+</span> <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> Mean <span class="sc">-</span> StdEnv,</span>
+<span id="cb48-2"><a href="#cb48-2"></a>               <span class="at">ymax =</span> Mean <span class="sc">+</span> StdEnv),</span>
+<span id="cb48-3"><a href="#cb48-3"></a>           <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb48-4"><a href="#cb48-4"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-29-2.png" width="960"></p>
-</figure>
-</div>
 </div>
 </div>
 </div>
@@ -1243,9 +1166,9 @@ Karen Cristine Goncalves, Ph.D.
 <div class="tab-content">
 <div id="tabset-9-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a><span class="co"># Create the linear model of Growth_measure ~ TimePoint, adding the Treatment interaction</span></span>
-<span id="cb49-2"><a></a>linear.model <span class="ot">=</span> <span class="fu">lm</span>(Growth_measure <span class="sc">~</span> TimePoint<span class="sc">*</span>Treatment, <span class="at">data =</span> timeSeriesLong)</span>
-<span id="cb49-3"><a></a><span class="fu">summary</span>(linear.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="co"># Create the linear model of Growth_measure ~ TimePoint, adding the Treatment interaction</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a>linear.model <span class="ot">=</span> <span class="fu">lm</span>(Growth_measure <span class="sc">~</span> TimePoint<span class="sc">*</span>Treatment, <span class="at">data =</span> timeSeriesLong)</span>
+<span id="cb49-3"><a href="#cb49-3"></a><span class="fu">summary</span>(linear.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1274,7 +1197,7 @@ F-statistic:  9800 on 5 and 102 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div id="tabset-9-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="fu">install.packages</span>(<span class="st">"lsmeans"</span>); <span class="fu">library</span>(<span class="st">"lsmeans"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">install.packages</span>(<span class="st">"lsmeans"</span>); <span class="fu">library</span>(<span class="st">"lsmeans"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>package 'lsmeans' successfully unpacked and MD5 sums checked
 
@@ -1283,8 +1206,8 @@ The downloaded binary packages are in
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a>linear.model.trends <span class="ot">&lt;-</span> <span class="fu">lstrends</span>(linear.model, <span class="st">"Treatment"</span>, <span class="at">var=</span><span class="st">"TimePoint"</span>)</span>
-<span id="cb53-2"><a></a><span class="fu">summary</span>(linear.model.trends)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>linear.model.trends <span class="ot">&lt;-</span> <span class="fu">lstrends</span>(linear.model, <span class="st">"Treatment"</span>, <span class="at">var=</span><span class="st">"TimePoint"</span>)</span>
+<span id="cb53-2"><a href="#cb53-2"></a><span class="fu">summary</span>(linear.model.trends)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Treatment  TimePoint.trend     SE  df lower.CL upper.CL
  Control                2.0 0.0193 102     1.96     2.04
@@ -1293,7 +1216,7 @@ The downloaded binary packages are in
 
 Confidence level used: 0.95 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="fu">pairs</span>(linear.model.trends)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">pairs</span>(linear.model.trends)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> contrast                estimate     SE  df t.ratio p.value
  Control - TreatmentA        -1.0 0.0273 102 -36.678  &lt;.0001
@@ -1324,28 +1247,26 @@ P value adjustment: tukey method for comparing a family of 3 estimates </code></
 </ul></li>
 </ul>
 </section>
-<section id="code-from-class" class="slide level2 scrollable">
+<section id="code-from-class" class="slide level2">
 <h2>Code from class</h2>
 <p>Tuesdays group</p>
 <ol type="1">
-<li><a href="../..\scripts_for_class/script_class2t.R">September 19th</a></li>
-<li><a href="../..\scripts_for_class/class_19092023.R">September 19th (2)</a></li>
-<li><a href="../..\scripts_for_class/script_class2tuesday.R">October 3rd</a></li>
-<li><a href="../..\scripts_for_class/class_10102023.R">October 10th</a></li>
-<li><a href="../..\scripts_for_class/class_17102023.R">October 17th</a></li>
+<li><a href="../../scripts_for_class/script_class2t.R">September 19th</a></li>
+<li><a href="../../scripts_for_class/class_19092023.R">September 19th (2)</a></li>
+<li><a href="../../scripts_for_class/script_class2tuesday.R">October 3rd</a></li>
+<li><a href="../../scripts_for_class/class_10102023.R">October 10th</a></li>
+<li><a href="../../scripts_for_class/class_17102023.R">October 17th</a></li>
 </ol>
 <p>Fridays group</p>
 <ol type="1">
-<li><a href="../..\scripts_for_class/script_class1f.R">September 15th</a></li>
-<li><a href="../..\scripts_for_class/class_29092023.R">September 29th</a></li>
-<li><a href="../..\scripts_for_class/class_06102023.R">October 6th</a></li>
-<li><a href="../..\scripts_for_class/class_19102023.R">October 19th</a></li>
+<li><a href="../../scripts_for_class/script_class1f.R">September 15th</a></li>
+<li><a href="../../scripts_for_class/class_29092023.R">September 29th</a></li>
+<li><a href="../../scripts_for_class/class_06102023.R">October 6th</a></li>
+<li><a href="../../scripts_for_class/class_19102023.R">October 19th</a></li>
 </ol>
 
-<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
-</div>
 </div>
 </section>
     </div>
@@ -1374,6 +1295,7 @@ P value adjustment: tukey method for comparing a family of 3 estimates </code></
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
+'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -1559,80 +1481,42 @@ P value adjustment: tukey method for comparing a family of 3 estimates </code></
       });
     </script>
     
-
     <script>
-
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
       // slide changes (different for each slide format).
-
       (function () {
-
         // dispatch for htmlwidgets
-
         function fireSlideEnter() {
-
           const event = window.document.createEvent("Event");
-
           event.initEvent("slideenter", true, true);
-
           window.document.dispatchEvent(event);
-
         }
-
-    
 
         function fireSlideChanged(previousSlide, currentSlide) {
-
           fireSlideEnter();
 
-    
-
           // dispatch for shiny
-
           if (window.jQuery) {
-
             if (previousSlide) {
-
               window.jQuery(previousSlide).trigger("hidden");
-
             }
-
             if (currentSlide) {
-
               window.jQuery(currentSlide).trigger("shown");
-
             }
-
           }
-
         }
-
-    
 
         // hookup for slidy
-
         if (window.w3c_slidy) {
-
           window.w3c_slidy.add_observer(function (slide_num) {
-
             // slide_num starts at position 1
-
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
           });
-
         }
 
-    
-
       })();
-
     </script>
-
-    
 
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -1710,27 +1594,10 @@ P value adjustment: tukey method for comparing a family of 3 estimates </code></
         // clear code selection
         e.clearSelection();
       });
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp("https:\/\/KarenGoncalves\.github\.io\/Programming_classes\/");
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-        }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
-            }
-          }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      function tippyHover(el, contentFn) {
         const config = {
           allowHTML: true,
+          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1740,17 +1607,8 @@ P value adjustment: tukey method for comparing a family of 3 estimates </code></
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start',
+          placement: 'bottom-start'
         };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
@@ -1764,11 +1622,7 @@ P value adjustment: tukey method for comparing a family of 3 estimates </code></
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
-          }
+          return note.innerHTML;
         });
       }
       const findCites = (el) => {

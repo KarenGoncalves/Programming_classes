@@ -175,5 +175,8 @@
   },
   "r/test.qmd": {
     "test.html": "ac221e4f"
+  },
+  "r/plots_DEA/index.qmd": {
+    "index.html": "7df48cf1"
   }
 }
