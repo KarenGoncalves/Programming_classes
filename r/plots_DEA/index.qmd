@@ -15,6 +15,7 @@ format:
     transition: none
     theme: dark
     scrollable: true
+    output-location: fragment
 date: "28 March 2024"
 incremental: false
 echo: true
@@ -155,7 +156,6 @@ Because of this, we can add things to the plot as if it was a ggplot.
 plotPCA(rlog_transformed, 
         intgroup = "Genotype", # color samples by
         ntop = nrow(counts_filtered)) + #use how many genes for the computation
-  theme_classic() +
   labs(color =  "") +
   scale_color_manual(values = c("Control" = "black",
                                   "Mlp37347" = "red",

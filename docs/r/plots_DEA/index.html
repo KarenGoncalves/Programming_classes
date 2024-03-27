@@ -417,12 +417,18 @@ Karen Cristine Goncalves, Ph.D.
 <span id="cb1-7"><a href="#cb1-7"></a></span>
 <span id="cb1-8"><a href="#cb1-8"></a><span class="fu">theme_classic</span>() <span class="sc">%&gt;%</span> theme_set</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell fragment">
+
+</div>
 </section>
 <section id="code-from-previous-class-prepare-input" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Code from previous class: Prepare input</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb2-1" class="hljs-ln-code"><a href="#cb2-1"></a>counts <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"https://karengoncalves.github.io/Programming_classes/exampleData/Arabidopsis_counts.csv"</span>,</span>
 <span id="cb2-2" class="hljs-ln-code"><a href="#cb2-2"></a>                  <span class="at">header =</span> T, <span class="at">row.names =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
 </div>
 </section>
 <section id="code-from-previous-class-prepare-input-1" class="slide level2" data-auto-animate="true">
@@ -436,6 +442,9 @@ Karen Cristine Goncalves, Ph.D.
 <span id="cb3-6" class="hljs-ln-code"><a href="#cb3-6"></a>  <span class="fu">mutate</span>(<span class="at">Genotype =</span> </span>
 <span id="cb3-7" class="hljs-ln-code"><a href="#cb3-7"></a>           <span class="fu">gsub</span>(<span class="st">"_</span><span class="sc">\\</span><span class="st">d+$"</span>, <span class="st">""</span>, </span>
 <span id="cb3-8" class="hljs-ln-code"><a href="#cb3-8"></a>                Replicates))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
 </div>
 </section>
 <section id="code-from-previous-class-prepare-input-2" class="slide level2" data-auto-animate="true">
@@ -453,6 +462,9 @@ Karen Cristine Goncalves, Ph.D.
 <span id="cb4-10" class="hljs-ln-code"><a href="#cb4-10"></a>genes_not_expressed <span class="ot">=</span> <span class="fu">rowSums</span>(counts) <span class="sc">==</span> <span class="dv">0</span></span>
 <span id="cb4-11" class="hljs-ln-code"><a href="#cb4-11"></a>counts_filtered <span class="ot">=</span> counts[ <span class="sc">!</span>genes_not_expressed, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell fragment">
+
+</div>
 </section>
 <section id="code-from-previous-class-main-analysis" class="slide level2">
 <h2>Code from previous class: Main analysis</h2>
@@ -462,6 +474,9 @@ Karen Cristine Goncalves, Ph.D.
 <span id="cb5-3"><a href="#cb5-3"></a>  <span class="at">colData =</span> design_matrix, <span class="co"># colData means data about the columns of the count matrix</span></span>
 <span id="cb5-4"><a href="#cb5-4"></a>  <span class="at">design =</span> <span class="sc">~</span>Genotype <span class="co"># basically: expression in function of the genotype</span></span>
 <span id="cb5-5"><a href="#cb5-5"></a>) <span class="sc">%&gt;%</span> <span class="fu">DESeq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
 </div>
 </section>
 <section id="code-from-previous-class-get-the-results" class="slide level2">
@@ -484,6 +499,9 @@ Karen Cristine Goncalves, Ph.D.
 <span id="cb6-15"><a href="#cb6-15"></a>  }) <span class="sc">%&gt;%</span></span>
 <span id="cb6-16"><a href="#cb6-16"></a>  <span class="fu">list_rbind</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell fragment">
+
+</div>
 </section>
 <section>
 <section id="check-for-sample-homogeneity" class="title-slide slide level1 center">
@@ -501,6 +519,8 @@ Karen Cristine Goncalves, Ph.D.
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>rlog_transformed <span class="ot">=</span> <span class="fu">rlogTransformation</span>(deseq_dataset)</span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="fu">assay</span>(rlog_transformed) <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>          Control_1 Control_2 Control_3 Control_4 Mlp37347_1 Mlp37347_2
 AT1G01010  6.856238  6.614363  6.614790  6.165110   5.471233   5.796102
@@ -524,6 +544,8 @@ AT1G01060   9.575817  10.642220   10.511861   10.605765   10.339630   12.211014<
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>VST_data <span class="ot">=</span> <span class="fu">varianceStabilizingTransformation</span>(deseq_dataset)</span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="fu">assay</span>(VST_data) <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>          Control_1 Control_2 Control_3 Control_4 Mlp37347_1 Mlp37347_2
 AT1G01010  7.590094  7.234199  7.235298  6.594604   5.592357   6.065537
@@ -550,9 +572,13 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb11-1" class="hljs-ln-code"><a href="#cb11-1"></a><span class="fu">plotPCA</span>(rlog_transformed, </span>
 <span id="cb11-2" class="hljs-ln-code"><a href="#cb11-2"></a>        <span class="at">intgroup =</span> <span class="st">"Genotype"</span>, <span class="co"># color samples by</span></span>
 <span id="cb11-3" class="hljs-ln-code"><a href="#cb11-3"></a>        <span class="at">ntop =</span> <span class="fu">nrow</span>(counts_filtered)) <span class="co">#use how many genes for the computation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
+</div>
+</div>
+</section>
 <section id="pca-1" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">PCA</h2>
 <p>DESeq2 offers a function for PCA that takes the result from either of the two functions and returns a ggplot object.</p>
@@ -561,15 +587,18 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb12-1" class="hljs-ln-code"><a href="#cb12-1"></a><span class="fu">plotPCA</span>(rlog_transformed, </span>
 <span id="cb12-2" class="hljs-ln-code"><a href="#cb12-2"></a>        <span class="at">intgroup =</span> <span class="st">"Genotype"</span>, <span class="co"># color samples by</span></span>
 <span id="cb12-3" class="hljs-ln-code"><a href="#cb12-3"></a>        <span class="at">ntop =</span> <span class="fu">nrow</span>(counts_filtered)) <span class="sc">+</span> <span class="co">#use how many genes for the computation</span></span>
-<span id="cb12-4" class="hljs-ln-code"><a href="#cb12-4"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb12-5" class="hljs-ln-code"><a href="#cb12-5"></a>  <span class="fu">labs</span>(<span class="at">color =</span>  <span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb12-6" class="hljs-ln-code"><a href="#cb12-6"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Control"</span> <span class="ot">=</span> <span class="st">"black"</span>,</span>
-<span id="cb12-7" class="hljs-ln-code"><a href="#cb12-7"></a>                                  <span class="st">"Mlp37347"</span> <span class="ot">=</span> <span class="st">"red"</span>,</span>
-<span id="cb12-8" class="hljs-ln-code"><a href="#cb12-8"></a>                                  <span class="st">"Mlp124499"</span> <span class="ot">=</span> <span class="st">"blue"</span>)</span>
-<span id="cb12-9" class="hljs-ln-code"><a href="#cb12-9"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<span id="cb12-4" class="hljs-ln-code"><a href="#cb12-4"></a>  <span class="fu">labs</span>(<span class="at">color =</span>  <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb12-5" class="hljs-ln-code"><a href="#cb12-5"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Control"</span> <span class="ot">=</span> <span class="st">"black"</span>,</span>
+<span id="cb12-6" class="hljs-ln-code"><a href="#cb12-6"></a>                                  <span class="st">"Mlp37347"</span> <span class="ot">=</span> <span class="st">"red"</span>,</span>
+<span id="cb12-7" class="hljs-ln-code"><a href="#cb12-7"></a>                                  <span class="st">"Mlp124499"</span> <span class="ot">=</span> <span class="st">"blue"</span>)</span>
+<span id="cb12-8" class="hljs-ln-code"><a href="#cb12-8"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-10-1.png" width="960"></p>
+</div>
+</div>
+</section>
 <section id="clustering" class="slide level2">
 <h2>Clustering</h2>
 <p>Hierarchical clustering is a graphical way to show the pairwise similarity between samples.</p>
@@ -582,9 +611,13 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb13-5"><a href="#cb13-5"></a></span>
 <span id="cb13-6"><a href="#cb13-6"></a>cluster_hc <span class="ot">=</span> <span class="fu">hclust</span>(distance_data)</span>
 <span id="cb13-7"><a href="#cb13-7"></a><span class="fu">plot</span>(cluster_hc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
+</div>
+</div>
+</section>
 <section id="add-a-heatmap" class="slide level2">
 <h2>Add a heatmap</h2>
 <p>You can show the dendrogram and the distance matrix in a heatmap</p>
@@ -593,9 +626,13 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb14-2"><a href="#cb14-2"></a>  as.matrix <span class="sc">%&gt;%</span></span>
 <span id="cb14-3"><a href="#cb14-3"></a>  stats<span class="sc">::</span><span class="fu">heatmap</span>(<span class="at">Rowv =</span> <span class="fu">as.dendrogram</span>(cluster_hc),</span>
 <span id="cb14-4"><a href="#cb14-4"></a>                 <span class="at">symm =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section>
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
+</div>
+</div>
+</section>
 <section id="improved-heatmap-dendrogram-prepare-data" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Improved heatmap + dendrogram: prepare data</h2>
 <p>If you want to plot it with ggplot to have more control, you need to do some transformations</p>
@@ -608,6 +645,9 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb15-6" class="hljs-ln-code"><a href="#cb15-6"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>Rep1,</span>
 <span id="cb15-7" class="hljs-ln-code"><a href="#cb15-7"></a>               <span class="at">names_to =</span> <span class="st">"Rep2"</span>, </span>
 <span id="cb15-8" class="hljs-ln-code"><a href="#cb15-8"></a>               <span class="at">values_to =</span> <span class="st">"distance"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
 </div>
 </section>
 <section id="improved-heatmap-dendrogram-prepare-data-1" class="slide level2" data-auto-animate="true">
@@ -625,6 +665,8 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb16-9"><a href="#cb16-9"></a></span>
 <span id="cb16-10"><a href="#cb16-10"></a><span class="co"># Add a column with the relative distance of the samples</span></span>
 <span id="cb16-11"><a href="#cb16-11"></a>(<span class="at">max_distance =</span> <span class="fu">max</span>(long_distance<span class="sc">$</span>distance))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 106.0121</code></pre>
 </div>
@@ -647,6 +689,8 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb19-9"><a href="#cb19-9"></a></span>
 <span id="cb19-10"><a href="#cb19-10"></a><span class="co"># Add a column with the relative distance of the samples</span></span>
 <span id="cb19-11"><a href="#cb19-11"></a>(<span class="at">max_distance =</span> <span class="fu">max</span>(long_distance<span class="sc">$</span>distance))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 106.0121</code></pre>
 </div>
@@ -675,6 +719,8 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb22-3"><a href="#cb22-3"></a>                        <span class="at">ladderize =</span> F) <span class="sc">+</span></span>
 <span id="cb22-4"><a href="#cb22-4"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">7</span>))</span>
 <span id="cb22-5"><a href="#cb22-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output-display">
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-16-1.png" width="960"></p>
 </div>
@@ -693,6 +739,8 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb23-8"><a href="#cb23-8"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb23-9"><a href="#cb23-9"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>()) </span>
 <span id="cb23-10"><a href="#cb23-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output-display">
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
 </div>
@@ -703,6 +751,8 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">wrap_plots</span>(sample_dendro, heatmap_distance, </span>
 <span id="cb24-2"><a href="#cb24-2"></a>           <span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
 <div class="cell-output-display">
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-18-1.png" width="960"></p>
 </div>
@@ -726,9 +776,13 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb25-5"><a href="#cb25-5"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb25-6"><a href="#cb25-6"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Contrast)</span>
 <span id="cb25-7"><a href="#cb25-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-19-1.png" width="960" class="r-stretch"></section>
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-19-1.png" width="960"></p>
+</div>
+</div>
+</section>
 <section id="improve-aesthetics" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Improve aesthetics</h2>
 <div class="cell">
@@ -738,9 +792,13 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb26-4" class="hljs-ln-code"><a href="#cb26-4"></a>                       <span class="fu">c</span>(<span class="st">"Up-regulated"</span> <span class="ot">=</span> <span class="st">"red"</span>,</span>
 <span id="cb26-5" class="hljs-ln-code"><a href="#cb26-5"></a>                         <span class="st">"Down-regulated"</span> <span class="ot">=</span> <span class="st">"blue"</span>,</span>
 <span id="cb26-6" class="hljs-ln-code"><a href="#cb26-6"></a>                         <span class="st">"equal"</span> <span class="ot">=</span> <span class="st">"grey"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-20-1.png" width="960" class="r-stretch"></section>
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
+</div>
+</div>
+</section>
 <section id="improve-aesthetics-1" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Improve aesthetics</h2>
 <div class="cell">
@@ -754,9 +812,13 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb27-8" class="hljs-ln-code"><a href="#cb27-8"></a>                       <span class="fu">c</span>(<span class="st">"Up-regulated"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
 <span id="cb27-9" class="hljs-ln-code"><a href="#cb27-9"></a>                         <span class="st">"Down-regulated"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
 <span id="cb27-10" class="hljs-ln-code"><a href="#cb27-10"></a>                         <span class="st">"equal"</span> <span class="ot">=</span> <span class="fl">0.3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-21-1.png" width="960" class="r-stretch"></section>
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
+</div>
+</div>
+</section>
 <section id="improve-aesthetics-2" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Improve aesthetics</h2>
 <div class="cell">
@@ -773,9 +835,13 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb28-11" class="hljs-ln-code"><a href="#cb28-11"></a>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(<span class="st">"log"</span>[<span class="dv">2</span>]<span class="sc">~</span><span class="st">"Fold Change"</span>),</span>
 <span id="cb28-12" class="hljs-ln-code"><a href="#cb28-12"></a>       <span class="at">y =</span> <span class="fu">expression</span>(<span class="st">"-log"</span>[<span class="dv">10</span>]<span class="sc">~</span><span class="st">"adjusted p-Value"</span>)) <span class="sc">+</span></span>
 <span id="cb28-13" class="hljs-ln-code"><a href="#cb28-13"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch"></section>
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-22-1.png" width="960"></p>
+</div>
+</div>
+</section>
 <section id="heatmap-of-deregulated-genes---prepare-input" class="slide level2">
 <h2>Heatmap of deregulated genes - prepare input</h2>
 <p>In our case, we just have one factor (Genotype) in the design formula, and both contrasts are against the control sample.</p>
@@ -787,6 +853,9 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb29-4"><a href="#cb29-4"></a>  ) <span class="sc">%&gt;%</span></span>
 <span id="cb29-5"><a href="#cb29-5"></a>  <span class="fu">filter</span>(<span class="fu">abs</span>(log2FoldChange) <span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">&amp;</span> padj <span class="sc">&lt;</span> <span class="fl">0.01</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell fragment">
+
+</div>
 <p>Now we also want to sort the genes so that the ones with similar deregulation are grouped together. We can use a cluster analysis for that.</p>
 <p>But, we need to use a wide table, not a long one, to compute the distance matrix. We will also filter out the genes that are not deregulated, so that the analysis don’t consider non-significant differences.</p>
 <div class="cell">
@@ -797,6 +866,9 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb30-5"><a href="#cb30-5"></a>              <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb30-6"><a href="#cb30-6"></a>  <span class="fu">as.data.frame</span>()</span>
 <span id="cb30-7"><a href="#cb30-7"></a><span class="fu">rownames</span>(wide_results) <span class="ot">=</span> wide_results<span class="sc">$</span>Gene_name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
 </div>
 <ul>
 <li><code>values_fill = 0</code>: after filtering, there will be genes with fold change levels present for only one contrast because they are not deregulated in the other condition. Since in the wide format, we need values for both contrasts, we replace the empty cell with 0.</li>
@@ -813,9 +885,13 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb31-4"><a href="#cb31-4"></a>  hclust</span>
 <span id="cb31-5"><a href="#cb31-5"></a></span>
 <span id="cb31-6"><a href="#cb31-6"></a><span class="fu">ggtree</span>(cluster_genes, <span class="at">layout =</span> <span class="st">"dendrogram"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"><p>Now we just make a column of ordered genes</p>
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-25-1.png" width="960"></p>
+</div>
+</div>
+<p>Now we just make a column of ordered genes</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>results_DESeq2_filtered <span class="ot">=</span></span>
 <span id="cb32-2"><a href="#cb32-2"></a>  results_DESeq2_filtered <span class="sc">%&gt;%</span></span>
@@ -823,6 +899,9 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb32-4"><a href="#cb32-4"></a>           <span class="fu">factor</span>(Gene_name, </span>
 <span id="cb32-5"><a href="#cb32-5"></a>                  <span class="at">levels =</span> cluster_genes<span class="sc">$</span>labels[cluster_genes<span class="sc">$</span>order])</span>
 <span id="cb32-6"><a href="#cb32-6"></a>         )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
 </div>
 </section>
 <section id="heatmap-of-deregulated-genes---plot" class="slide level2" data-auto-animate="true">
@@ -835,9 +914,13 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb33-4" class="hljs-ln-code"><a href="#cb33-4"></a>                           log2FoldChange, <span class="dv">0</span>)</span>
 <span id="cb33-5" class="hljs-ln-code"><a href="#cb33-5"></a>  )) <span class="sc">+</span></span>
 <span id="cb33-6" class="hljs-ln-code"><a href="#cb33-6"></a>    <span class="fu">geom_tile</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-27-1.png" width="960" class="r-stretch"></section>
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-27-1.png" width="960"></p>
+</div>
+</div>
+</section>
 <section id="heatmap-of-deregulated-genes---plot-1" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Heatmap of deregulated genes - plot</h2>
 <p>Whether you plot the genes in the x or in the y axis depends on how readable the plot is in the end (how many genes are deregulated, how many contrasts you have, etc)</p>
@@ -852,9 +935,13 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb34-8" class="hljs-ln-code"><a href="#cb34-8"></a>                       <span class="at">mid =</span> <span class="st">"white"</span>, </span>
 <span id="cb34-9" class="hljs-ln-code"><a href="#cb34-9"></a>                       <span class="at">low =</span> <span class="st">"midnightblue"</span>, </span>
 <span id="cb34-10" class="hljs-ln-code"><a href="#cb34-10"></a>                       <span class="at">high =</span> <span class="st">"red"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-28-1.png" width="960" class="r-stretch"></section>
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-28-1.png" width="960"></p>
+</div>
+</div>
+</section>
 <section id="heatmap-of-deregulated-genes---plot-2" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Heatmap of deregulated genes - plot</h2>
 <p>Whether you plot the genes in the x or in the y axis depends on how readable the plot is in the end (how many genes are deregulated, how many contrasts you have, etc)</p>
@@ -873,16 +960,19 @@ AT1G01060   8.562044  10.476041   10.264868   10.417590    9.978984   12.774389<
 <span id="cb35-12" class="hljs-ln-code"><a href="#cb35-12"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb35-13" class="hljs-ln-code"><a href="#cb35-13"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
 <span id="cb35-14" class="hljs-ln-code"><a href="#cb35-14"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-29-1.png" width="960" class="r-stretch"></section>
+<div class="cell fragment">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-29-1.png" width="960"></p>
+</div>
+</div>
+</section>
 <section id="resources" class="slide level2">
 <h2>Resources</h2>
 <ul>
-<li>Hierarchical clustering</li>
-<li>PCA</li>
-<li>Variance stabilizing transformation</li>
-<li>Regularized log transformation</li>
+<li><a href="https://towardsdatascience.com/understanding-the-concept-of-hierarchical-clustering-technique-c6e8243758ec">Hierarchical clustering</a></li>
+<li><a href="https://towardsdatascience.com/a-one-stop-shop-for-principal-component-analysis-5582fb7e0a9c">PCA</a></li>
+<li><a href="https://www.bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#variance-stabilizing-transformation">Variance stabilizing transformation and regularized log transformation</a></li>
 </ul>
 
 <div class="footer footer-default">
